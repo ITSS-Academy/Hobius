@@ -3,14 +3,18 @@
   width: 100%;
   display: flex;
   flex-direction: row;
+  align-items: end;
 
   #sidebar-container {
-    height: 100%;
-    width: 15%;
+    height: 95%;
+    width: 87px;
   }
 
   #main-container {
-    height: 100%;
-    width: 85%;
+    height: 95%;
+    width: calc(100% - 87px);
+    background: var(--surfaceContainerLowest);
+    border-top-left-radius: var(--container-border-radius);
+    border-bottom-left-radius: var(--container-border-radius);
   }
 }

@@ -1,0 +1,92 @@
+@use "../../../styles" as styles;
+
+#sidebar-container {
+  width: 100%;
+  min-width: 76px;
+  height: 100%;
+
+  .sidenav-nav {
+    list-style: none;
+    padding: 0.938rem;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+
+    #logo {
+      margin: 10px 0;
+      cursor: pointer;
+    }
+
+    .sidenav-nav-item {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+
+      .sidenav-nav-link {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        border-radius: 50px;
+        padding: 6px 0;
+        transition: all 0.3s ease-in-out;
+
+        .sidenav-link-icon {
+          //width: 2rem;
+          //min-width: 2rem;
+          //margin: 0 0.5rem;
+          text-align: center;
+        }
+      }
+
+      .sidenav-link-text {
+        margin-block-start: 0.5em;
+        margin-block-end: 0.5em;
+      }
+    }
+  }
+
+  .sidenav-nav-link {
+    width: 100%;
+    height: 100%;
+  }
+
+  .active {
+    .sidenav-nav-link {
+      background-color: var(--secondaryContainer);
+      color: var(--onSecondaryContainer);
+    }
+
+    .sidenav-link-icon,
+    .sidenav-link-text {
+      // color: var(--mat-app-text-color) !important;
+      color: var(--onSecondaryContainer);
+    }
+  }
+
+  // .active:hover {
+  //   .sidenav-nav-link {
+  //     filter: brightness(0.85);
+  //   }
+  // }
+
+  .sidenav-nav-link:hover {
+    filter: brightness(0.85);
+    background: var(--secondaryContainer);
+    color: var(--onSecondaryContainer);
+  }
+
+  .inactive:hover {
+    .sidenav-nav-link {
+    }
+  }
+
+  //set the style for the index 1 and 2 of the sidenav-nav-item
+  .sidenav-nav-item:nth-child(2),
+  .sidenav-nav-item:nth-child(3) {
+    margin: 20px 0;
+  }
+}

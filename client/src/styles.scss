@@ -213,6 +213,9 @@ $client-theme: mat.define-theme(
   --surfaceContainer: #ededf4;
   --surfaceContainerHigh: #e7e8ee;
   --surfaceContainerHighest: #e2e2e9;
+
+  //custom border radius
+  --container-border-radius: 28px;
 }
 
 @include mat.color-variants-backwards-compatibility($client-theme);
