@@ -1,0 +1,327 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "@angular/material" as mat;
+@use "sass:map";
+
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+$_palettes: (
+  primary: (
+    0: #000000,
+    10: #001b3e,
+    20: #193054,
+    25: #253b60,
+    30: #31476c,
+    35: #3d5379,
+    40: #495f86,
+    50: #6277a0,
+    60: #7c91bb,
+    70: #96acd7,
+    80: #b1c7f3,
+    90: #d7e3ff,
+    95: #ecf0ff,
+    98: #f9f9ff,
+    99: #fdfbff,
+    100: #ffffff,
+  ),
+  secondary: (
+    0: #000000,
+    10: #171c24,
+    20: #2c303a,
+    25: #373b45,
+    30: #434751,
+    35: #4e525d,
+    40: #5a5e69,
+    50: #737782,
+    60: #8d909c,
+    70: #a7abb7,
+    80: #c3c6d2,
+    90: #dfe2ef,
+    95: #edf0fd,
+    98: #f9f9ff,
+    99: #fdfbff,
+    100: #ffffff,
+  ),
+  tertiary: (
+    0: #000000,
+    10: #231726,
+    20: #392c3b,
+    25: #453747,
+    30: #514253,
+    35: #5d4d5e,
+    40: #69596b,
+    50: #837284,
+    60: #9d8b9e,
+    70: #b8a5b9,
+    80: #d5c0d5,
+    90: #f1dcf1,
+    95: #ffebfe,
+    98: #fff7fb,
+    99: #fffbff,
+    100: #ffffff,
+  ),
+  neutral: (
+    0: #000000,
+    4: #0a0a0a,
+    6: #101011,
+    10: #1b1b1d,
+    12: #242426,
+    17: #363638,
+    20: #303032,
+    22: #3a3a3c,
+    24: #414143,
+    25: #3b3b3d,
+    30: #474648,
+    35: #525254,
+    40: #5f5e60,
+    50: #777779,
+    60: #919092,
+    70: #acabad,
+    80: #c8c6c8,
+    87: #d7d5d7,
+    90: #e4e2e4,
+    92: #eae8ea,
+    94: #f0edef,
+    95: #f3f0f2,
+    96: #f6f3f5,
+    98: #fbf8fb,
+    99: #fefbfd,
+    100: #ffffff,
+  ),
+  neutral-variant: (
+    0: #000000,
+    10: #1a1c1f,
+    20: #2f3034,
+    25: #3a3b3f,
+    30: #45474b,
+    35: #515257,
+    40: #5d5e63,
+    50: #76777b,
+    60: #909095,
+    70: #ababb0,
+    80: #c6c6cb,
+    90: #e2e2e7,
+    95: #f1f0f5,
+    98: #faf9fe,
+    99: #fdfbff,
+    100: #ffffff,
+  ),
+  error: (
+    0: #000000,
+    10: #410002,
+    20: #690005,
+    25: #7e0007,
+    30: #930009,
+    35: #a80710,
+    40: #b91a1a,
+    50: #de3730,
+    60: #ff5449,
+    70: #ff897d,
+    80: #ffb4ab,
+    90: #ffdbd6,
+    95: #ffedea,
+    98: #fff8f7,
+    99: #fffbff,
+    100: #ffffff,
+  ),
+);
+
+$_rest: (
+  secondary: map.get($_palettes, secondary),
+  neutral: map.get($_palettes, neutral),
+  neutral-variant: map.get($_palettes, neutral-variant),
+  error: map.get($_palettes, error),
+);
+
+$_primary: map.merge(map.get($_palettes, primary), $_rest);
+$_tertiary: map.merge(map.get($_palettes, tertiary), $_rest);
+
+// Define the theme object.
+$client-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: $_primary,
+      tertiary: $_tertiary,
+    ),
+    typography: (
+      brand-family: "Rowdies",
+      plain-family: "Rowdies",
+    ),
+    density: (
+      scale: 0,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+:root {
+  @include mat.all-component-themes($client-theme);
+  --primary: #415e91;
+  --surfaceTint: #415e91;
+  --onPrimary: #ffffff;
+  --primaryContainer: #d7e3ff;
+  --onPrimaryContainer: #001b3e;
+  --secondary: #565e71;
+  --onSecondary: #ffffff;
+  --secondaryContainer: #dae2f9;
+  --onSecondaryContainer: #131c2b;
+  --tertiary: #705574;
+  --onTertiary: #ffffff;
+  --tertiaryContainer: #fad8fd;
+  --onTertiaryContainer: #28132e;
+  --error: #ba1a1a;
+  --onError: #ffffff;
+  --errorContainer: #ffdad6;
+  --onErrorContainer: #410002;
+  --background: #f9f9ff;
+  --onBackground: #191c20;
+  --surface: #f9f9ff;
+  --onSurface: #191c20;
+  --surfaceVariant: #e0e2ec;
+  --onSurfaceVariant: #44474e;
+  --outline: #74777f;
+  --outlineVariant: #c4c6d0;
+  --shadow: #000000;
+  --scrim: #000000;
+  --inverseSurface: #2e3036;
+  --inverseOnSurface: #f0f0f7;
+  --inversePrimary: #aac7ff;
+  --primaryFixed: #d7e3ff;
+  --onPrimaryFixed: #001b3e;
+  --primaryFixedDim: #aac7ff;
+  --onPrimaryFixedVariant: #284777;
+  --secondaryFixed: #dae2f9;
+  --onSecondaryFixed: #131c2b;
+  --secondaryFixedDim: #bec6dc;
+  --onSecondaryFixedVariant: #3e4759;
+  --tertiaryFixed: #fad8fd;
+  --onTertiaryFixed: #28132e;
+  --tertiaryFixedDim: #ddbce0;
+  --onTertiaryFixedVariant: #573e5c;
+  --surfaceDim: #d9d9e0;
+  --surfaceBright: #f9f9ff;
+  --surfaceContainerLowest: #ffffff;
+  --surfaceContainerLow: #f3f3fa;
+  --surfaceContainer: #ededf4;
+  --surfaceContainerHigh: #e7e8ee;
+  --surfaceContainerHighest: #e2e2e9;
+}
+
+@include mat.color-variants-backwards-compatibility($client-theme);
+@include mat.typography-hierarchy($client-theme);
+// Comment out the line below if you want to use the pre-defined typography utility classes.
+// For more information: https://material.angular.io/guide/typography#using-typography-styles-in-your-application.
+// @include mat.typography-hierarchy($client-theme);
+
+// Comment out the line below if you want to use the deprecated `color` inputs.
+// @include mat.color-variants-backwards-compatibility($client-theme);
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--surface);
+}
+
+.rowdies-light {
+  font-family: "Rowdies", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.rowdies-regular {
+  font-family: "Rowdies", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.rowdies-bold {
+  font-family: "Rowdies", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.roboto-thin {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.roboto-light {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.roboto-regular {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.roboto-medium {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.roboto-bold {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.roboto-black {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.roboto-thin-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.roboto-light-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.roboto-regular-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.roboto-medium-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.roboto-bold-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.roboto-black-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}

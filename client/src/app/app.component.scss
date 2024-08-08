@@ -1,0 +1,16 @@
+#root-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+
+  #sidebar-container {
+    height: 100%;
+    width: 15%;
+  }
+
+  #main-container {
+    height: 100%;
+    width: 85%;
+  }
+}
