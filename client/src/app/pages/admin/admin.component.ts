@@ -257,7 +257,7 @@ export class AdminComponent implements AfterViewInit {
     // 'image',
     'view',
     'like',
-    // 'genre',
+    'genre',
   ];
   dataSource: MatTableDataSource<EbookModel>;
   selection = new SelectionModel<EbookModel>(true, []);
@@ -286,29 +286,18 @@ export class AdminComponent implements AfterViewInit {
     }
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  toggleAllRows() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
-    }
-
-    this.selection.select(...this.dataSource.data);
-  }
-
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: EbookModel): string {
     if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+      return `${this.selection.hasValue() ? 'deselect' : 'select'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${Number(row.id) + 1}`;
+  }
+
+  toggle(row: EbookModel) {
+    this.selection.clear(); // Clear all selections
+    this.selection.toggle(row); // Select the clicked row
+    console.log(this.selection.selected);
   }
 }
 

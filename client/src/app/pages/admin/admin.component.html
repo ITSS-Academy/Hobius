@@ -31,19 +31,11 @@
         <table mat-table [dataSource]="dataSource" matSort>
           <!-- Checkbox Column -->
           <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef>
-              <mat-checkbox
-                (change)="$event ? toggleAllRows() : null"
-                [checked]="selection.hasValue() && isAllSelected()"
-                [indeterminate]="selection.hasValue() && !isAllSelected()"
-                [aria-label]="checkboxLabel()"
-              >
-              </mat-checkbox>
-            </th>
+            <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let row">
               <mat-checkbox
                 (click)="$event.stopPropagation()"
-                (change)="$event ? selection.toggle(row) : null"
+                (change)="$event ? toggle(row) : null"
                 [checked]="selection.isSelected(row)"
                 [aria-label]="checkboxLabel(row)"
               >
@@ -85,6 +77,18 @@
           <ng-container matColumnDef="like">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Like</th>
             <td mat-cell *matCellDef="let row">{{ row.like }}</td>
+          </ng-container>
+
+          <!-- Genre Column -->
+          <ng-container matColumnDef="genre">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Genre</th>
+            <td mat-cell *matCellDef="let row">
+              <mat-chip-set aria-label="Categories Chip">
+                @for (genre of row.genre; track $index) {
+                  <mat-chip>{{ genre }}</mat-chip>
+                }
+              </mat-chip-set>
+            </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
