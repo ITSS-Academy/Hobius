@@ -20,6 +20,11 @@ export const routes: Routes = [
       import('./pages/admin/admin.route').then((m) => m.ADMIN_ROUTES),
   },
   {
+    path: 'login',
+    loadChildren: () =>
+      import('./pages/login/login.route').then((m) => m.LOGIN_ROUTES),
+  },
+  {
     path: 'ebook-info',
     loadChildren: () =>
       import('./pages/ebook-info/ebook-info.route').then(

@@ -1,1 +1,25 @@
-<div id="home-container"></div>
+<div id="home-container">
+  <div id="home-header">
+    <div id="home-header-title">
+      <h1>Hobius</h1>
+    </div>
+    <mat-form-field appearance="fill" id="home-header-search">
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput placeholder="Search your book..." />
+    </mat-form-field>
+
+    <!--    <div id="home-header-avatar">-->
+    <!--      <mat-icon>account_circle</mat-icon>-->
+    <!--    </div>-->
+    <div id="home-header-button">
+      <button mat-flat-button>Login</button>
+    </div>
+  </div>
+  <div id="home-content">
+    <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+      <div *cdkVirtualFor="let item of items" class="example-item">
+        {{ item }}
+      </div>
+    </cdk-virtual-scroll-viewport>
+  </div>
+</div>
