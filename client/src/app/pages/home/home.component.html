@@ -17,46 +17,39 @@
   </div>
   <div id="home-content">
     <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
-      <div id="lichSu">
+      <div class="boxContener">
         <div class="titleName">
           <p>LỊCH SỬ</p>
-          <button mat-icon-button>
-            <mat-icon>arrow_forward</mat-icon>
-          </button>
         </div>
         <div class="cardBox">
           <app-card *ngFor="let card of lichSuCards" [ebook]="card"></app-card>
         </div>
       </div>
 
-      <div id="thinhHanh"></div>
-      <div class="titleName">
-        <p>THỊNH HÀNH</p>
-        <button mat-icon-button>
-          <mat-icon>arrow_forward</mat-icon>
-        </button>
-      </div>
-      <div class="cardBox">
-        <app-card *ngFor="let card of thinhHanhCards" [ebook]="card"></app-card>
-      </div>
-
-      <div id="deCu"></div>
-      <div class="titleName">
-        <p>ĐỀ CỬ</p>
-        <button mat-icon-button>
-          <mat-icon>arrow_forward</mat-icon>
-        </button>
-      </div>
-      <div class="cardBox">
-        <app-card *ngFor="let card of deCuCards" [ebook]="card"></app-card>
+      <div class="boxContener">
+        <div class="titleName">
+          <p>THỊNH HÀNH</p>
+        </div>
+        <div class="cardBox">
+          <app-card
+            *ngFor="let card of thinhHanhCards"
+            [ebook]="card"
+          ></app-card>
+        </div>
       </div>
 
-      <div id="bangXepHang">
+      <div class="boxContener">
+        <div class="titleName">
+          <p>ĐỀ CỬ</p>
+        </div>
+        <div class="cardBox">
+          <app-card *ngFor="let card of deCuCards" [ebook]="card"></app-card>
+        </div>
+      </div>
+
+      <div class="boxContener">
         <div class="titleName">
           <p>BẢNG XẾP HẠNG</p>
-          <button mat-icon-button>
-            <mat-icon>arrow_forward</mat-icon>
-          </button>
         </div>
         <div class="cardBox">
           <app-card
