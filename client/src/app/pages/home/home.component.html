@@ -29,26 +29,31 @@
         </div>
       </div>
 
-      <div id="thinhHanh"></div>
-      <div class="titleName">
-        <p>THỊNH HÀNH</p>
-        <button mat-icon-button>
-          <mat-icon>arrow_forward</mat-icon>
-        </button>
-      </div>
-      <div class="cardBox">
-        <app-card *ngFor="let card of thinhHanhCards" [ebook]="card"></app-card>
+      <div id="thinhHanh">
+        <div class="titleName">
+          <p>THỊNH HÀNH</p>
+          <button mat-icon-button>
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+        <div class="cardBox">
+          <app-card
+            *ngFor="let card of thinhHanhCards"
+            [ebook]="card"
+          ></app-card>
+        </div>
       </div>
 
-      <div id="deCu"></div>
-      <div class="titleName">
-        <p>ĐỀ CỬ</p>
-        <button mat-icon-button>
-          <mat-icon>arrow_forward</mat-icon>
-        </button>
-      </div>
-      <div class="cardBox">
-        <app-card *ngFor="let card of deCuCards" [ebook]="card"></app-card>
+      <div id="deCu">
+        <div class="titleName">
+          <p>ĐỀ CỬ</p>
+          <button mat-icon-button>
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+        <div class="cardBox">
+          <app-card *ngFor="let card of deCuCards" [ebook]="card"></app-card>
+        </div>
       </div>
 
       <div id="bangXepHang">

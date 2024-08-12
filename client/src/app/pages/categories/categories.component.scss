@@ -1,0 +1,157 @@
+#home-container {
+  height: 100%;
+  width: 100%;
+
+  #home-header {
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--primary);
+    font-size: 2rem;
+    font-weight: bold;
+    border-top-left-radius: var(--container-border-radius);
+    border-top-right-radius: var(--container-border-radius);
+
+    #home-header-title {
+      margin-left: 20px;
+
+      h1 {
+        margin: 0;
+      }
+    }
+
+    #home-header-search {
+      width: 50%;
+      min-width: 360px;
+    }
+
+    #home-header-avatar {
+      height: 50px;
+      width: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: auto 20px auto 0;
+      cursor: pointer;
+
+      mat-icon {
+        font-size: 50px;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
+
+      mat-icon:hover {
+        color: var(--onPrimary);
+        background: var(--primary);
+      }
+    }
+
+    #home-header-button {
+      display: flex;
+      margin: auto 20px auto 0;
+    }
+  }
+
+  #home-content {
+    height: calc(100% - 100px);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .example-viewport {
+      height: 100%;
+      width: 100%;
+      //border: 1px solid black;
+      margin: 20px;
+    }
+
+    .example-item {
+      height: 50px;
+    }
+  }
+}
+
+:host {
+  ::ng-deep .mat-mdc-form-field-subscript-wrapper,
+  .mat-mdc-form-field-bottom-align {
+    display: none;
+  }
+
+  ::ng-deep .mat-mdc-text-field-wrapper,
+  .mdc-text-field,
+  .mdc-text-field--filled {
+    border-radius: 16px;
+    border: none;
+
+    .mdc-line-ripple {
+      display: none;
+    }
+  }
+
+  ::ng-deep .mat-mdc-form-field-flex,
+  .mat-mdc-form-field-infix {
+    height: 100%;
+  }
+
+  ::ng-deep .mdc-text-field--no-label .mat-mdc-form-field-infix {
+    padding: 14px 0;
+  }
+
+  ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background: var(--background);
+  }
+}
+
+#thinhHanhBox > p {
+  font-size: 24px;
+  color: var(--primary);
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+#theLoaiBox {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.theLoai {
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid var(--outline);
+  border-radius: 8px;
+  width: 100px;
+  height: 5px;
+  color: var(--onSurfaceVariant);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+}
+
+.theLoai:hover {
+  background-color: var(--surfaceContainer);
+  color: var(--onSurface);
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+#cardBox {
+  margin-top: 10px;
+  width: 100vh;
+  height: max-content;
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  flex-wrap: wrap;
+  align-items: center;
+}

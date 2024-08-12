@@ -1,1 +1,37 @@
-<p>categories works!</p>
+<div id="home-container">
+  <div id="home-header">
+    <div id="home-header-title">
+      <h1>Hobius</h1>
+    </div>
+    <mat-form-field appearance="fill" id="home-header-search">
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput placeholder="Search your book..." />
+    </mat-form-field>
+
+    <!--    <div id="home-header-avatar">-->
+    <!--      <mat-icon>account_circle</mat-icon>-->
+    <!--    </div>-->
+    <div id="home-header-button">
+      <button mat-flat-button>Login</button>
+    </div>
+  </div>
+  <div id="home-content">
+    <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+      <div id="topBox"></div>
+      <div id="thinhHanhBox">
+        <button mat-icon-button>
+          <mat-icon>arrow_backward</mat-icon>
+        </button>
+        <p>THỊNH HÀNH</p>
+      </div>
+
+      <div id="theLoaiBox">
+        <div class="theLoai" *ngFor="let loai of theLoai">{{ loai }}</div>
+      </div>
+
+      <div id="cardBox">
+        <app-card *ngFor="let card of thinhHanhCards" [ebook]="card"></app-card>
+      </div>
+    </cdk-virtual-scroll-viewport>
+  </div>
+</div>
