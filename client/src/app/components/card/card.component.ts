@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { EbookModel } from '../../../models/ebook.model';
-import { CardService } from '../../../services/card.service';
 
 @Component({
   selector: 'app-card',
@@ -12,5 +11,5 @@ import { CardService } from '../../../services/card.service';
 export class CardComponent {
   @Input() ebook!: EbookModel;
 
-  constructor(private CardService: CardService) {}
+  constructor() {}
 }

@@ -105,3 +105,32 @@
     background: var(--background);
   }
 }
+
+.titleName {
+  height: 48px;
+  width: 833px;
+  font-size: 22px;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 15px;
+}
+
+.titleName > p {
+  margin-bottom: 0;
+  margin-right: 10px;
+}
+
+.cardBox {
+  width: max-content;
+  height: 282px;
+  flex-direction: row;
+  display: flex;
+  gap: 24px;
+}
+
+.mat-icon-button {
+  margin-left: 10px;
+  color: var(--primary);
+}

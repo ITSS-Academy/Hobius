@@ -1,5 +1,9 @@
 <div id="container">
-  <img [src]="ebook.image" alt="TRANG BÌA SÁCH" />
-  <p id="title">{{ ebook.title }}</p>
-  <p id="author">{{ ebook.author }}</p>
+  <div id="bookImg">
+    <img [src]="ebook.image" alt="{{ ebook.title }}" />
+  </div>
+  <div id="text">
+    <p id="title">{{ ebook.title }}</p>
+    <p id="author">{{ ebook.author }}</p>
+  </div>
 </div>
