@@ -29,28 +29,62 @@
     <cdk-virtual-scroll-viewport itemSize="100" class="viewport">
       <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource" matSort>
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                (change)="$event ? toggleAllRows() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                [aria-label]="checkboxLabel()"
+              >
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox
+                (click)="$event.stopPropagation()"
+                (change)="$event ? selection.toggle(row) : null"
+                [checked]="selection.isSelected(row)"
+                [aria-label]="checkboxLabel(row)"
+              >
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
           <!-- ID Column -->
           <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
             <td mat-cell *matCellDef="let row">{{ row.id }}</td>
           </ng-container>
 
-          <!-- Progress Column -->
-          <ng-container matColumnDef="progress">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Progress</th>
-            <td mat-cell *matCellDef="let row">{{ row.progress }}%</td>
+          <!-- Title Column -->
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+            <td mat-cell *matCellDef="let row">{{ row.title }}</td>
           </ng-container>
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-            <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+          <!-- Author Column -->
+          <ng-container matColumnDef="author">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Author</th>
+            <td mat-cell *matCellDef="let row">{{ row.author }}</td>
           </ng-container>
 
-          <!-- Fruit Column -->
-          <ng-container matColumnDef="fruit">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Fruit</th>
-            <td mat-cell *matCellDef="let row">{{ row.fruit }}</td>
+          <!-- Detail Column -->
+          <ng-container matColumnDef="detail">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Detail</th>
+            <td mat-cell *matCellDef="let row">{{ row.detail }}</td>
+          </ng-container>
+
+          <!-- View Column -->
+          <ng-container matColumnDef="view">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>View</th>
+            <td mat-cell *matCellDef="let row">{{ row.view }}</td>
+          </ng-container>
+
+          <!-- Like Column -->
+          <ng-container matColumnDef="like">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Like</th>
+            <td mat-cell *matCellDef="let row">{{ row.like }}</td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
