@@ -8,4 +8,5 @@ export interface EbookModel {
   view: number;
   like: number;
   pdf: string;
+  genre: string[];
 }

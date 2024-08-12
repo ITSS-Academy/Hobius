@@ -19,6 +19,7 @@ export class CardService {
       view: 100,
       like: 50,
       pdf: '',
+      genre: ['Fiction', 'Classic'],
     },
   ];
 
