@@ -1,0 +1,45 @@
+#admin-container {
+  height: 100%;
+  width: 100%;
+
+  #admin-header {
+    height: 100px;
+    width: 100%;
+
+    #admin-header-button-grp {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      align-items: center;
+
+      #admin-header-button-grp-left-side {
+        display: flex;
+        align-items: center;
+        margin-left: 20px;
+      }
+
+      #admin-header-button-grp-right-side {
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+      }
+    }
+  }
+
+  #admin-content {
+    width: calc(100% - 40px);
+    height: calc(100% - 140px);
+    padding: 20px;
+
+    #filter-search {
+      width: 100%;
+    }
+
+    .viewport {
+      height: calc(100% - 78px - 57px);
+      width: 100%;
+    }
+  }
+}
