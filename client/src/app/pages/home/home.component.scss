@@ -61,6 +61,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 
     .example-viewport {
       height: 100%;
@@ -136,8 +137,8 @@
 }
 
 .boxContener {
-  width: 100%;
-  max-width: 100%;
+}
+
+.example-viewport {
   height: 100%;
-  overflow: auto;
 }
