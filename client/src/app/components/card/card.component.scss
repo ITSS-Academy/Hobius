@@ -3,6 +3,9 @@
   height: 282px;
   background-color: var(--surfaceContainerHigh);
   border-radius: 12px;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
 }
 
 #bookImg {
@@ -31,7 +34,6 @@
 #title {
   font-size: 14px;
   margin: 0;
-  text-decoration: underline;
   color: var(--onSurface);
 }
 
@@ -47,4 +49,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
+}
+
+#container:hover {
+  background-color: var(--surfaceContainerLow);
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
