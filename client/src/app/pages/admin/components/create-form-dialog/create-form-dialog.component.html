@@ -4,12 +4,21 @@
     <!--   title form control   -->
     <mat-form-field appearance="fill">
       <mat-label>Title</mat-label>
-      <input matInput placeholder="title..." formControlName="title" required />
-      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      <input
+        matInput
+        placeholder="title..."
+        formControlName="title"
+        (blur)="updateTitleErrorMessage()"
+        required
+      />
+      @if (title.valid) {
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      } @else {
+        <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>
+      }
       @if (title.invalid) {
         <mat-error>{{ titleErrorMessage() }}</mat-error>
       }
-      <mat-error> Title is required </mat-error>
     </mat-form-field>
 
     <!--   author form control   -->
@@ -19,9 +28,17 @@
         matInput
         placeholder="author..."
         formControlName="author"
+        (blur)="updateAuthorErrorMessage()"
         required
       />
-      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      @if (author.valid) {
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      } @else {
+        <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>
+      }
+      @if (author.invalid) {
+        <mat-error>{{ authorErrorMessage() }}</mat-error>
+      }
     </mat-form-field>
 
     <!--   detail form control   -->
@@ -31,26 +48,114 @@
         matInput
         placeholder="detail..."
         formControlName="detail"
+        (blur)="updateDetailErrorMessage()"
+        required
+        cdkTextareaAutosize
       ></textarea>
-      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      @if (detail.valid) {
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      } @else {
+        <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>
+      }
+      @if (detail.invalid) {
+        <mat-error>{{ detailErrorMessage() }}</mat-error>
+      }
+    </mat-form-field>
+
+    <!--      genres form control-->
+    <mat-form-field>
+      <mat-label>Genre</mat-label>
+      <mat-select
+        placeholder="genre..."
+        formControlName="genre"
+        [errorStateMatcher]="genreMatcher"
+        multiple
+        required
+      >
+        <mat-select-trigger>
+          {{ genre.value?.[0] || "" }}
+          @if ((genre.value?.length || 0) > 1) {
+            <span class="additional-selection">
+              (+{{ (genre.value?.length || 0) - 1 }}
+              {{ genre.value?.length === 2 ? "other" : "others" }})
+            </span>
+          }
+        </mat-select-trigger>
+        @for (genre of genreList; track genre) {
+          <mat-option [value]="genre">{{ genre }}</mat-option>
+        }
+      </mat-select>
+      @if (genre.hasError("required")) {
+        <mat-error>You must make a selection</mat-error>
+      }
     </mat-form-field>
 
     <!--   image form control   -->
-    <mat-form-field appearance="fill">
-      <mat-label>Image</mat-label>
-      <input matInput placeholder="image..." formControlName="image" />
-      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-    </mat-form-field>
+    <!--    <mat-form-field appearance="fill">-->
+    <!--      <mat-label>Image</mat-label>-->
+    <!--      <input-->
+    <!--        matInput-->
+    <!--        placeholder="image..."-->
+    <!--        formControlName="image"-->
+    <!--        (blur)="updateImageErrorMessage()"-->
+    <!--        required-->
+    <!--      />-->
+    <!--      @if (image.valid) {-->
+    <!--        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>-->
+    <!--      } @else {-->
+    <!--        <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>-->
+    <!--      }-->
+    <!--      @if (image.invalid) {-->
+    <!--        <mat-error>{{ imageErrorMessage() }}</mat-error>-->
+    <!--      }-->
+    <!--    </mat-form-field>-->
 
+    <div class="mdc-text-field mdc-text-field--filled mdc-text-field--file">
+      <input
+        type="file"
+        class="mdc-text-field__input"
+        id="cover-file-input"
+        formControlName="image"
+        required
+        (blur)="updateImageErrorMessage()"
+      />
+      <label class="mdc-floating-label" for="cover-file-input"
+        >Image file</label
+      >
+      <div class="mdc-line-ripple"></div>
+    </div>
+    <div class="mdc-text-field--error">
+      @if (image.invalid) {
+        <mat-error>{{ imageErrorMessage() }}</mat-error>
+      }
+    </div>
     <!--   file form control   -->
-    <mat-form-field appearance="fill">
-      <mat-label>Pdf file</mat-label>
-      <input matInput placeholder="file..." formControlName="pdf" />
-      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-    </mat-form-field>
+    <div class="mdc-text-field mdc-text-field--filled mdc-text-field--file">
+      <input
+        type="file"
+        class="mdc-text-field__input"
+        id="pdf-file-input"
+        formControlName="pdf"
+        required
+        (blur)="updatePdfErrorMessage()"
+      />
+      <label class="mdc-floating-label" for="pdf-file-input">Pdf file</label>
+      <div class="mdc-line-ripple"></div>
+    </div>
+    <div class="mdc-text-field--error">
+      @if (image.invalid) {
+        <mat-error>{{ pdfErrorMessage() }}</mat-error>
+      }
+    </div>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Submit</button>
+  <button
+    mat-flat-button
+    [mat-dialog-close]="true"
+    [disabled]="ebookFormGroup.invalid"
+  >
+    Submit
+  </button>
 </mat-dialog-actions>

@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateFormDialogComponent } from './components/create-form-dialog/create-form-dialog.component';
 
 /** Constants used to fill up our data base. */
-const GENRES: string[] = [
+export const GENRES: string[] = [
   'Adventure',
   'Science Fiction',
   'Fantasy',

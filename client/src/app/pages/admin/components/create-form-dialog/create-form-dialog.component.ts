@@ -12,9 +12,32 @@ import {
   MatDialogContent,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormGroupDirective,
+  NgForm,
+  Validators,
+} from '@angular/forms';
 import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { GENRES } from '../../admin.component';
+import { ErrorStateMatcher } from '@angular/material/core';
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(
+    control: FormControl | null,
+    form: FormGroupDirective | NgForm | null,
+  ): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(
+      control &&
+      control.invalid &&
+      (control.dirty || control.touched || isSubmitted)
+    );
+  }
+}
 
 @Component({
   selector: 'app-create-form-dialog',
@@ -37,7 +60,11 @@ export class CreateFormDialogComponent implements OnInit {
   author = new FormControl('', [Validators.required]);
   detail = new FormControl('', [Validators.required]);
   pdf = new FormControl('', [Validators.required]);
-  genre = new FormControl([], [Validators.required]);
+  genre = new FormControl('', [Validators.required]);
+  image = new FormControl('', [Validators.required]);
+
+  genreList = GENRES;
+  genreMatcher = new MyErrorStateMatcher();
 
   ngOnInit(): void {}
 
@@ -45,14 +72,17 @@ export class CreateFormDialogComponent implements OnInit {
   authorErrorMessage = signal('');
   detailErrorMessage = signal('');
   pdfErrorMessage = signal('');
-  genreErrorMessage = signal('');
+  imageErrorMessage = signal('');
 
   constructor() {
-    this.ebookFormGroup.addControl('title', this.title);
-    this.ebookFormGroup.addControl('author', this.author);
-    this.ebookFormGroup.addControl('detail', this.detail);
-    this.ebookFormGroup.addControl('pdf', this.pdf);
-    this.ebookFormGroup.addControl('genre', this.genre);
+    this.ebookFormGroup = new FormGroup({
+      title: this.title,
+      author: this.author,
+      detail: this.detail,
+      pdf: this.pdf,
+      genre: this.genre,
+      image: this.image,
+    });
 
     merge(this.title.statusChanges, this.title.valueChanges)
       .pipe(takeUntilDestroyed())
@@ -66,9 +96,9 @@ export class CreateFormDialogComponent implements OnInit {
     merge(this.pdf.statusChanges, this.pdf.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updatePdfErrorMessage());
-    merge(this.genre.statusChanges, this.genre.valueChanges)
+    merge(this.image.statusChanges, this.image.valueChanges)
       .pipe(takeUntilDestroyed())
-      .subscribe(() => this.updateGenreErrorMessage());
+      .subscribe(() => this.updateImageErrorMessage());
   }
 
   updateTitleErrorMessage() {
@@ -97,17 +127,17 @@ export class CreateFormDialogComponent implements OnInit {
 
   updatePdfErrorMessage() {
     if (this.pdf.hasError('required')) {
-      this.pdfErrorMessage.set('You must enter a value');
+      this.pdfErrorMessage.set(`You must upload ebook's pdf file`);
     } else {
       this.pdfErrorMessage.set('');
     }
   }
 
-  updateGenreErrorMessage() {
-    if (this.genre.hasError('required')) {
-      this.genreErrorMessage.set('You must enter a value');
+  updateImageErrorMessage() {
+    if (this.image.hasError('required')) {
+      this.imageErrorMessage.set('You must upload ebook cover');
     } else {
-      this.genreErrorMessage.set('');
+      this.imageErrorMessage.set('');
     }
   }
 }
