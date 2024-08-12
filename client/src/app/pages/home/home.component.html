@@ -17,8 +17,46 @@
   </div>
   <div id="home-content">
     <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
-      <div *cdkVirtualFor="let item of items" class="example-item">
-        {{ item }}
+      <div class="boxContener">
+        <div class="titleName">
+          <p>LỊCH SỬ</p>
+        </div>
+        <div class="cardBox">
+          <app-card *ngFor="let card of lichSuCards" [ebook]="card"></app-card>
+        </div>
+      </div>
+
+      <div class="boxContener">
+        <div class="titleName">
+          <p>THỊNH HÀNH</p>
+        </div>
+        <div class="cardBox">
+          <app-card
+            *ngFor="let card of thinhHanhCards"
+            [ebook]="card"
+          ></app-card>
+        </div>
+      </div>
+
+      <div class="boxContener">
+        <div class="titleName">
+          <p>ĐỀ CỬ</p>
+        </div>
+        <div class="cardBox">
+          <app-card *ngFor="let card of deCuCards" [ebook]="card"></app-card>
+        </div>
+      </div>
+
+      <div class="boxContener">
+        <div class="titleName">
+          <p>BẢNG XẾP HẠNG</p>
+        </div>
+        <div class="cardBox">
+          <app-card
+            *ngFor="let card of bangXepHangCards"
+            [ebook]="card"
+          ></app-card>
+        </div>
       </div>
     </cdk-virtual-scroll-viewport>
   </div>

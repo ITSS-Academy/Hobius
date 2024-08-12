@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { AsyncPipe, CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule, DatePipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -11,7 +11,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     FormsModule,
     AsyncPipe,
+    DatePipe,
   ],
-  exports: [RouterModule, ReactiveFormsModule, FormsModule, AsyncPipe],
+  exports: [
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule,
+    AsyncPipe,
+    DatePipe,
+  ],
 })
 export class SharedModule {}

@@ -10,6 +10,13 @@ export const routes: Routes = [
       import('./pages/home/home.route').then((m) => m.HOME_ROUTES),
   },
   {
+    path: 'categories',
+    loadChildren: () =>
+      import('./pages/categories/categories.route').then(
+        (m) => m.CATEGORIES_ROUTES,
+      ),
+  },
+  {
     path: 'profile',
     loadChildren: () =>
       import('./pages/profile/profile.route').then((m) => m.PROFILE_ROUTES),
