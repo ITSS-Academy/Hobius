@@ -1,8 +1,10 @@
 <div id="root-container">
-  <div id="sidebar-container">
-    <app-sidebar></app-sidebar>
-  </div>
-  <div id="main-container">
+  @if (!isLoginPage) {
+    <div id="sidebar-container">
+      <app-sidebar></app-sidebar>
+    </div>
+  }
+  <div id="main-container" [class]="isLoginPage ? 'login-scaffold' : ''">
     <router-outlet></router-outlet>
   </div>
 </div>
