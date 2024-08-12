@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { SharedModule } from '../../../shared/modules/shared.module';
@@ -6,6 +6,8 @@ import { MaterialModule } from '../../../shared/modules/material.module';
 import { MatTableDataSource } from '@angular/material/table';
 import { EbookModel } from '../../../models/ebook.model';
 import { SelectionModel } from '@angular/cdk/collections';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateFormDialogComponent } from './components/create-form-dialog/create-form-dialog.component';
 
 /** Constants used to fill up our data base. */
 const GENRES: string[] = [
@@ -248,13 +250,14 @@ const AUTHORS: string[] = [
   styleUrl: './admin.component.scss',
 })
 export class AdminComponent implements AfterViewInit {
+  //table
   displayedColumns: string[] = [
     'select',
-    'id',
+    // 'id',
+    'image',
     'title',
     'author',
     'detail',
-    // 'image',
     'view',
     'like',
     'genre',
@@ -263,6 +266,9 @@ export class AdminComponent implements AfterViewInit {
   selection = new SelectionModel<EbookModel>(true, []);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  //dialog
+  readonly dialog = inject(MatDialog);
 
   constructor() {
     // Create 100 users
@@ -295,9 +301,23 @@ export class AdminComponent implements AfterViewInit {
   }
 
   toggle(row: EbookModel) {
-    this.selection.clear(); // Clear all selections
-    this.selection.toggle(row); // Select the clicked row
-    console.log(this.selection.selected);
+    if (this.selection.isSelected(row)) {
+      // console.log(row);
+      this.selection.deselect(row);
+    } else {
+      this.selection.clear(); // Clear all selections
+      this.selection.toggle(row); // Select the clicked row
+    }
+    //log the checked row
+    // console.log(this.selection.selected);
+  }
+
+  openCreateEbookDialog() {
+    const dialogRef = this.dialog.open(CreateFormDialogComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }
 
