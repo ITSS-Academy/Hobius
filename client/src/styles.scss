@@ -328,3 +328,15 @@ body {
   font-weight: 900;
   font-style: italic;
 }
+
+.mat-accent.mat-mdc-checkbox {
+  --mdc-checkbox-selected-checkmark-color: #ffffff;
+  --mdc-checkbox-selected-focus-icon-color: #495f86;
+  --mdc-checkbox-selected-hover-icon-color: #495f86;
+  --mdc-checkbox-selected-icon-color: #495f86;
+  --mdc-checkbox-selected-focus-state-layer-color: #495f86;
+  --mdc-checkbox-selected-hover-state-layer-color: #495f86;
+  --mdc-checkbox-unselected-pressed-state-layer-color: #495f86;
+  --mat-checkbox-disabled-label-color: rgba(27, 27, 29, 0.38);
+  --mat-checkbox-label-text-color: #1b1b1d;
+}
