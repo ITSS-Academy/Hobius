@@ -1,10 +1,11 @@
 <div id="info-container">
   <div id="book-title">
     <div id="header-title">
-      <mat-icon>arrow_back</mat-icon>
+      <button mat-icon-button><mat-icon>arrow_back</mat-icon></button>
       <h1 id="title">The Call of Cthulhu</h1>
     </div>
-    <mat-icon id="favorite">favorite</mat-icon>
+    <mat-icon id="favorite" [class.active]="isFavorite" (click)="toggleFavorite()">favorite</mat-icon>
+
   </div>
   <div id="book-info-card">
     <div id="img-book-info">
@@ -20,13 +21,16 @@
   </div>
   <div id="comment">
     <div id="header-comment">
-      <p id="comment-title">Bình luận</p>
-      <mat-icon id="add_comment" (click)="toggleCommentInput()">add_comment</mat-icon>
+      <div id="comment-title-header">
+        <p id="comment-title">Bình luận</p>
+        <mat-icon id="add_comment" (click)="toggleCommentInput()">add_comment</mat-icon>
+      </div>
+      <div id="InputVisible"></div>
       @if(isCommentInputVisible){
         <div id="input-comment">
           <img src="../public/assets/temp-logo.jpg" class="avatar-comment">
           <input type="text" placeholder="Viết bình luận" id="comment-input" [(ngModel)]="newCommentText">
-          <mat-icon class="send" (click)="addComment()">send</mat-icon>
+          <button mat-icon-button><mat-icon class="send" (click)="addComment()">send</mat-icon></button>
         </div>
       }
   </div>
@@ -39,28 +43,37 @@
           <p class="comment-text">Godamn, tôi chưa bao giờ đọc được quấn sách nào hay như vậy, các nhân này mà có ở ngoài đời thật thì sẽ thú vị như thế nào</p>
         </div>
       </div>
-      <mat-icon class="more-vert">more_vert</mat-icon>
+      <button mat-icon-button><mat-icon class="more-vert">more_vert</mat-icon></button>
     </div>
     <div class="comment-content">
       <div class="user-comment">
         <img src="../public/assets/temp-logo.jpg" class="avatar-comment">
         <div class="comment-input">
           <p class="comment-name">Nguyễn Văn C</p>
-          <p class="comment-text">Godamn, tôi chưa bao giờ đọc được quấn sách nào hay như vậy, các nhân này mà có ở ngoài đời thật thì sẽ thú vị như thế nào</p>
+          <p class="comment-text">
+            Xương rồng đơm lá, đơm hoa
+            Nước ngọt đong đầy trên cao nguyên đá
+            Là ngày Hoàng đế về nhà
+            Bảy năm mòn mỏi, kiệu hoa đón ngài
+            Vương triều màu Đỏ mất ngai
+            Bao năm chờ đợi, mong ngày phục hưng
+            Cuối cùng trời đã đông hừng
+            Đế chế trở lại, chúc mừng Quỷ Vương! </p>
         </div>
       </div>
-      <mat-icon class="more-vert">more_vert</mat-icon>
+      <button mat-icon-button><mat-icon class="more-vert">more_vert</mat-icon></button>
     </div>
     @for (comment of comments; track $index){
       <div class="comment-content">
         <div class="user-comment">
           <img src="../public/assets/temp-logo.jpg" class="avatar-comment">
+
           <div class="comment-input">
-            <p class="comment-name">tôi</p>
-            <p class="comment-text">{{ comment.text }}</p>
+            <p class="comment-name">{{comment.name}}</p>
+            <span class="comment-text">{{ comment.text }}</span>
           </div>
         </div>
-        <mat-icon class="more-vert">more_vert</mat-icon>
+        <button mat-icon-button><mat-icon class="more-vert">more_vert</mat-icon></button>
       </div>
     }
   </div>
