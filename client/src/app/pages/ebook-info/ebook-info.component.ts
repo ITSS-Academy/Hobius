@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatButton } from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import {FormsModule} from "@angular/forms";
 
@@ -9,7 +9,8 @@ import {FormsModule} from "@angular/forms";
   imports: [
     MatButton,
     MatIcon,
-    FormsModule
+    FormsModule,
+    MatIconButton
   ],
   templateUrl: './ebook-info.component.html',
   styleUrls: ['./ebook-info.component.scss']
@@ -28,5 +29,9 @@ export class EbookInfoComponent {
       this.newCommentText = '';
       this.isCommentInputVisible = false;
     }
+  }
+  isFavorite: boolean = false;
+  toggleFavorite(): void {
+    this.isFavorite = !this.isFavorite;
   }
 }
