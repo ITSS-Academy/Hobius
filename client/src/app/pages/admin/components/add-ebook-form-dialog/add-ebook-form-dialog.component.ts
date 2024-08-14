@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 
 import {
   MatDialogActions,
@@ -12,6 +17,7 @@ import { EbookFormDialogComponent } from '../../../../components/ebook-form-dial
 import { CloudStorageService } from '../../../../../services/cloud-storage.service';
 import { FileUploadState } from '../../../../../ngrx/file-upload/file-upload.state';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-ebook-form-dialog',
@@ -28,7 +34,13 @@ import { Store } from '@ngrx/store';
   styleUrl: './add-ebook-form-dialog.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddEbookFormDialogComponent extends EbookFormDialogComponent {
+export class AddEbookFormDialogComponent
+  extends EbookFormDialogComponent
+  implements OnInit, OnDestroy
+{
+  subscriptions: Subscription[] = [];
+  progress: number = 0;
+
   constructor(
     protected override cloudStorageService: CloudStorageService,
     protected override store: Store<{
@@ -36,5 +48,15 @@ export class AddEbookFormDialogComponent extends EbookFormDialogComponent {
     }>,
   ) {
     super(cloudStorageService, store);
+  }
+
+  ngOnDestroy(): void {}
+
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.store.select('file_upload', 'progress').subscribe((progress) => {
+        this.progress = progress;
+      }),
+    );
   }
 }

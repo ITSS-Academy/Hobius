@@ -1,3 +1,8 @@
+@if (progress != 0) {
+  <div class="loading-overlay">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+}
 <h2 mat-dialog-title>Add New Ebook</h2>
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="ebookFormGroup">

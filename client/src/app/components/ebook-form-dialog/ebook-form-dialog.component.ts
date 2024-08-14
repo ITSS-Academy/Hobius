@@ -14,6 +14,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CloudStorageService } from '../../../services/cloud-storage.service';
 import { Store } from '@ngrx/store';
 import { FileUploadState } from '../../../ngrx/file-upload/file-upload.state';
+import * as UploadActions from '../../../ngrx/file-upload/file-upload.actions';
 
 @Component({
   selector: 'app-ebook-form-dialog',
@@ -121,13 +122,23 @@ export class EbookFormDialogComponent {
 
   onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
-    this.cloudStorageService.uploadFile(file!, `ebooks/${this.tempId}/cover`);
+    this.store.dispatch(
+      UploadActions.uploadFile({
+        file: file!,
+        path: `ebooks/${this.tempId}/cover`,
+      }),
+    );
     this.ebookFormGroup.patchValue({ image: file!.name });
   }
 
   onPdfPicked(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
-    this.cloudStorageService.uploadFile(file!, `ebooks/${this.tempId}/pdf`);
+    this.store.dispatch(
+      UploadActions.uploadFile({
+        file: file!,
+        path: `ebooks/${this.tempId}/pdf`,
+      }),
+    );
     this.ebookFormGroup.patchValue({ pdf: file!.name });
   }
 

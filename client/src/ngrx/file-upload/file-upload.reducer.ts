@@ -22,6 +22,7 @@ export const fileUploadReducer = createReducer(
     return <FileUploadState>{
       ...state,
       downloadURL,
+      progress: 0,
       error: null,
     };
   }),
