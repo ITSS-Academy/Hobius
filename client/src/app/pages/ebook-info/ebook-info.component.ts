@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatButton, MatFabButton, MatIconButton} from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import {FormsModule} from "@angular/forms";
 import {CdkFixedSizeVirtualScroll} from "@angular/cdk/scrolling";
@@ -12,7 +12,8 @@ import {CdkFixedSizeVirtualScroll} from "@angular/cdk/scrolling";
     MatIcon,
     FormsModule,
     MatIconButton,
-    CdkFixedSizeVirtualScroll
+    CdkFixedSizeVirtualScroll,
+    MatFabButton
   ],
   templateUrl: './ebook-info.component.html',
   styleUrls: ['./ebook-info.component.scss']
@@ -33,7 +34,15 @@ export class EbookInfoComponent {
     }
   }
   isFavorite: boolean = false;
+  isHovering: boolean = false;
   toggleFavorite(): void {
     this.isFavorite = !this.isFavorite;
+  }
+  onMouseEnter(): void {
+    this.isHovering = true;
+  }
+
+  onMouseLeave(): void {
+    this.isHovering = false;
   }
 }

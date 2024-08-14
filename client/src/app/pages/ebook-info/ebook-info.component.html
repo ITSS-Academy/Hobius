@@ -2,9 +2,16 @@
   <div id="book-title">
     <div id="header-title">
       <button mat-icon-button><mat-icon>arrow_back</mat-icon></button>
-      <h1 id="title">The Call of Cthulhu</h1>
+      <p id="title">The Call of Cthulhu</p>
     </div>
-    <mat-icon id="favorite" [class.active]="isFavorite" (click)="toggleFavorite()">favorite</mat-icon>
+    <button mat-fab extended
+            id="favorite" [class.active]="isFavorite"
+            (click)="toggleFavorite()"
+            (mouseenter)="onMouseEnter()"
+            (mouseleave)="onMouseLeave()">
+      <mat-icon>favorite</mat-icon>
+      <span>{{ isFavorite ? (isHovering ? 'Remove' : 'Favorite'): 'Add Favorite' }}</span>
+    </button>
   </div>
   <div id="book-info-card">
     <div id="img-book-info">
@@ -22,7 +29,7 @@
     <div id="header-comment">
       <div id="comment-title-header">
         <p id="comment-title">Bình luận</p>
-        <button mat-icon-button><mat-icon id="add_comment" (click)="toggleCommentInput()">add_comment</mat-icon></button>
+        <button mat-icon-button (click)="toggleCommentInput()"><mat-icon id="add_comment">add_comment</mat-icon></button>
       </div>
   </div>
   <div id="comment-box" >
@@ -34,9 +41,8 @@
             <input type="text" placeholder="Viết bình luận" id="comment-input" [(ngModel)]="newCommentText">
           </div>
           <div class="comment-text">
-
           </div>
-          <button mat-icon-button><mat-icon class="send" (click)="addComment()">send</mat-icon></button>
+          <button mat-icon-button class="send" (click)="addComment()"><mat-icon>send</mat-icon></button>
         </div>
       }
     </div>
@@ -49,7 +55,7 @@
             <span class="comment-text">{{ comment.text }}</span>
           </div>
         </div>
-        <button mat-icon-button><mat-icon class="more-vert">more_vert</mat-icon></button>
+        <button mat-icon-button class="more-vert"><mat-icon >more_vert</mat-icon></button>
       </div>
     }
     <div class="comment-content">
@@ -60,7 +66,7 @@
           <p class="comment-text">Godamn, tôi chưa bao giờ đọc được quấn sách nào hay như vậy, các nhân này mà có ở ngoài đời thật thì sẽ thú vị như thế nào</p>
         </div>
       </div>
-      <button mat-icon-button><mat-icon class="more-vert">more_vert</mat-icon></button>
+      <button mat-icon-button class="more-vert"><mat-icon >more_vert</mat-icon></button>
     </div>
     <div class="comment-content">
       <div class="user-comment">
@@ -78,11 +84,8 @@
             Đế chế trở lại, chúc mừng Quỷ Vương! </p>
         </div>
       </div>
-      <button mat-icon-button><mat-icon class="more-vert">more_vert</mat-icon></button>
+      <button mat-icon-button class="more-vert"><mat-icon >more_vert</mat-icon></button>
     </div>
   </div>
-
-
-
 </div>
 </div>
