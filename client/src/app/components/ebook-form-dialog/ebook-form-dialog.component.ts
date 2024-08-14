@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  signal,
-} from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   MatDialogActions,
@@ -17,6 +12,8 @@ import { GENRES } from '../../pages/admin/admin.component';
 import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CloudStorageService } from '../../../services/cloud-storage.service';
+import { Store } from '@ngrx/store';
+import { FileUploadState } from '../../../ngrx/file-upload/file-upload.state';
 
 @Component({
   selector: 'app-ebook-form-dialog',
@@ -50,7 +47,12 @@ export class EbookFormDialogComponent {
   pdfErrorMessage = signal('');
   imageErrorMessage = signal('');
 
-  constructor(protected cloudStorageService: CloudStorageService) {
+  constructor(
+    protected cloudStorageService: CloudStorageService,
+    protected store: Store<{
+      file_upload: FileUploadState;
+    }>,
+  ) {
     this.ebookFormGroup = new FormGroup({
       title: new FormControl('', [Validators.required]),
       author: new FormControl('', [Validators.required]),
@@ -120,14 +122,12 @@ export class EbookFormDialogComponent {
   onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
     this.cloudStorageService.uploadFile(file!, `ebooks/${this.tempId}/cover`);
-    console.log(`ebooks/${this.tempId}/cover`);
     this.ebookFormGroup.patchValue({ image: file!.name });
   }
 
   onPdfPicked(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
     this.cloudStorageService.uploadFile(file!, `ebooks/${this.tempId}/pdf`);
-    console.log(`ebooks/${this.tempId}/pdf`);
     this.ebookFormGroup.patchValue({ pdf: file!.name });
   }
 
