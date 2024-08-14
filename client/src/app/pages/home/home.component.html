@@ -26,6 +26,7 @@
       </div>
       <div class="cardBox" #viewport>
         <app-card *ngFor="let card of lichSuCards" [ebook]="card"></app-card>
+        <!--        <div class="end-of-scroll" #endOfScrollIndicator>End of List</div>-->
       </div>
     </div>
     <div class="boxContener">
@@ -37,6 +38,7 @@
       </div>
       <div class="cardBox" #viewport>
         <app-card *ngFor="let card of thinhHanhCards" [ebook]="card"></app-card>
+        <div class="end-of-scroll" #endOfScrollIndicator>End of List</div>
       </div>
     </div>
     <div class="boxContener">
@@ -62,6 +64,7 @@
           *ngFor="let card of bangXepHangCards"
           [ebook]="card"
         ></app-card>
+        <div class="end-of-scroll" #endOfScrollIndicator>End of List</div>
       </div>
     </div>
     <!--    </cdk-virtual-scroll-viewport>-->

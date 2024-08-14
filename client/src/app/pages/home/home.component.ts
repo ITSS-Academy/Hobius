@@ -4,6 +4,7 @@ import {
   ViewChildren,
   QueryList,
   ElementRef,
+  ViewChild,
 } from '@angular/core';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
@@ -44,6 +45,9 @@ export class HomeComponent implements AfterViewInit {
       let velocity = 0;
       let lastMoveTime: number;
       let lastMoveX: number;
+      const safetyMargin = 50; // Safety margin before bounce-back
+      const minVelocityForBounce = 0.5; // Minimum velocity to trigger bounce-back
+      let debounceTimeout: any;
 
       slider.addEventListener('mousedown', (e) => {
         isDown = true;
@@ -79,6 +83,8 @@ export class HomeComponent implements AfterViewInit {
 
         lastMoveTime = now;
         lastMoveX = e.pageX;
+
+        checkEndOfScroll();
       });
 
       function applyInertia() {
@@ -88,9 +94,37 @@ export class HomeComponent implements AfterViewInit {
           slider.scrollLeft -= velocity * 5;
           velocity *= friction;
           requestAnimationFrame(step);
+          checkEndOfScroll();
         };
         requestAnimationFrame(step);
       }
+
+      const checkEndOfScroll = () => {
+        if (
+          slider.scrollLeft + slider.clientWidth >=
+          slider.scrollWidth - safetyMargin
+        ) {
+          if (Math.abs(velocity) > minVelocityForBounce) {
+            if (debounceTimeout) clearTimeout(debounceTimeout);
+            debounceTimeout = setTimeout(() => {
+              slider.classList.add('bounce-back');
+              setTimeout(() => {
+                slider.classList.remove('bounce-back');
+              }, 500);
+            }, 100);
+          }
+        } else if (slider.scrollLeft <= safetyMargin) {
+          if (Math.abs(velocity) > minVelocityForBounce) {
+            if (debounceTimeout) clearTimeout(debounceTimeout);
+            debounceTimeout = setTimeout(() => {
+              slider.classList.add('bounce-back-start');
+              setTimeout(() => {
+                slider.classList.remove('bounce-back-start');
+              }, 500);
+            }, 100);
+          }
+        }
+      };
     });
   }
 }

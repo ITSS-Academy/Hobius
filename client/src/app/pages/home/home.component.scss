@@ -1,6 +1,7 @@
 #home-container {
   height: 100%;
   width: 100%;
+  overflow-x: hidden;
 
   #home-header {
     height: 100px;
@@ -87,10 +88,12 @@
 
     .titleName > p {
       margin-bottom: 0;
-      margin-right: 10px;
+      margin-right: 15px;
+      margin-left: 15px;
     }
 
     .cardBox {
+      margin-left: 15px;
       height: auto;
       display: flex;
       width: 100%;
@@ -109,6 +112,52 @@
     .mat-icon-button {
       margin-left: 10px;
       color: var(--primary);
+    }
+
+    .end-of-scroll {
+      display: none;
+      text-align: center;
+      padding: 10px;
+      color: #333;
+      width: 100%;
+      border-radius: 12px;
+      background-color: var(--surfaceContainerHigh);
+    }
+
+    .end-of-scroll.visible {
+      display: block;
+    }
+
+    .cardBox.bounce-back {
+      animation: bounce-back 0.5s ease-out;
+    }
+
+    @keyframes bounce-back {
+      0% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(-20px);
+      }
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    .cardBox.bounce-back-start {
+      animation: bounce-back-start 0.5s ease-out;
+    }
+
+    @keyframes bounce-back-start {
+      0% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(20px);
+      }
+      100% {
+        transform: translateX(0);
+      }
     }
   }
 }
