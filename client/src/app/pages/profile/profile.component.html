@@ -45,164 +45,303 @@
   </div>
 
   <div id="profile-content">
-    <div id="header">
-      <div>
-        <button id="left-header"><b>Yêu thích</b></button>
-      </div>
-      <div>
-        <button id="right-header"><b>Bình luận</b></button>
-      </div>
-    </div>
-    <div id="content">
-      <cdk-virtual-scroll-viewport itemSize="50" class="list-viewport">
-        <div class="book-card">
-          <div class="left-card">
-            <div class="img">
-              <img src="../public/assets/profile_pictures/img.png" alt="" />
-            </div>
-            <div>
-              <div class="title">Đợi Tới Khi Ve Xanh Rụng</div>
-              <div class="info">
-                <div>Đinh Mặc - N/A</div>
-                <div>
-                  Bảy năm trước vào một đêm khuya, cảnh sát hình sự Lý Cẩn Thành
-                  mất tích bí ẩn tại làng đô thị...
+    <mat-tab-group
+      mat-stretch-tabs="false"
+      mat-align-tabs="center"
+      color="accent"
+    >
+      <mat-tab label="Yêu thích">
+        <ng-template mat-tab-label>
+          <span class="my-custom-class">Yêu thích</span>
+        </ng-template>
+        <div class="content">
+          <!--          <cdk-virtual-scroll-viewport itemSize="50" class="list-viewport">-->
+          <div class="book-card">
+            <div class="left-card">
+              <div class="img">
+                <img src="../public/assets/profile_pictures/img.png" alt="" />
+              </div>
+              <div>
+                <div class="title">Đợi Tới Khi Ve Xanh Rụng</div>
+                <div class="info">
+                  <div>Đinh Mặc - N/A</div>
+                  <div>
+                    Bảy năm trước vào một đêm khuya, cảnh sát hình sự Lý Cẩn
+                    Thành mất tích bí ẩn tại làng đô thị...
+                  </div>
                 </div>
               </div>
             </div>
+            <div class="right-card">
+              <mat-icon>favorite</mat-icon>
+            </div>
           </div>
-          <div class="right-card">
-            <mat-icon>favorite</mat-icon>
-          </div>
-        </div>
 
-        <div class="book-card">
-          <div class="left-card">
-            <div class="img">
-              <img src="../public/assets/profile_pictures/img_1.png" alt="" />
-            </div>
-            <div>
-              <div class="title">Lên Nhầm Kiệu Hoa</div>
-              <div class="info">
-                <div>Lục Dược - N/A</div>
-                <div>
-                  Hết làm cha rồi đến làm mẹ, làm xong sư phụ rồi lại đến làm
-                  trượng phu...
+          <div class="book-card">
+            <div class="left-card">
+              <div class="img">
+                <img src="../public/assets/profile_pictures/img_1.png" alt="" />
+              </div>
+              <div>
+                <div class="title">Lên Nhầm Kiệu Hoa</div>
+                <div class="info">
+                  <div>Lục Dược - N/A</div>
+                  <div>
+                    Hết làm cha rồi đến làm mẹ, làm xong sư phụ rồi lại đến làm
+                    trượng phu...
+                  </div>
                 </div>
               </div>
             </div>
+            <div class="right-card">
+              <mat-icon>favorite</mat-icon>
+            </div>
           </div>
-          <div class="right-card">
-            <mat-icon>favorite</mat-icon>
-          </div>
-        </div>
 
-        <div class="book-card">
-          <div class="left-card">
-            <div class="img">
-              <img src="../public/assets/profile_pictures/img_2.png" alt="" />
-            </div>
-            <div>
-              <div class="title">Anh Trai Nhân Vật Chính</div>
-              <div class="info">
-                <div>Tiên Sắc Xám - N/A</div>
-                <div>
-                  Ở kiếp này, Khan là anh trai nhân vật chính nhưng số mệnh của
-                  hắn lại không may mắn hưởng ké được miếng hào quang nào của
-                  cậu ta...
+          <div class="book-card">
+            <div class="left-card">
+              <div class="img">
+                <img src="../public/assets/profile_pictures/img_2.png" alt="" />
+              </div>
+              <div>
+                <div class="title">Anh Trai Nhân Vật Chính</div>
+                <div class="info">
+                  <div>Tiên Sắc Xám - N/A</div>
+                  <div>
+                    Ở kiếp này, Khan là anh trai nhân vật chính nhưng số mệnh
+                    của hắn lại không may mắn hưởng ké được miếng hào quang nào
+                    của cậu ta...
+                  </div>
                 </div>
               </div>
             </div>
+            <div class="right-card">
+              <mat-icon>favorite</mat-icon>
+            </div>
           </div>
-          <div class="right-card">
-            <mat-icon>favorite</mat-icon>
-          </div>
-        </div>
 
-        <div class="book-card">
-          <div class="left-card">
-            <div class="img">
-              <img src="../public/assets/profile_pictures/img_3.png" alt="" />
-            </div>
-            <div>
-              <div class="title">Bắc Phái Đạo Mộ Bút Ký</div>
-              <div class="info">
-                <div>Vân Phong - N/A</div>
-                <div>
-                  Tôi là một đứa trẻ nghèo đến từ một ngôi làng miền núi ở Đông
-                  Bắc Trung Quốc, vào đầu thế kỷ 20, ...
+          <div class="book-card">
+            <div class="left-card">
+              <div class="img">
+                <img src="../public/assets/profile_pictures/img_3.png" alt="" />
+              </div>
+              <div>
+                <div class="title">Bắc Phái Đạo Mộ Bút Ký</div>
+                <div class="info">
+                  <div>Vân Phong - N/A</div>
+                  <div>
+                    Tôi là một đứa trẻ nghèo đến từ một ngôi làng miền núi ở
+                    Đông Bắc Trung Quốc, vào đầu thế kỷ 20, ...
+                  </div>
                 </div>
               </div>
             </div>
+            <div class="right-card">
+              <mat-icon>favorite</mat-icon>
+            </div>
           </div>
-          <div class="right-card">
-            <mat-icon>favorite</mat-icon>
-          </div>
-        </div>
 
-        <div class="book-card">
-          <div class="left-card">
-            <div class="img">
-              <img src="../public/assets/profile_pictures/img_4.png" alt="" />
-            </div>
-            <div>
-              <div class="title">Chí Tôn Kiếm Đế</div>
-              <div class="info">
-                <div>Lâm Nhất - N/A</div>
-                <div>
-                  Diệp Thanh là thế tử Diệp gia, vừa có tài, lại có thân phận...
+          <div class="book-card">
+            <div class="left-card">
+              <div class="img">
+                <img src="../public/assets/profile_pictures/img_4.png" alt="" />
+              </div>
+              <div>
+                <div class="title">Chí Tôn Kiếm Đế</div>
+                <div class="info">
+                  <div>Lâm Nhất - N/A</div>
+                  <div>
+                    Diệp Thanh là thế tử Diệp gia, vừa có tài, lại có thân
+                    phận...
+                  </div>
                 </div>
               </div>
             </div>
+            <div class="right-card">
+              <mat-icon>favorite</mat-icon>
+            </div>
           </div>
-          <div class="right-card">
-            <mat-icon>favorite</mat-icon>
-          </div>
-        </div>
 
-        <div class="book-card">
-          <div class="left-card">
-            <div class="img">
-              <img src="../public/assets/profile_pictures/img_5.png" alt="" />
-            </div>
-            <div>
-              <div class="title">Tướng Quân Tại Thượng</div>
-              <div class="info">
-                <div>Trúc Lâm Thâm Xứ - N/A</div>
-                <div>
-                  Một giấc tỉnh dậy, ta thấy mình nằm trên giường của kẻ thù.
-                  Hắn áo quần xộc xệch, đầy dấu vết đỏ, khoé mắt và chân mày đều
-                  mang vẻ mờ ám...
+          <div class="book-card">
+            <div class="left-card">
+              <div class="img">
+                <img src="../public/assets/profile_pictures/img_5.png" alt="" />
+              </div>
+              <div>
+                <div class="title">Tướng Quân Tại Thượng</div>
+                <div class="info">
+                  <div>Trúc Lâm Thâm Xứ - N/A</div>
+                  <div>
+                    Một giấc tỉnh dậy, ta thấy mình nằm trên giường của kẻ thù.
+                    Hắn áo quần xộc xệch, đầy dấu vết đỏ, khoé mắt và chân mày
+                    đều mang vẻ mờ ám...
+                  </div>
                 </div>
               </div>
             </div>
+            <div class="right-card">
+              <mat-icon>favorite</mat-icon>
+            </div>
           </div>
-          <div class="right-card">
-            <mat-icon>favorite</mat-icon>
-          </div>
-        </div>
 
-        <div class="book-card">
-          <div class="left-card">
-            <div class="img">
-              <img src="../public/assets/profile_pictures/img_6.png" alt="" />
-            </div>
-            <div>
-              <div class="title">430 Triệu Năm Của Cô Ấy</div>
-              <div class="info">
-                <div>Quân Tử Dĩ Trạch - N/A</div>
-                <div>
-                  Vào sinh nhật 18 tuổi, Lê Tử được cha mình nói: “Thực ra mẹ
-                  con có gen không phải người…”...
+          <div class="book-card">
+            <div class="left-card">
+              <div class="img">
+                <img src="../public/assets/profile_pictures/img_6.png" alt="" />
+              </div>
+              <div>
+                <div class="title">430 Triệu Năm Của Cô Ấy</div>
+                <div class="info">
+                  <div>Quân Tử Dĩ Trạch - N/A</div>
+                  <div>
+                    Vào sinh nhật 18 tuổi, Lê Tử được cha mình nói: “Thực ra mẹ
+                    con có gen không phải người…”...
+                  </div>
                 </div>
               </div>
             </div>
+            <div class="right-card">
+              <mat-icon>favorite</mat-icon>
+            </div>
           </div>
-          <div class="right-card">
-            <mat-icon>favorite</mat-icon>
-          </div>
+          <!--          </cdk-virtual-scroll-viewport>-->
         </div>
-      </cdk-virtual-scroll-viewport>
-    </div>
+      </mat-tab>
+
+      <mat-tab label="Bình luận">
+        <ng-template mat-tab-label>
+          <span class="my-custom-class1">Bình luận</span>
+        </ng-template>
+        <div class="content">
+          <!--          <cdk-virtual-scroll-viewport itemSize="50" class="list-viewport">-->
+          <div class="book-card">
+            <div class="left-card">
+              <div class="img">
+                <img src="../public/assets/profile_pictures/img.png" alt="" />
+              </div>
+              <div>
+                <div class="title">Đợi Tới Khi Ve Xanh Rụng</div>
+                <div class="info">
+                  <div>Ngày giờ cmt</div>
+                  <div>Thông tin cmt</div>
+                </div>
+              </div>
+            </div>
+            <div class="right-card">
+              <mat-icon>open_in_new</mat-icon>
+            </div>
+          </div>
+
+          <div class="book-card">
+            <div class="left-card">
+              <div class="img">
+                <img src="../public/assets/profile_pictures/img_1.png" alt="" />
+              </div>
+              <div>
+                <div class="title">Lên Nhầm Kiệu Hoa</div>
+                <div class="info">
+                  <div>Ngày giờ cmt</div>
+                  <div>Thông tin cmt</div>
+                </div>
+              </div>
+            </div>
+            <div class="right-card">
+              <mat-icon>open_in_new</mat-icon>
+            </div>
+          </div>
+
+          <div class="book-card">
+            <div class="left-card">
+              <div class="img">
+                <img src="../public/assets/profile_pictures/img_2.png" alt="" />
+              </div>
+              <div>
+                <div class="title">Anh Trai Nhân Vật Chính</div>
+                <div class="info">
+                  <div>Ngày giờ cmt</div>
+                  <div>Thông tin cmt</div>
+                </div>
+              </div>
+            </div>
+            <div class="right-card">
+              <mat-icon>open_in_new</mat-icon>
+            </div>
+          </div>
+
+          <div class="book-card">
+            <div class="left-card">
+              <div class="img">
+                <img src="../public/assets/profile_pictures/img_3.png" alt="" />
+              </div>
+              <div>
+                <div class="title">Bắc Phái Đạo Mộ Bút Ký</div>
+                <div class="info">
+                  <div>Ngày giờ cmt</div>
+                  <div>Thông tin cmt</div>
+                </div>
+              </div>
+            </div>
+            <div class="right-card">
+              <mat-icon>open_in_new</mat-icon>
+            </div>
+          </div>
+
+          <div class="book-card">
+            <div class="left-card">
+              <div class="img">
+                <img src="../public/assets/profile_pictures/img_4.png" alt="" />
+              </div>
+              <div>
+                <div class="title">Chí Tôn Kiếm Đế</div>
+                <div class="info">
+                  <div>Ngày giờ cmt</div>
+                  <div>Thông tin cmt</div>
+                </div>
+              </div>
+            </div>
+            <div class="right-card">
+              <mat-icon>open_in_new</mat-icon>
+            </div>
+          </div>
+
+          <div class="book-card">
+            <div class="left-card">
+              <div class="img">
+                <img src="../public/assets/profile_pictures/img_5.png" alt="" />
+              </div>
+              <div>
+                <div class="title">Tướng Quân Tại Thượng</div>
+                <div class="info">
+                  <div>Ngày giờ cmt</div>
+                  <div>Thông tin cmt</div>
+                </div>
+              </div>
+            </div>
+            <div class="right-card">
+              <mat-icon>open_in_new</mat-icon>
+            </div>
+          </div>
+
+          <div class="book-card">
+            <div class="left-card">
+              <div class="img">
+                <img src="../public/assets/profile_pictures/img_6.png" alt="" />
+              </div>
+              <div>
+                <div class="title">430 Triệu Năm Của Cô Ấy</div>
+                <div class="info">
+                  <div>Ngày giờ cmt</div>
+                  <div>Thông tin cmt</div>
+                </div>
+              </div>
+            </div>
+            <div class="right-card">
+              <mat-icon>open_in_new</mat-icon>
+            </div>
+          </div>
+          <!--          </cdk-virtual-scroll-viewport>-->
+        </div>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </div>
