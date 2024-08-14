@@ -1,41 +1,26 @@
 <div id="info-container">
   <div id="book-title">
     <div id="header-title">
-      <button mat-icon-button>
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-      <h1 id="title">The Call of Cthulhu</h1>
+      <button mat-icon-button><mat-icon>arrow_back</mat-icon></button>
+      <p id="title">The Call of Cthulhu</p>
     </div>
-    <mat-icon
-      id="favorite"
-      [class.active]="isFavorite"
-      (click)="toggleFavorite()"
-      >favorite</mat-icon
-    >
+    <button mat-fab extended
+            id="favorite" [class.active]="isFavorite"
+            (click)="toggleFavorite()"
+            (mouseenter)="onMouseEnter()"
+            (mouseleave)="onMouseLeave()">
+      <mat-icon>favorite</mat-icon>
+      <span>{{ isFavorite ? (isHovering ? 'Remove' : 'Favorite'): 'Add Favorite' }}</span>
+    </button>
   </div>
   <div id="book-info-card">
     <div id="img-book-info">
-      <img
-        src="../../../../public/assets/books-img/Cthulhu.png"
-        alt="Trang Bìa "
-        id="cover"
-      />
+      <img src="../public/assets/Cthulhu.png" alt="Trang Bìa " id="cover" />
     </div>
     <div id="book-info">
       <p id="author">Tác giả: H. P. Lovecraft</p>
       <p id="date">Đăng ngày: 14/08/2024</p>
-      <p id="description">
-        Mùa đông 1926-1927. Frances Wayland XNUMXthon, một công dân nổi tiếng
-        của Boston, được thông báo về cái chết của người chú cố của mình, George
-        G. Angell. Cái sau là một giáo sư ngôn ngữ lỗi lạc Tiếng Semitic từ Đại
-        học Brown. Về cái chết có hai phiên bản: phiên bản chính thức, do tim
-        ngừng đập xảy ra trong khi nhà giáo dục đang leo lên một đoạn đường dốc
-        gần bến tàu.Thay vào đó, phiên bản thứ hai (từ một số nhân chứng) cho
-        rằng một người đàn ông da đen đã đẩy giáo sư xuống đồi. Là người thừa kế
-        duy nhất của anh ấy, Fiveon nhận tất cả tài liệu điều tra và đồ dùng cá
-        nhân từ Angell. Trong số các văn bản và đồ đạc, có một chiếc hộp kỳ lạ
-        chứa tác phẩm điêu khắc hình chữ nhật với những dòng chữ giống như chữ
-        tượng hình.
+      <p id="description">Mùa đông 1926-1927. Frances Wayland XNUMXthon, một công dân nổi tiếng của Boston, được thông báo về cái chết của người chú cố của mình, George G. Angell. Cái sau là một giáo sư ngôn ngữ lỗi lạc Tiếng Semitic từ Đại học Brown. Về cái chết có hai phiên bản: phiên bản chính thức, do tim ngừng đập xảy ra trong khi nhà giáo dục đang leo lên một đoạn đường dốc gần bến tàu.Thay vào đó, phiên bản thứ hai (từ một số nhân chứng) cho rằng một người đàn ông da đen đã đẩy giáo sư xuống đồi. Là người thừa kế duy nhất của anh ấy, Fiveon nhận tất cả tài liệu điều tra và đồ dùng cá nhân từ Angell. Trong số các văn bản và đồ đạc, có một chiếc hộp kỳ lạ chứa tác phẩm điêu khắc hình chữ nhật với những dòng chữ giống như chữ tượng hình.
       </p>
       <button id="doc-btn" mat-flat-button>Đọc</button>
     </div>
@@ -44,91 +29,63 @@
     <div id="header-comment">
       <div id="comment-title-header">
         <p id="comment-title">Bình luận</p>
-        <button mat-icon-button>
-          <mat-icon id="add_comment" (click)="toggleCommentInput()"
-            >add_comment</mat-icon
-          >
-        </button>
+        <button mat-icon-button (click)="toggleCommentInput()"><mat-icon id="add_comment">add_comment</mat-icon></button>
       </div>
-    </div>
-    <div id="comment-box">
-      <div class="comment-content">
-        @if (isCommentInputVisible) {
-          <div id="input-comment">
-            <div class="avatar-input">
-              <img
-                src="../../../../public/assets/logos/temp_logo.jpg"
-                class="avatar-comment"
-              />
-              <input
-                type="text"
-                placeholder="Viết bình luận"
-                id="comment-input"
-                [(ngModel)]="newCommentText"
-              />
-            </div>
-            <div class="comment-text"></div>
-            <button mat-icon-button>
-              <mat-icon class="send" (click)="addComment()">send</mat-icon>
-            </button>
+  </div>
+  <div id="comment-box" >
+    <div class="comment-content">
+      @if(isCommentInputVisible){
+        <div id="input-comment">
+          <div class="avatar-input">
+            <img src="../public/assets/temp-logo.jpg" class="avatar-comment">
+            <input type="text" placeholder="Viết bình luận" id="comment-input" [(ngModel)]="newCommentText">
           </div>
-        }
-      </div>
-      @for (comment of comments; track $index) {
-        <div class="comment-content">
-          <div class="user-comment">
-            <img
-              src="../../../../public/assets/logos/temp_logo.jpg"
-              class="avatar-comment"
-            />
-            <div class="comment-input">
-              <p class="comment-name">{{ comment.name }}</p>
-              <span class="comment-text">{{ comment.text }}</span>
-            </div>
+          <div class="comment-text">
           </div>
-          <button mat-icon-button>
-            <mat-icon class="more-vert">more_vert</mat-icon>
-          </button>
+          <button mat-icon-button class="send" (click)="addComment()"><mat-icon>send</mat-icon></button>
         </div>
       }
+    </div>
+    @for (comment of comments; track $index){
       <div class="comment-content">
         <div class="user-comment">
-          <img
-            src="../../../../public/assets/logos/temp_logo.jpg"
-            class="avatar-comment"
-          />
+          <img src="../public/assets/temp-logo.jpg" class="avatar-comment">
           <div class="comment-input">
-            <p class="comment-name">Nguyễn Văn B</p>
-            <p class="comment-text">
-              Godamn, tôi chưa bao giờ đọc được quấn sách nào hay như vậy, các
-              nhân này mà có ở ngoài đời thật thì sẽ thú vị như thế nào
-            </p>
+            <p class="comment-name">{{comment.name}}</p>
+            <span class="comment-text">{{ comment.text }}</span>
           </div>
         </div>
-        <button mat-icon-button>
-          <mat-icon class="more-vert">more_vert</mat-icon>
-        </button>
+        <button mat-icon-button class="more-vert"><mat-icon >more_vert</mat-icon></button>
       </div>
-      <div class="comment-content">
-        <div class="user-comment">
-          <img
-            src="../../../../public/assets/logos/temp_logo.jpg"
-            class="avatar-comment"
-          />
-          <div class="comment-input">
-            <p class="comment-name">Nguyễn Văn C</p>
-            <p class="comment-text">
-              Xương rồng đơm lá, đơm hoa Nước ngọt đong đầy trên cao nguyên đá
-              Là ngày Hoàng đế về nhà Bảy năm mòn mỏi, kiệu hoa đón ngài Vương
-              triều màu Đỏ mất ngai Bao năm chờ đợi, mong ngày phục hưng Cuối
-              cùng trời đã đông hừng Đế chế trở lại, chúc mừng Quỷ Vương!
-            </p>
-          </div>
+    }
+    <div class="comment-content">
+      <div class="user-comment">
+        <img src="../public/assets/temp-logo.jpg" class="avatar-comment">
+        <div class="comment-input">
+          <p class="comment-name">Nguyễn Văn B</p>
+          <p class="comment-text">Godamn, tôi chưa bao giờ đọc được quấn sách nào hay như vậy, các nhân này mà có ở ngoài đời thật thì sẽ thú vị như thế nào</p>
         </div>
-        <button mat-icon-button>
-          <mat-icon class="more-vert">more_vert</mat-icon>
-        </button>
       </div>
+      <button mat-icon-button class="more-vert"><mat-icon >more_vert</mat-icon></button>
+    </div>
+    <div class="comment-content">
+      <div class="user-comment">
+        <img src="../public/assets/temp-logo.jpg" class="avatar-comment">
+        <div class="comment-input">
+          <p class="comment-name">Nguyễn Văn C</p>
+          <p class="comment-text">
+            Xương rồng đơm lá, đơm hoa
+            Nước ngọt đong đầy trên cao nguyên đá
+            Là ngày Hoàng đế về nhà
+            Bảy năm mòn mỏi, kiệu hoa đón ngài
+            Vương triều màu Đỏ mất ngai
+            Bao năm chờ đợi, mong ngày phục hưng
+            Cuối cùng trời đã đông hừng
+            Đế chế trở lại, chúc mừng Quỷ Vương! </p>
+        </div>
+      </div>
+      <button mat-icon-button class="more-vert"><mat-icon >more_vert</mat-icon></button>
     </div>
   </div>
+</div>
 </div>
