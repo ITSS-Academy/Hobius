@@ -72,11 +72,16 @@
         required
       >
         <mat-select-trigger>
-          {{ genre.value?.[0] || "" }}
-          @if ((genre.value?.length || 0) > 1) {
+          {{ ebookFormGroup.get("genre")?.value?.[0] || "" }}
+          @if ((ebookFormGroup.get("genre")?.value?.length || 0) > 1) {
             <span class="additional-selection">
-              (+{{ (genre.value?.length || 0) - 1 }}
-              {{ genre.value?.length === 2 ? "other" : "others" }})
+              (+{{ (ebookFormGroup.get("genre")?.value?.length || 0) - 1 }}
+              {{
+                ebookFormGroup.get("genre")?.value?.length === 2
+                  ? "other"
+                  : "others"
+              }}
+              )
             </span>
           }
         </mat-select-trigger>
