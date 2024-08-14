@@ -129,7 +129,7 @@
     }
 
     .cardBox.bounce-back {
-      animation: bounce-back 0.5s ease-out;
+      animation: bounce-back 0.3s ease-out;
     }
 
     @keyframes bounce-back {
@@ -145,7 +145,7 @@
     }
 
     .cardBox.bounce-back-start {
-      animation: bounce-back-start 0.5s ease-out;
+      animation: bounce-back-start 0.3s ease-out;
     }
 
     @keyframes bounce-back-start {

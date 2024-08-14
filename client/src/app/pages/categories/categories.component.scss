@@ -52,7 +52,7 @@
     .cardBox {
       height: 130px;
       width: 100%;
-      margin: 20px;
+      margin: 0;
       overflow: hidden;
       white-space: nowrap;
       cursor: grab;
@@ -68,6 +68,13 @@
         overflow-x: hidden;
         width: 100%;
         margin-top: 40px;
+      }
+
+      .theLoai.selected {
+        background-color: var(--primary);
+        color: var(--onPrimary);
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
 
       .theLoai {

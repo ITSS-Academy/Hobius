@@ -111,7 +111,7 @@ export class HomeComponent implements AfterViewInit {
               setTimeout(() => {
                 slider.classList.remove('bounce-back');
               }, 500);
-            }, 100);
+            }, 10);
           }
         } else if (slider.scrollLeft <= safetyMargin) {
           if (Math.abs(velocity) > minVelocityForBounce) {
@@ -121,7 +121,7 @@ export class HomeComponent implements AfterViewInit {
               setTimeout(() => {
                 slider.classList.remove('bounce-back-start');
               }, 500);
-            }, 100);
+            }, 10);
           }
         }
       };

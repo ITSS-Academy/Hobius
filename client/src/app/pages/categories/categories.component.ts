@@ -100,6 +100,14 @@ export class CategoriesComponent implements AfterViewInit {
         };
         requestAnimationFrame(step);
       }
+
+      // Add click event listener to toggle selected class
+      const theLoaiElements = slider.querySelectorAll('.theLoai');
+      theLoaiElements.forEach((element) => {
+        element.addEventListener('click', () => {
+          element.classList.toggle('selected');
+        });
+      });
     });
   }
 }
