@@ -11,7 +11,7 @@
         (blur)="updateTitleErrorMessage()"
         required
       />
-      @if (title.valid) {
+      @if (ebookFormGroup.get("title")?.valid) {
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
       } @else {
         <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>
@@ -31,7 +31,7 @@
         (blur)="updateAuthorErrorMessage()"
         required
       />
-      @if (author.valid) {
+      @if (ebookFormGroup.get("author")?.valid) {
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
       } @else {
         <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>
@@ -52,7 +52,7 @@
         required
         cdkTextareaAutosize
       ></textarea>
-      @if (detail.valid) {
+      @if (ebookFormGroup.get("detail")?.valid) {
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
       } @else {
         <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>
@@ -104,7 +104,7 @@
         (blur)="updateImageErrorMessage()"
         required
       />
-      @if (image.valid) {
+      @if (ebookFormGroup.get("image")?.valid) {
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
       } @else {
         <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>
@@ -142,7 +142,7 @@
         (blur)="updatePdfErrorMessage()"
         required
       />
-      @if (pdf.valid) {
+      @if (ebookFormGroup.get("pdf")?.valid) {
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
       } @else {
         <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>

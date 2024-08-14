@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import {
   MatDialogActions,
@@ -27,7 +27,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   ],
   templateUrl: './add-ebook-form-dialog.component.html',
   styleUrl: './add-ebook-form-dialog.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddEbookFormDialogComponent extends EbookFormDialogComponent {
   constructor(
