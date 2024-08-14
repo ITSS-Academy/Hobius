@@ -1,8 +1,13 @@
-import { Component } from '@angular/core';
-import {MatButton, MatFabButton, MatIconButton} from '@angular/material/button';
+import { Component, OnInit } from '@angular/core';
+import {
+  MatButton,
+  MatFabButton,
+  MatIconButton,
+} from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import {FormsModule} from "@angular/forms";
-import {CdkFixedSizeVirtualScroll} from "@angular/cdk/scrolling";
+import { FormsModule } from '@angular/forms';
+import { CdkFixedSizeVirtualScroll } from '@angular/cdk/scrolling';
+import { NavigationEnd, Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-ebook-info',
@@ -13,19 +18,26 @@ import {CdkFixedSizeVirtualScroll} from "@angular/cdk/scrolling";
     FormsModule,
     MatIconButton,
     CdkFixedSizeVirtualScroll,
-    MatFabButton
+    MatFabButton,
   ],
   templateUrl: './ebook-info.component.html',
-  styleUrls: ['./ebook-info.component.scss']
+  styleUrls: ['./ebook-info.component.scss'],
 })
-export class EbookInfoComponent {
+export class EbookInfoComponent implements OnInit {
   isCommentInputVisible: boolean = false;
+  newCommentText: string = '';
+  comments: { name: string; text: string }[] = [];
+  isFavorite: boolean = false;
+  isHovering: boolean = false;
+
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {}
 
   toggleCommentInput(): void {
     this.isCommentInputVisible = !this.isCommentInputVisible;
   }
-  newCommentText: string = '';
-  comments: { name: string, text: string }[] = [];
+
   addComment(): void {
     if (this.newCommentText.trim()) {
       this.comments.push({ name: 'Tôi', text: this.newCommentText });
@@ -33,16 +45,20 @@ export class EbookInfoComponent {
       this.isCommentInputVisible = false;
     }
   }
-  isFavorite: boolean = false;
-  isHovering: boolean = false;
+
   toggleFavorite(): void {
     this.isFavorite = !this.isFavorite;
   }
+
   onMouseEnter(): void {
     this.isHovering = true;
   }
 
   onMouseLeave(): void {
     this.isHovering = false;
+  }
+
+  navigateBack(): void {
+    this.router.navigate(['/']).then(() => {});
   }
 }
