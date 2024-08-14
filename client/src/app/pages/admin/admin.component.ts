@@ -7,7 +7,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { EbookModel } from '../../../models/ebook.model';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateFormDialogComponent } from './components/create-form-dialog/create-form-dialog.component';
+import { AddEbookFormDialogComponent } from './components/add-ebook-form-dialog/add-ebook-form-dialog.component';
+import { EditEbookFormDialogComponent } from './components/edit-ebook-form-dialog/edit-ebook-form-dialog.component';
 
 /** Constants used to fill up our data base. */
 export const GENRES: string[] = [
@@ -267,15 +268,17 @@ export class AdminComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  ebooks: EbookModel[] = [];
+
   //dialog
   readonly dialog = inject(MatDialog);
 
   constructor() {
-    // Create 100 users
-    const ebooks = Array.from({ length: 100 }, (_, k) => createNewEbook(k + 1));
+    // Create 100 ebooks
+    this.ebooks = Array.from({ length: 10 }, (_, k) => createNewEbook(k + 1));
 
     // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(ebooks);
+    this.dataSource = new MatTableDataSource(this.ebooks);
   }
 
   ngAfterViewInit(): void {
@@ -313,10 +316,38 @@ export class AdminComponent implements AfterViewInit {
   }
 
   openCreateEbookDialog() {
-    const dialogRef = this.dialog.open(CreateFormDialogComponent);
+    const dialogRef = this.dialog.open(AddEbookFormDialogComponent);
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
+      if (result) {
+        let newEbook: EbookModel = {
+          ...result,
+          id: (this.dataSource.data.length + 1).toString(),
+          like: 0,
+          view: 0,
+          date: new Date().toDateString(),
+        };
+        console.log(newEbook);
+      }
+    });
+  }
+
+  openEditEbookDialog() {
+    const dialogRef = this.dialog.open(EditEbookFormDialogComponent, {
+      data: this.selection.selected[0],
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        let newEbook: EbookModel = {
+          ...result,
+          id: (this.dataSource.data.length + 1).toString(),
+          like: 0,
+          view: 0,
+          date: new Date().toDateString(),
+        };
+        console.log(newEbook);
+      }
     });
   }
 }

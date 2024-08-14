@@ -1,0 +1,103 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  mat-dialog-content {
+    //display: flex;
+
+    form {
+      display: block;
+
+      mat-form-field {
+        width: 100%;
+
+        mat-select {
+          mat-select-trigger {
+            .additional-selection {
+              opacity: 0.75;
+              font-size: 0.75em;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .mdc-text-field--file {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid var(--mdc-filled-text-field-active-indicator-color);
+
+    .mdc-text-field__input {
+      width: 100%;
+      padding: 16px 0 8px;
+      border: none;
+      background: none;
+      font-family: inherit;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: inherit;
+      outline: none;
+      cursor: pointer;
+
+      &::-webkit-file-upload-button {
+        visibility: hidden;
+      }
+    }
+
+    .mdc-floating-label {
+      position: absolute;
+      top: 28px;
+      left: 16px;
+      transition:
+        transform 0.2s,
+        color 0.2s;
+      transform-origin: left top;
+      pointer-events: none;
+      color: var(--mdc-theme-on-surface, rgba(0, 0, 0, 0.6));
+    }
+
+    .mdc-line-ripple {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 0.2px;
+      transform-origin: center;
+      transform: scaleX(0);
+      transition: transform 0.2s;
+    }
+
+    //make the line ripple visible when the input is focused
+
+    &:focus-within {
+      .mdc-floating-label {
+        transform: translateY(-100%) scale(0.75);
+        color: var(--primary);
+      }
+
+      .mdc-line-ripple {
+        transform: scaleX(1);
+        background: var(--mdc-filled-text-field-focus-active-indicator-color);
+      }
+    }
+  }
+
+  .mdc-text-field--error {
+    height: 19.5px;
+    margin-left: 8px;
+    -webkit-font-smoothing: antialiased;
+    line-height: var(--mat-form-field-subscript-text-line-height);
+    font-size: var(--mat-form-field-subscript-text-size);
+    letter-spacing: var(--mat-form-field-subscript-text-tracking);
+    font-weight: var(--mat-form-field-subscript-text-weight);
+  }
+}

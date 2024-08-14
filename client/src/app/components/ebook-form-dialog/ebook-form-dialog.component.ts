@@ -4,69 +4,43 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { MaterialModule } from '../../../../../shared/modules/material.module';
-import { SharedModule } from '../../../../../shared/modules/shared.module';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import {
-  FormControl,
-  FormGroup,
-  FormGroupDirective,
-  NgForm,
-  Validators,
-} from '@angular/forms';
+import { MaterialModule } from '../../../shared/modules/material.module';
+import { SharedModule } from '../../../shared/modules/shared.module';
+import { GENRES } from '../../pages/admin/admin.component';
 import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { GENRES } from '../../admin.component';
-import { ErrorStateMatcher } from '@angular/material/core';
-
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null,
-  ): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
-  }
-}
 
 @Component({
-  selector: 'app-create-form-dialog',
+  selector: 'app-ebook-form-dialog',
   standalone: true,
   imports: [
     MaterialModule,
     SharedModule,
-    MatDialogTitle,
-    MatDialogContent,
     MatDialogActions,
     MatDialogClose,
+    MatDialogContent,
+    MatDialogTitle,
   ],
-  templateUrl: './create-form-dialog.component.html',
-  styleUrl: './create-form-dialog.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '',
+  styleUrls: ['./ebook-form-dialog.component.scss'],
 })
-export class CreateFormDialogComponent implements OnInit {
-  ebookFormGroup!: FormGroup;
+export class EbookFormDialogComponent {
+  ebookFormGroup: FormGroup;
+  genreList = GENRES;
+
   title = new FormControl('', [Validators.required]);
   author = new FormControl('', [Validators.required]);
   detail = new FormControl('', [Validators.required]);
-  pdf = new FormControl('', [Validators.required]);
   genre = new FormControl('', [Validators.required]);
-  image = new FormControl('', [Validators.required]);
-
-  genreList = GENRES;
-  genreMatcher = new MyErrorStateMatcher();
-
-  ngOnInit(): void {}
+  pdf = new FormControl(null, [Validators.required]);
+  image = new FormControl(null, [Validators.required]);
 
   titleErrorMessage = signal('');
   authorErrorMessage = signal('');
@@ -76,12 +50,12 @@ export class CreateFormDialogComponent implements OnInit {
 
   constructor() {
     this.ebookFormGroup = new FormGroup({
-      title: this.title,
-      author: this.author,
-      detail: this.detail,
-      pdf: this.pdf,
-      genre: this.genre,
-      image: this.image,
+      title: new FormControl('', [Validators.required]),
+      author: new FormControl('', [Validators.required]),
+      detail: new FormControl('', [Validators.required]),
+      image: new FormControl('', [Validators.required]),
+      pdf: new FormControl('', [Validators.required]),
+      genre: new FormControl([], [Validators.required]),
     });
 
     merge(this.title.statusChanges, this.title.valueChanges)
@@ -127,7 +101,7 @@ export class CreateFormDialogComponent implements OnInit {
 
   updatePdfErrorMessage() {
     if (this.pdf.hasError('required')) {
-      this.pdfErrorMessage.set(`You must upload ebook's pdf file`);
+      this.pdfErrorMessage.set(`You must upload ebook pdf file`);
     } else {
       this.pdfErrorMessage.set('');
     }
@@ -139,5 +113,20 @@ export class CreateFormDialogComponent implements OnInit {
     } else {
       this.imageErrorMessage.set('');
     }
+  }
+
+  onImagePicked(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    this.ebookFormGroup.patchValue({ image: file!.name });
+  }
+
+  onPdfPicked(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    this.ebookFormGroup.patchValue({ pdf: file!.name });
+  }
+
+  sendForm() {
+    // console.log(this.ebookFormGroup.value);
+    return this.ebookFormGroup.value;
   }
 }
