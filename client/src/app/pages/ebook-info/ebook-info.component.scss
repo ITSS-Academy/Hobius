@@ -91,46 +91,48 @@
   width: 150px;
 }
 #comment{
+    height: 250px;
     margin-left: 28px;
     display: flex;
     flex-direction: column;
 }
-
 #header-comment{
   width: 100%;
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
+  flex-direction: column;
 }
 #header-comment #comment-title-header{
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 #InputVisible{
 }
 #header-comment #add_comment{
   color: var(--secondary);
+  padding: 3px 0;
 }
 #header-comment #add_comment:hover{
   cursor: pointer;
   color: var(--onPrimaryContainer);
 }
 #header-comment #comment-title{
-  width: 100%;
   font-size: 24px;
-  text-align: center;
-  margin-bottom: 2px;
+  padding: 3px 0;
+  margin: 0;
 }
 #input-comment{
-  width: 100%;
+  width: 97%;
   height: 56px;
-  margin: 0px 40px 0px 8px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
   background-color:  var(--inverseOnSurface);
   border-radius: 15px;
+  margin-bottom: 10px;
 }
 #input-comment .avatar-comment{
   height: 46px;
@@ -159,7 +161,7 @@
 }
 #comment-box{
   width: 100%;
-  max-height: 190px;
+  max-height: 100%;
   overflow: auto;
 }
 #comment-box::-webkit-scrollbar {
@@ -168,7 +170,7 @@
 .comment-content{
   display: flex;
   flex-direction: row;
-  margin: 15px 28px 15px 0px;
+  margin: 0px 28px 10px 0px;
   justify-content: space-between;
   align-items: center;
   background-color:  var(--inverseOnSurface);
