@@ -1,5 +1,6 @@
 export interface FileUploadState {
-  progress: number;
-  downloadURL: string | null;
+  isLoading: boolean;
+  downloadCoverURL: string | null;
+  downloadPdfURL: string | null;
   error: any;
 }

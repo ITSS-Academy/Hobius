@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   MatDialogActions,
@@ -9,12 +9,14 @@ import {
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { GENRES } from '../../pages/admin/admin.component';
-import { merge } from 'rxjs';
+import { merge, Subscription } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CloudStorageService } from '../../../services/cloud-storage.service';
 import { Store } from '@ngrx/store';
 import { FileUploadState } from '../../../ngrx/file-upload/file-upload.state';
 import * as UploadActions from '../../../ngrx/file-upload/file-upload.actions';
+import { Event } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-ebook-form-dialog',
@@ -30,10 +32,12 @@ import * as UploadActions from '../../../ngrx/file-upload/file-upload.actions';
   template: '',
   styleUrls: ['./ebook-form-dialog.component.scss'],
 })
-export class EbookFormDialogComponent {
+export class EbookFormDialogComponent implements OnInit, OnDestroy {
   tempId = Date.now().toString();
   ebookFormGroup: FormGroup;
   genreList = GENRES;
+  isLoading = false;
+  subscriptions: Subscription[] = [];
 
   title = new FormControl('', [Validators.required]);
   author = new FormControl('', [Validators.required]);
@@ -53,6 +57,7 @@ export class EbookFormDialogComponent {
     protected store: Store<{
       file_upload: FileUploadState;
     }>,
+    protected _snackBar: MatSnackBar,
   ) {
     this.ebookFormGroup = new FormGroup({
       title: new FormControl('', [Validators.required]),
@@ -78,6 +83,24 @@ export class EbookFormDialogComponent {
     merge(this.image.statusChanges, this.image.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateImageErrorMessage());
+
+    this.store
+      .select('file_upload', 'downloadPdfURL')
+      .pipe(takeUntilDestroyed())
+      .subscribe((downloadURL) => {
+        if (downloadURL != null && downloadURL != '') {
+          this.ebookFormGroup.patchValue({ pdf: downloadURL });
+        }
+      });
+
+    this.store
+      .select('file_upload', 'downloadCoverURL')
+      .pipe(takeUntilDestroyed())
+      .subscribe((downloadURL) => {
+        if (downloadURL != null && downloadURL != '') {
+          this.ebookFormGroup.patchValue({ image: downloadURL });
+        }
+      });
   }
 
   updateTitleErrorMessage() {
@@ -120,30 +143,63 @@ export class EbookFormDialogComponent {
     }
   }
 
-  onImagePicked(event: Event) {
-    const file = (event.target as HTMLInputElement).files?.[0];
+  onImagePicked(event: any) {
+    const inputEvent = event as InputEvent;
+    const file = (inputEvent.target as HTMLInputElement).files?.[0];
     this.store.dispatch(
-      UploadActions.uploadFile({
+      UploadActions.uploadEbookCoverFile({
         file: file!,
         path: `ebooks/${this.tempId}/cover`,
       }),
     );
-    this.ebookFormGroup.patchValue({ image: file!.name });
   }
 
-  onPdfPicked(event: Event) {
-    const file = (event.target as HTMLInputElement).files?.[0];
+  onPdfPicked(event: any) {
+    const inputEvent = event as InputEvent;
+    const file = (inputEvent.target as HTMLInputElement).files?.[0];
     this.store.dispatch(
-      UploadActions.uploadFile({
+      UploadActions.uploadEbookPdfFile({
         file: file!,
         path: `ebooks/${this.tempId}/pdf`,
       }),
     );
-    this.ebookFormGroup.patchValue({ pdf: file!.name });
   }
 
   sendForm() {
     // console.log(this.ebookFormGroup.value);
     return this.ebookFormGroup.value;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.store.select('file_upload', 'downloadCoverURL').subscribe((url) => {
+        if (url != null) {
+          this._snackBar.open('File uploaded successfully', 'Close', {
+            duration: 5000,
+          });
+        }
+      }),
+      this.store.select('file_upload', 'downloadPdfURL').subscribe((url) => {
+        if (url != null) {
+          this._snackBar.open('File uploaded successfully', 'Close', {
+            duration: 5000,
+          });
+        }
+      }),
+      this.store.select('file_upload', 'isLoading').subscribe((isLoading) => {
+        this.isLoading = isLoading;
+      }),
+      this.store.select('file_upload', 'error').subscribe((error) => {
+        if (error) {
+          this._snackBar.open('Error uploading file', 'Close', {
+            duration: 5000,
+          });
+        }
+      }),
+    );
   }
 }

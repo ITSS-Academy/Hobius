@@ -12,19 +12,45 @@ export class FileUploadEffects {
     private cloudStorageService: CloudStorageService,
   ) {}
 
-  uploadFile$ = createEffect(() =>
+  uploadEbookCoverFile$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(UploadActions.uploadFile),
+      ofType(UploadActions.uploadEbookCoverFile),
       mergeMap(({ file, path }) =>
         this.cloudStorageService.uploadFile(file, path).pipe(
           map((result) => {
             if (typeof result === 'number') {
               return UploadActions.uploadFileProgress({ progress: result });
             } else {
-              return UploadActions.uploadFileSuccess({ downloadURL: result });
+              return UploadActions.uploadEbookCoverFileSuccess({
+                downloadURL: result,
+              });
             }
           }),
-          catchError((error) => of(UploadActions.uploadFileFailure({ error }))),
+          catchError((error) =>
+            of(UploadActions.uploadEbookCoverFileFailure({ error })),
+          ),
+        ),
+      ),
+    ),
+  );
+
+  uploadEbookPdfFile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UploadActions.uploadEbookPdfFile),
+      mergeMap(({ file, path }) =>
+        this.cloudStorageService.uploadFile(file, path).pipe(
+          map((result) => {
+            if (typeof result === 'number') {
+              return UploadActions.uploadFileProgress({ progress: result });
+            } else {
+              return UploadActions.uploadEbookPdfFileSuccess({
+                downloadURL: result,
+              });
+            }
+          }),
+          catchError((error) =>
+            of(UploadActions.uploadEbookPdfFileFailure({ error })),
+          ),
         ),
       ),
     ),
