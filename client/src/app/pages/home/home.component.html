@@ -16,48 +16,57 @@
     </div>
   </div>
   <div id="home-content">
-    <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
-      <div class="boxContener">
-        <div class="titleName">
-          <p>LỊCH SỬ</p>
-        </div>
-        <div class="cardBox">
-          <app-card *ngFor="let card of lichSuCards" [ebook]="card"></app-card>
-        </div>
+    <!--    <cdk-virtual-scroll-viewport itemSize="50" id="main-viewport">-->
+    <div class="boxContener">
+      <div class="titleName">
+        <p>LỊCH SỬ</p>
+        <button mat-icon-button>
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
       </div>
-
-      <div class="boxContener">
-        <div class="titleName">
-          <p>THỊNH HÀNH</p>
-        </div>
-        <div class="cardBox">
-          <app-card
-            *ngFor="let card of thinhHanhCards"
-            [ebook]="card"
-          ></app-card>
-        </div>
+      <div class="cardBox" #viewport>
+        <app-card *ngFor="let card of lichSuCards" [ebook]="card"></app-card>
+        <!--        <div class="end-of-scroll" #endOfScrollIndicator>End of List</div>-->
       </div>
-
-      <div class="boxContener">
-        <div class="titleName">
-          <p>ĐỀ CỬ</p>
-        </div>
-        <div class="cardBox">
-          <app-card *ngFor="let card of deCuCards" [ebook]="card"></app-card>
-        </div>
+    </div>
+    <div class="boxContener">
+      <div class="titleName">
+        <p>THỊNH HÀNH</p>
+        <button mat-icon-button>
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
       </div>
-
-      <div class="boxContener">
-        <div class="titleName">
-          <p>BẢNG XẾP HẠNG</p>
-        </div>
-        <div class="cardBox">
-          <app-card
-            *ngFor="let card of bangXepHangCards"
-            [ebook]="card"
-          ></app-card>
-        </div>
+      <div class="cardBox" #viewport>
+        <app-card *ngFor="let card of thinhHanhCards" [ebook]="card"></app-card>
+        <div class="end-of-scroll" #endOfScrollIndicator>End of List</div>
       </div>
-    </cdk-virtual-scroll-viewport>
+    </div>
+    <div class="boxContener">
+      <div class="titleName">
+        <p>ĐỀ CỬ</p>
+        <button mat-icon-button>
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+      <div class="cardBox" #viewport>
+        <app-card *ngFor="let card of deCuCards" [ebook]="card"></app-card>
+      </div>
+    </div>
+    <div class="boxContener">
+      <div class="titleName">
+        <p>BẢNG XẾP HẠNG</p>
+        <button mat-icon-button>
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+      <div class="cardBox" #viewport>
+        <app-card
+          *ngFor="let card of bangXepHangCards"
+          [ebook]="card"
+        ></app-card>
+        <div class="end-of-scroll" #endOfScrollIndicator>End of List</div>
+      </div>
+    </div>
+    <!--    </cdk-virtual-scroll-viewport>-->
   </div>
 </div>

@@ -1,3 +1,8 @@
+@if (isLoading) {
+  <div class="loading-overlay">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+}
 <h2 mat-dialog-title>Add New Ebook</h2>
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="ebookFormGroup">
@@ -11,7 +16,7 @@
         (blur)="updateTitleErrorMessage()"
         required
       />
-      @if (title.valid) {
+      @if (ebookFormGroup.get("title")?.valid) {
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
       } @else {
         <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>
@@ -31,7 +36,7 @@
         (blur)="updateAuthorErrorMessage()"
         required
       />
-      @if (author.valid) {
+      @if (ebookFormGroup.get("author")?.valid) {
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
       } @else {
         <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>
@@ -52,7 +57,7 @@
         required
         cdkTextareaAutosize
       ></textarea>
-      @if (detail.valid) {
+      @if (ebookFormGroup.get("detail")?.valid) {
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
       } @else {
         <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>
@@ -68,16 +73,20 @@
       <mat-select
         placeholder="genre..."
         formControlName="genre"
-        [errorStateMatcher]="genreMatcher"
         multiple
         required
       >
         <mat-select-trigger>
-          {{ genre.value?.[0] || "" }}
-          @if ((genre.value?.length || 0) > 1) {
+          {{ ebookFormGroup.get("genre")?.value?.[0] || "" }}
+          @if ((ebookFormGroup.get("genre")?.value?.length || 0) > 1) {
             <span class="additional-selection">
-              (+{{ (genre.value?.length || 0) - 1 }}
-              {{ genre.value?.length === 2 ? "other" : "others" }})
+              (+{{ (ebookFormGroup.get("genre")?.value?.length || 0) - 1 }}
+              {{
+                ebookFormGroup.get("genre")?.value?.length === 2
+                  ? "other"
+                  : "others"
+              }}
+              )
             </span>
           }
         </mat-select-trigger>
@@ -90,34 +99,33 @@
       }
     </mat-form-field>
 
-    <!--   image form control   -->
-    <!--    <mat-form-field appearance="fill">-->
-    <!--      <mat-label>Image</mat-label>-->
-    <!--      <input-->
-    <!--        matInput-->
-    <!--        placeholder="image..."-->
-    <!--        formControlName="image"-->
-    <!--        (blur)="updateImageErrorMessage()"-->
-    <!--        required-->
-    <!--      />-->
-    <!--      @if (image.valid) {-->
-    <!--        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>-->
-    <!--      } @else {-->
-    <!--        <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>-->
-    <!--      }-->
-    <!--      @if (image.invalid) {-->
-    <!--        <mat-error>{{ imageErrorMessage() }}</mat-error>-->
-    <!--      }-->
-    <!--    </mat-form-field>-->
-
+    <!--   image file form control   -->
+    <mat-form-field appearance="fill">
+      <mat-label>Image Url</mat-label>
+      <input
+        matInput
+        placeholder="image url..."
+        formControlName="image"
+        (blur)="updateImageErrorMessage()"
+        required
+      />
+      @if (ebookFormGroup.get("image")?.valid) {
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      } @else {
+        <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>
+      }
+      @if (image.invalid) {
+        <mat-error>{{ imageErrorMessage() }}</mat-error>
+      }
+    </mat-form-field>
     <div class="mdc-text-field mdc-text-field--filled mdc-text-field--file">
       <input
         type="file"
         class="mdc-text-field__input"
         id="cover-file-input"
-        formControlName="image"
         required
         (blur)="updateImageErrorMessage()"
+        (change)="onImagePicked($event)"
       />
       <label class="mdc-floating-label" for="cover-file-input"
         >Image file</label
@@ -125,27 +133,45 @@
       <div class="mdc-line-ripple"></div>
     </div>
     <div class="mdc-text-field--error">
-      @if (image.invalid) {
-        <mat-error>{{ imageErrorMessage() }}</mat-error>
-      }
+      <!--      @if (image.invalid) {-->
+      <!--        <mat-error>{{ imageErrorMessage() }}</mat-error>-->
+      <!--      }-->
     </div>
     <!--   file form control   -->
+    <mat-form-field appearance="fill">
+      <mat-label>Pdf Url</mat-label>
+      <input
+        matInput
+        placeholder="pdf url..."
+        formControlName="pdf"
+        (blur)="updatePdfErrorMessage()"
+        required
+      />
+      @if (ebookFormGroup.get("pdf")?.valid) {
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      } @else {
+        <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>
+      }
+      @if (pdf.invalid) {
+        <mat-error>{{ pdfErrorMessage() }}</mat-error>
+      }
+    </mat-form-field>
     <div class="mdc-text-field mdc-text-field--filled mdc-text-field--file">
       <input
         type="file"
         class="mdc-text-field__input"
         id="pdf-file-input"
-        formControlName="pdf"
         required
         (blur)="updatePdfErrorMessage()"
+        (change)="onPdfPicked($event)"
       />
       <label class="mdc-floating-label" for="pdf-file-input">Pdf file</label>
       <div class="mdc-line-ripple"></div>
     </div>
     <div class="mdc-text-field--error">
-      @if (image.invalid) {
-        <mat-error>{{ pdfErrorMessage() }}</mat-error>
-      }
+      <!--      @if (image.invalid) {-->
+      <!--        <mat-error>{{ pdfErrorMessage() }}</mat-error>-->
+      <!--      }-->
     </div>
   </form>
 </mat-dialog-content>
@@ -153,7 +179,7 @@
   <button mat-button mat-dialog-close>Cancel</button>
   <button
     mat-flat-button
-    [mat-dialog-close]="true"
+    [mat-dialog-close]="sendForm()"
     [disabled]="ebookFormGroup.invalid"
   >
     Submit

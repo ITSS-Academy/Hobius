@@ -1,6 +1,7 @@
 #home-container {
   height: 100%;
   width: 100%;
+  overflow-x: hidden;
 
   #home-header {
     height: 100px;
@@ -59,19 +60,104 @@
     height: calc(100% - 100px);
     width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
 
-    .example-viewport {
-      height: 100%;
+    #main-viewport {
+      flex: 1; /* Allows the viewport to take up the remaining space */
       width: 100%;
-      //border: 1px solid black;
-      margin: 20px;
+      -webkit-overflow-scrolling: touch;
+      overflow-x: hidden;
     }
 
-    .example-item {
-      height: 50px;
+    .boxContener {
+      width: 100%;
+      height: auto;
+    }
+
+    .titleName {
+      height: 48px;
+      width: 833px;
+      font-size: 22px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      margin-top: 15px;
+      margin-left: 10px;
+    }
+
+    .titleName > p {
+      margin-bottom: 0;
+      margin-right: 15px;
+      margin-left: 15px;
+    }
+
+    .cardBox {
+      margin-left: 15px;
+      height: auto;
+      display: flex;
+      width: 100%;
+      flex-direction: row;
+      gap: 24px;
+      overflow: hidden;
+      white-space: nowrap;
+      cursor: grab;
+    }
+
+    .cardBox.active {
+      cursor: grabbing;
+      transition: transform 0.5s ease-out;
+    }
+
+    .mat-icon-button {
+      margin-left: 10px;
+      color: var(--primary);
+    }
+
+    .end-of-scroll {
+      display: none;
+      text-align: center;
+      padding: 10px;
+      color: #333;
+      width: 100%;
+      border-radius: 12px;
+      background-color: var(--surfaceContainerHigh);
+    }
+
+    .end-of-scroll.visible {
+      display: block;
+    }
+
+    .cardBox.bounce-back {
+      animation: bounce-back 0.3s ease-out;
+    }
+
+    @keyframes bounce-back {
+      0% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(-20px);
+      }
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    .cardBox.bounce-back-start {
+      animation: bounce-back-start 0.3s ease-out;
+    }
+
+    @keyframes bounce-back-start {
+      0% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(20px);
+      }
+      100% {
+        transform: translateX(0);
+      }
     }
   }
 }
@@ -105,40 +191,4 @@
   ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
     background: var(--background);
   }
-}
-
-.titleName {
-  height: 48px;
-  width: 833px;
-  font-size: 22px;
-  color: var(--primary);
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  margin-top: 15px;
-}
-
-.titleName > p {
-  margin-bottom: 0;
-  margin-right: 10px;
-}
-
-.cardBox {
-  display: flex;
-  flex-wrap: nowrap;
-  height: 282px;
-  flex-direction: row;
-  gap: 24px;
-}
-
-.mat-icon-button {
-  margin-left: 10px;
-  color: var(--primary);
-}
-
-.boxContener {
-}
-
-.example-viewport {
-  height: 100%;
 }

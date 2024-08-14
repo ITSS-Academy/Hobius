@@ -340,3 +340,19 @@ body {
   --mat-checkbox-disabled-label-color: rgba(27, 27, 29, 0.38);
   --mat-checkbox-label-text-color: #1b1b1d;
 }
+
+.secondary-icon-button {
+  @include mat.icon-button-color($client-theme, $color-variant: secondary);
+}
+
+.tertiary-icon-button {
+  @include mat.icon-button-color($client-theme, $color-variant: tertiary);
+}
+
+.secondary-button {
+  @include mat.button-color($client-theme, $color-variant: secondary);
+}
+
+.tertiary-button {
+  @include mat.button-color($client-theme, $color-variant: tertiary);
+}

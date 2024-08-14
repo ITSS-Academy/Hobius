@@ -5,7 +5,6 @@
       <h1 id="title">The Call of Cthulhu</h1>
     </div>
     <mat-icon id="favorite" [class.active]="isFavorite" (click)="toggleFavorite()">favorite</mat-icon>
-
   </div>
   <div id="book-info-card">
     <div id="img-book-info">
@@ -13,7 +12,7 @@
     </div>
     <div id="book-info">
       <p id="author">Tác giả: H. P. Lovecraft</p>
-      <p id="date">August 20, 2024</p>
+      <p id="date">Đăng ngày: 14/08/2024</p>
       <p id="description">Mùa đông 1926-1927. Frances Wayland XNUMXthon, một công dân nổi tiếng của Boston, được thông báo về cái chết của người chú cố của mình, George G. Angell. Cái sau là một giáo sư ngôn ngữ lỗi lạc Tiếng Semitic từ Đại học Brown. Về cái chết có hai phiên bản: phiên bản chính thức, do tim ngừng đập xảy ra trong khi nhà giáo dục đang leo lên một đoạn đường dốc gần bến tàu.Thay vào đó, phiên bản thứ hai (từ một số nhân chứng) cho rằng một người đàn ông da đen đã đẩy giáo sư xuống đồi. Là người thừa kế duy nhất của anh ấy, Fiveon nhận tất cả tài liệu điều tra và đồ dùng cá nhân từ Angell. Trong số các văn bản và đồ đạc, có một chiếc hộp kỳ lạ chứa tác phẩm điêu khắc hình chữ nhật với những dòng chữ giống như chữ tượng hình.
       </p>
       <button id="doc-btn" mat-flat-button>Đọc</button>
@@ -25,16 +24,34 @@
         <p id="comment-title">Bình luận</p>
         <button mat-icon-button><mat-icon id="add_comment" (click)="toggleCommentInput()">add_comment</mat-icon></button>
       </div>
-      <div id="InputVisible"></div>
+  </div>
+  <div id="comment-box" >
+    <div class="comment-content">
       @if(isCommentInputVisible){
         <div id="input-comment">
-          <img src="../public/assets/temp-logo.jpg" class="avatar-comment">
-          <input type="text" placeholder="Viết bình luận" id="comment-input" [(ngModel)]="newCommentText">
+          <div class="avatar-input">
+            <img src="../public/assets/temp-logo.jpg" class="avatar-comment">
+            <input type="text" placeholder="Viết bình luận" id="comment-input" [(ngModel)]="newCommentText">
+          </div>
+          <div class="comment-text">
+
+          </div>
           <button mat-icon-button><mat-icon class="send" (click)="addComment()">send</mat-icon></button>
         </div>
       }
-  </div>
-  <div id="comment-box" >
+    </div>
+    @for (comment of comments; track $index){
+      <div class="comment-content">
+        <div class="user-comment">
+          <img src="../public/assets/temp-logo.jpg" class="avatar-comment">
+          <div class="comment-input">
+            <p class="comment-name">{{comment.name}}</p>
+            <span class="comment-text">{{ comment.text }}</span>
+          </div>
+        </div>
+        <button mat-icon-button><mat-icon class="more-vert">more_vert</mat-icon></button>
+      </div>
+    }
     <div class="comment-content">
       <div class="user-comment">
         <img src="../public/assets/temp-logo.jpg" class="avatar-comment">
@@ -63,19 +80,9 @@
       </div>
       <button mat-icon-button><mat-icon class="more-vert">more_vert</mat-icon></button>
     </div>
-    @for (comment of comments; track $index){
-      <div class="comment-content">
-        <div class="user-comment">
-          <img src="../public/assets/temp-logo.jpg" class="avatar-comment">
-
-          <div class="comment-input">
-            <p class="comment-name">{{comment.name}}</p>
-            <span class="comment-text">{{ comment.text }}</span>
-          </div>
-        </div>
-        <button mat-icon-button><mat-icon class="more-vert">more_vert</mat-icon></button>
-      </div>
-    }
   </div>
+
+
+
 </div>
 </div>
