@@ -10,5 +10,6 @@ import { MaterialModule } from '../../../shared/modules/material.module';
   imports: [SharedModule,MaterialModule],
 })
 export class LoginComponent {
-
+  constructor() {}
+  
 }

@@ -2,16 +2,24 @@
     <div id="login">
         
         <div id="title">
-            <img src="../public/assets/Blue-Book.png" width="90px" height="60px" alt="Blue-Book">
+            <img src="../public/assets/Blue-Book.png" width="100px" height="70px" alt="Blue-Book">
             <h2>Sign in</h2>
             <h4>Use your Google Account</h4>
         </div>
         <form id="form">
-            <div id="form-login">
-                <input type="text" name="username" placeholder="Username" required>
-                <input type="password" name="password" placeholder="Password" required>
+            <div class="form-login">
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Email">
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input matInput placeholder="Password">
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                  </mat-form-field>
             </div>
-            <div id="btn">
+            <div class="btn">
                 <button type="submit" class="btn-submitGG" mat-stroked-button>Sign in with Google</button>
                 <button type="submit" class="btn-submit" mat-flat-button>Sign in</button>
             </div>
