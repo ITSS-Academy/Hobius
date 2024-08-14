@@ -1,10 +1,12 @@
 #categories-container {
   height: 100%;
   width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
 
   #categories-header {
     display: flex;
-    justify-content: center; /* Center the search bar */
+    justify-content: center;
     align-items: center;
     font-size: 2rem;
     font-weight: bold;
@@ -47,17 +49,32 @@
       margin-bottom: 0;
     }
 
-    #top-viewport {
+    .cardBox {
       height: 130px;
       width: 100%;
-      margin: 20px;
+      margin: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      cursor: grab;
+
+      &.active {
+        cursor: grabbing;
+        transition: transform 0.5s ease-out;
+      }
 
       #theLoaiBox {
         display: flex;
         flex-direction: row;
-        overflow-x: auto;
+        overflow-x: hidden;
         width: 100%;
         margin-top: 40px;
+      }
+
+      .theLoai.selected {
+        background-color: var(--primary);
+        color: var(--onPrimary);
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
 
       .theLoai {

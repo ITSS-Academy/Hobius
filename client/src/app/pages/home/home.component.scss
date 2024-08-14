@@ -1,6 +1,7 @@
 #home-container {
   height: 100%;
   width: 100%;
+  overflow-x: hidden;
 
   #home-header {
     height: 100px;
@@ -61,15 +62,17 @@
     display: flex;
     flex-direction: column;
 
-    //.example-viewport {
-    //  height: calc(100% - 100px);
-    //  min-height: 310px;
-    //  width: 100%;
-    //}
-    //
-    //.example-item {
-    //  height: 100%;
-    //}
+    #main-viewport {
+      flex: 1; /* Allows the viewport to take up the remaining space */
+      width: 100%;
+      -webkit-overflow-scrolling: touch;
+      overflow-x: hidden;
+    }
+
+    .boxContener {
+      width: 100%;
+      height: auto;
+    }
 
     .titleName {
       height: 48px;
@@ -85,11 +88,13 @@
 
     .titleName > p {
       margin-bottom: 0;
-      margin-right: 10px;
+      margin-right: 15px;
+      margin-left: 15px;
     }
 
     .cardBox {
-      height: 100%;
+      margin-left: 15px;
+      height: auto;
       display: flex;
       width: 100%;
       flex-direction: row;
@@ -109,9 +114,50 @@
       color: var(--primary);
     }
 
-    .boxContener {
+    .end-of-scroll {
+      display: none;
+      text-align: center;
+      padding: 10px;
+      color: #333;
       width: 100%;
-      height: 100%;
+      border-radius: 12px;
+      background-color: var(--surfaceContainerHigh);
+    }
+
+    .end-of-scroll.visible {
+      display: block;
+    }
+
+    .cardBox.bounce-back {
+      animation: bounce-back 0.3s ease-out;
+    }
+
+    @keyframes bounce-back {
+      0% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(-20px);
+      }
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    .cardBox.bounce-back-start {
+      animation: bounce-back-start 0.3s ease-out;
+    }
+
+    @keyframes bounce-back-start {
+      0% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(20px);
+      }
+      100% {
+        transform: translateX(0);
+      }
     }
   }
 }
