@@ -101,6 +101,7 @@
 
     .cardBox.active {
       cursor: grabbing;
+      transition: transform 0.5s ease-out;
     }
 
     .mat-icon-button {
