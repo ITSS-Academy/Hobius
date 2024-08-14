@@ -41,12 +41,17 @@ export class HomeComponent implements AfterViewInit {
       let isDown = false;
       let startX: number;
       let scrollLeft: number;
+      let velocity = 0;
+      let lastMoveTime: number;
+      let lastMoveX: number;
 
       slider.addEventListener('mousedown', (e) => {
         isDown = true;
         slider.classList.add('active');
         startX = e.pageX - slider.offsetLeft;
         scrollLeft = slider.scrollLeft;
+        lastMoveTime = Date.now();
+        lastMoveX = e.pageX;
       });
 
       slider.addEventListener('mouseleave', () => {
@@ -57,16 +62,35 @@ export class HomeComponent implements AfterViewInit {
       slider.addEventListener('mouseup', () => {
         isDown = false;
         slider.classList.remove('active');
+        applyInertia();
       });
 
       slider.addEventListener('mousemove', (e) => {
         if (!isDown) return;
         e.preventDefault();
         const x = e.pageX - slider.offsetLeft;
-        const walk = (x - startX) * 1.5; //scroll-fast
+        const walk = (x - startX) * 1.1; //scroll-fast
         slider.scrollLeft = scrollLeft - walk;
-        console.log(walk);
+
+        const now = Date.now();
+        const deltaTime = now - lastMoveTime;
+        const deltaX = e.pageX - lastMoveX;
+        velocity = deltaX / deltaTime;
+
+        lastMoveTime = now;
+        lastMoveX = e.pageX;
       });
+
+      function applyInertia() {
+        const friction = 0.95;
+        const step = () => {
+          if (Math.abs(velocity) < 0.1) return;
+          slider.scrollLeft -= velocity * 5;
+          velocity *= friction;
+          requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      }
     });
   }
 }

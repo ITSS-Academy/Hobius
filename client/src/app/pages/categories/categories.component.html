@@ -4,13 +4,6 @@
       <mat-icon matPrefix>search</mat-icon>
       <input matInput placeholder="Search your book..." />
     </mat-form-field>
-
-    <!--    <div id="home-header-avatar">-->
-    <!--      <mat-icon>account_circle</mat-icon>-->
-    <!--    </div>-->
-    <!--    <div id="categories-header-button">-->
-    <!--      <button mat-flat-button>Login</button>-->
-    <!--    </div>-->
   </div>
   <div id="categories-header-title">
     <button mat-icon-button>
@@ -23,11 +16,11 @@
         <p>THỊNH HÀNH</p>
       </div>
     </div>
-    <cdk-virtual-scroll-viewport itemSize="50" id="top-viewport">
-      <div id="theLoaiBox">
+    <div class="cardBox">
+      <div id="theLoaiBox" #viewport>
         <div class="theLoai" *ngFor="let loai of theLoai">{{ loai }}</div>
       </div>
-    </cdk-virtual-scroll-viewport>
+    </div>
     <cdk-virtual-scroll-viewport itemSize="50" id="bot-viewport">
       <div id="cardBox">
         <app-card *ngFor="let card of thinhHanhCards" [ebook]="card"></app-card>
