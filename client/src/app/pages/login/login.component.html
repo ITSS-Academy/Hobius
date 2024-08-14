@@ -1,28 +1,57 @@
-<div id="container">
-    <div id="login">
-        
-        <div id="title">
-            <img src="../public/assets/Blue-Book.png" width="100px" height="70px" alt="Blue-Book">
-            <h2>Sign in</h2>
-            <h4>Use your Google Account</h4>
-        </div>
-        <form id="form">
-            <div class="form-login">
-                <mat-form-field appearance="outline">
-                    <mat-label>Email</mat-label>
-                    <input matInput placeholder="Email">
-                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                  </mat-form-field>
-                  <mat-form-field appearance="outline">
-                    <mat-label>Password</mat-label>
-                    <input matInput placeholder="Password">
-                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                  </mat-form-field>
-            </div>
-            <div class="btn">
-                <button type="submit" class="btn-submitGG" mat-stroked-button>Sign in with Google</button>
-                <button type="submit" class="btn-submit" mat-flat-button>Sign in</button>
-            </div>
-        </form>
+<div id="login-container">
+  <div id="login-card">
+    <div id="title">
+      <img
+        [src]="'public/assets/logos/logo.png'"
+        width="100px"
+        height="100px"
+        alt="Blue-Book"
+      />
+      <h6>Sign in</h6>
+      <p>Use your <b>Google Account</b></p>
+      <p>or Sign in with <b>Email & Password</b></p>
     </div>
+    <form [formGroup]="loginForm" id="form" (ngSubmit)="onSubmit()">
+      <div class="form-login">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" placeholder="Email" />
+          @if (loginForm.get("email")?.invalid) {
+            <mat-error>Invalid email</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            placeholder="Password"
+            type="password"
+          />
+          @if (loginForm.get("password")?.invalid) {
+            <mat-error>Invalid password</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="btn-grp">
+        <button type="submit" class="btn-submit" mat-stroked-button>
+          <img
+            [src]="'public/assets/logos/google_logo.png'"
+            width="16"
+            height="16"
+            alt="google logo"
+          />
+          Sign in with Google
+        </button>
+        <button
+          type="submit"
+          class="btn-submit"
+          mat-flat-button
+          [disabled]="loginForm.invalid"
+        >
+          Sign in
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

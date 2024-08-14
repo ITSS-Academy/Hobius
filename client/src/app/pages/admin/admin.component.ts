@@ -374,7 +374,7 @@ function createNewEbook(id: number): EbookModel {
     title: name,
     author: AUTHORS[Math.round(Math.random() * (AUTHORS.length - 1))],
     detail: 'This is a detail of ' + name,
-    image: 'public/assets/Emma-Jane-Austen.jpg',
+    image: 'public/assets/books-img/Emma-Jane-Austen.jpg',
     date: new Date().toDateString(),
     view: Math.round(Math.random() * 1000),
     like: Math.round(Math.random() * 100),
