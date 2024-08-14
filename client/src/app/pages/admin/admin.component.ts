@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { SharedModule } from '../../../shared/modules/shared.module';
@@ -6,9 +6,11 @@ import { MaterialModule } from '../../../shared/modules/material.module';
 import { MatTableDataSource } from '@angular/material/table';
 import { EbookModel } from '../../../models/ebook.model';
 import { SelectionModel } from '@angular/cdk/collections';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateFormDialogComponent } from './components/create-form-dialog/create-form-dialog.component';
 
 /** Constants used to fill up our data base. */
-const GENRES: string[] = [
+export const GENRES: string[] = [
   'Adventure',
   'Science Fiction',
   'Fantasy',
@@ -248,21 +250,25 @@ const AUTHORS: string[] = [
   styleUrl: './admin.component.scss',
 })
 export class AdminComponent implements AfterViewInit {
+  //table
   displayedColumns: string[] = [
     'select',
-    'id',
+    // 'id',
+    'image',
     'title',
     'author',
     'detail',
-    // 'image',
     'view',
     'like',
-    // 'genre',
+    'genre',
   ];
   dataSource: MatTableDataSource<EbookModel>;
   selection = new SelectionModel<EbookModel>(true, []);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  //dialog
+  readonly dialog = inject(MatDialog);
 
   constructor() {
     // Create 100 users
@@ -286,29 +292,32 @@ export class AdminComponent implements AfterViewInit {
     }
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  toggleAllRows() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
-    }
-
-    this.selection.select(...this.dataSource.data);
-  }
-
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: EbookModel): string {
     if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+      return `${this.selection.hasValue() ? 'deselect' : 'select'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${Number(row.id) + 1}`;
+  }
+
+  toggle(row: EbookModel) {
+    if (this.selection.isSelected(row)) {
+      // console.log(row);
+      this.selection.deselect(row);
+    } else {
+      this.selection.clear(); // Clear all selections
+      this.selection.toggle(row); // Select the clicked row
+    }
+    //log the checked row
+    // console.log(this.selection.selected);
+  }
+
+  openCreateEbookDialog() {
+    const dialogRef = this.dialog.open(CreateFormDialogComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }
 

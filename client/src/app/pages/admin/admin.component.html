@@ -7,10 +7,10 @@
         </button>
       </div>
       <div id="admin-header-button-grp-right-side">
-        <button mat-icon-button>
+        <button mat-icon-button (click)="openCreateEbookDialog()">
           <mat-icon>add_circle</mat-icon>
         </button>
-        <button mat-icon-button>
+        <button mat-icon-button [disabled]="selection.selected.length == 0">
           <mat-icon>edit</mat-icon>
         </button>
       </div>
@@ -31,19 +31,11 @@
         <table mat-table [dataSource]="dataSource" matSort>
           <!-- Checkbox Column -->
           <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef>
-              <mat-checkbox
-                (change)="$event ? toggleAllRows() : null"
-                [checked]="selection.hasValue() && isAllSelected()"
-                [indeterminate]="selection.hasValue() && !isAllSelected()"
-                [aria-label]="checkboxLabel()"
-              >
-              </mat-checkbox>
-            </th>
+            <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let row">
               <mat-checkbox
                 (click)="$event.stopPropagation()"
-                (change)="$event ? selection.toggle(row) : null"
+                (change)="$event ? toggle(row) : null"
                 [checked]="selection.isSelected(row)"
                 [aria-label]="checkboxLabel(row)"
               >
@@ -51,16 +43,25 @@
             </td>
           </ng-container>
 
-          <!-- ID Column -->
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-            <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+          <!-- Image Column -->
+          <ng-container matColumnDef="image">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Image</th>
+            <td mat-cell *matCellDef="let row">
+              <img
+                [src]="row.image"
+                alt="Ebook Image"
+                width="80"
+                height="122"
+              />
+            </td>
           </ng-container>
 
           <!-- Title Column -->
           <ng-container matColumnDef="title">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
-            <td mat-cell *matCellDef="let row">{{ row.title }}</td>
+            <td mat-cell *matCellDef="let row">
+              <span>{{ row.title }}</span>
+            </td>
           </ng-container>
 
           <!-- Author Column -->
@@ -72,7 +73,9 @@
           <!-- Detail Column -->
           <ng-container matColumnDef="detail">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Detail</th>
-            <td mat-cell *matCellDef="let row">{{ row.detail }}</td>
+            <td mat-cell *matCellDef="let row">
+              <span>{{ row.detail }}</span>
+            </td>
           </ng-container>
 
           <!-- View Column -->
@@ -87,6 +90,18 @@
             <td mat-cell *matCellDef="let row">{{ row.like }}</td>
           </ng-container>
 
+          <!-- Genre Column -->
+          <ng-container matColumnDef="genre">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Genre</th>
+            <td mat-cell *matCellDef="let row">
+              <mat-chip-set aria-label="Categories Chip">
+                @for (genre of row.genre; track $index) {
+                  <mat-chip>{{ genre }}</mat-chip>
+                }
+              </mat-chip-set>
+            </td>
+          </ng-container>
+
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
@@ -99,9 +114,8 @@
         </table>
       </div>
     </cdk-virtual-scroll-viewport>
-
     <mat-paginator
-      [pageSizeOptions]="[5, 10, 25, 100]"
+      [pageSizeOptions]="[10, 5, 25, 100]"
       aria-label="Select page of users"
     ></mat-paginator>
   </div>
