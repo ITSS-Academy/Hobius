@@ -63,6 +63,18 @@
     color: #3a3b3f;
     line-height: 33px;
 }
+#book-info #doc-btn{
+    width: 200px;
+    height: 50px;
+    border-radius: 15px;
+    background-color: var(--primary);
+    color: var(fdfbff);
+    font-size: 18px;
+}
+#book-info #doc-btn:hover{
+    background-color: var(--primaryFixedDim);
+    color: #001b3e;
+}
 .example-label {
   display: table-cell;
   font-size: 24px;
