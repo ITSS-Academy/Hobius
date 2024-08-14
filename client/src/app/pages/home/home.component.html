@@ -23,11 +23,9 @@
           <mat-icon>arrow_forward</mat-icon>
         </button>
       </div>
-      <cdk-virtual-scroll-viewport itemSize="166px" class="example-viewport">
-        <div class="cardBox">
-          <app-card *ngFor="let card of lichSuCards" [ebook]="card"></app-card>
-        </div>
-      </cdk-virtual-scroll-viewport>
+      <div class="cardBox" #viewport>
+        <app-card *ngFor="let card of lichSuCards" [ebook]="card"></app-card>
+      </div>
     </div>
     <div class="boxContener">
       <div class="titleName">
@@ -36,14 +34,9 @@
           <mat-icon>arrow_forward</mat-icon>
         </button>
       </div>
-      <cdk-virtual-scroll-viewport itemSize="166px" class="example-viewport">
-        <div class="cardBox">
-          <app-card
-            *ngFor="let card of thinhHanhCards"
-            [ebook]="card"
-          ></app-card>
-        </div>
-      </cdk-virtual-scroll-viewport>
+      <div class="cardBox" #viewport>
+        <app-card *ngFor="let card of thinhHanhCards" [ebook]="card"></app-card>
+      </div>
     </div>
     <div class="boxContener">
       <div class="titleName">
@@ -52,11 +45,9 @@
           <mat-icon>arrow_forward</mat-icon>
         </button>
       </div>
-      <cdk-virtual-scroll-viewport itemSize="166px" class="example-viewport">
-        <div class="cardBox">
-          <app-card *ngFor="let card of deCuCards" [ebook]="card"></app-card>
-        </div>
-      </cdk-virtual-scroll-viewport>
+      <div class="cardBox" #viewport>
+        <app-card *ngFor="let card of deCuCards" [ebook]="card"></app-card>
+      </div>
     </div>
     <div class="boxContener">
       <div class="titleName">
@@ -65,14 +56,12 @@
           <mat-icon>arrow_forward</mat-icon>
         </button>
       </div>
-      <cdk-virtual-scroll-viewport itemSize="166px" class="example-viewport">
-        <div class="cardBox">
-          <app-card
-            *ngFor="let card of bangXepHangCards"
-            [ebook]="card"
-          ></app-card>
-        </div>
-      </cdk-virtual-scroll-viewport>
+      <div class="cardBox" #viewport>
+        <app-card
+          *ngFor="let card of bangXepHangCards"
+          [ebook]="card"
+        ></app-card>
+      </div>
     </div>
   </div>
 </div>

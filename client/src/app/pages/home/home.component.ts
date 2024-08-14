@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ViewChildren,
+  QueryList,
+  ElementRef,
+} from '@angular/core';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { CardComponent } from '../../components/card/card.component';
@@ -14,6 +20,7 @@ import { NgForOf } from '@angular/common';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements AfterViewInit {
+  @ViewChildren('viewport') viewports!: QueryList<ElementRef>;
   lichSuCards: EbookModel[] = [];
   thinhHanhCards: EbookModel[] = [];
   deCuCards: EbookModel[] = [];
@@ -28,5 +35,38 @@ export class HomeComponent implements AfterViewInit {
     this.bangXepHangCards = this.cardService.cards;
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() {
+    this.viewports.forEach((viewport) => {
+      const slider = viewport.nativeElement as HTMLElement;
+      let isDown = false;
+      let startX: number;
+      let scrollLeft: number;
+
+      slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.classList.add('active');
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+      });
+
+      slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.classList.remove('active');
+      });
+
+      slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.classList.remove('active');
+      });
+
+      slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 3; //scroll-fast
+        slider.scrollLeft = scrollLeft - walk;
+        console.log(walk);
+      });
+    });
+  }
 }
