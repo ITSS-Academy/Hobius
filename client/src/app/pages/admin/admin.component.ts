@@ -327,6 +327,8 @@ export class AdminComponent implements AfterViewInit {
           view: 0,
           date: new Date().toDateString(),
         };
+        this.ebooks.push(newEbook);
+        this.dataSource = new MatTableDataSource(this.ebooks);
         console.log(newEbook);
       }
     });

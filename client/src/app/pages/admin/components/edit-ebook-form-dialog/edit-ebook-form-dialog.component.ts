@@ -10,6 +10,7 @@ import {
 } from '@angular/material/dialog';
 import { EbookModel } from '../../../../../models/ebook.model';
 import { EbookFormDialogComponent } from '../../../../components/ebook-form-dialog/ebook-form-dialog.component';
+import { CloudStorageService } from '../../../../../services/cloud-storage.service';
 
 @Component({
   selector: 'app-edit-ebook-form-dialog',
@@ -26,8 +27,11 @@ import { EbookFormDialogComponent } from '../../../../components/ebook-form-dial
   styleUrl: './edit-ebook-form-dialog.component.scss',
 })
 export class EditEbookFormDialogComponent extends EbookFormDialogComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: EbookModel) {
-    super();
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: EbookModel,
+    protected override cloudStorageService: CloudStorageService,
+  ) {
+    super(cloudStorageService);
     console.log(data);
     this.ebookFormGroup.patchValue({ ...data });
   }

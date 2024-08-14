@@ -16,6 +16,7 @@ import { SharedModule } from '../../../shared/modules/shared.module';
 import { GENRES } from '../../pages/admin/admin.component';
 import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CloudStorageService } from '../../../services/cloud-storage.service';
 
 @Component({
   selector: 'app-ebook-form-dialog',
@@ -32,6 +33,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrls: ['./ebook-form-dialog.component.scss'],
 })
 export class EbookFormDialogComponent {
+  tempId = Date.now().toString();
   ebookFormGroup: FormGroup;
   genreList = GENRES;
 
@@ -48,7 +50,7 @@ export class EbookFormDialogComponent {
   pdfErrorMessage = signal('');
   imageErrorMessage = signal('');
 
-  constructor() {
+  constructor(protected cloudStorageService: CloudStorageService) {
     this.ebookFormGroup = new FormGroup({
       title: new FormControl('', [Validators.required]),
       author: new FormControl('', [Validators.required]),
@@ -117,11 +119,15 @@ export class EbookFormDialogComponent {
 
   onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
+    this.cloudStorageService.uploadFile(file!, `ebooks/${this.tempId}/cover`);
+    console.log(`ebooks/${this.tempId}/cover`);
     this.ebookFormGroup.patchValue({ image: file!.name });
   }
 
   onPdfPicked(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
+    this.cloudStorageService.uploadFile(file!, `ebooks/${this.tempId}/pdf`);
+    console.log(`ebooks/${this.tempId}/pdf`);
     this.ebookFormGroup.patchValue({ pdf: file!.name });
   }
 

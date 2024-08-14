@@ -9,6 +9,7 @@ import {
 import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
 import { EbookFormDialogComponent } from '../../../../components/ebook-form-dialog/ebook-form-dialog.component';
+import { CloudStorageService } from '../../../../../services/cloud-storage.service';
 
 @Component({
   selector: 'app-add-ebook-form-dialog',
@@ -26,7 +27,7 @@ import { EbookFormDialogComponent } from '../../../../components/ebook-form-dial
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddEbookFormDialogComponent extends EbookFormDialogComponent {
-  constructor() {
-    super();
+  constructor(protected override cloudStorageService: CloudStorageService) {
+    super(cloudStorageService);
   }
 }
