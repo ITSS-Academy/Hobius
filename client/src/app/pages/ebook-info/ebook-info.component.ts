@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import {FormsModule} from "@angular/forms";
+import {CdkFixedSizeVirtualScroll} from "@angular/cdk/scrolling";
 
 @Component({
   selector: 'app-ebook-info',
@@ -10,7 +11,8 @@ import {FormsModule} from "@angular/forms";
     MatButton,
     MatIcon,
     FormsModule,
-    MatIconButton
+    MatIconButton,
+    CdkFixedSizeVirtualScroll
   ],
   templateUrl: './ebook-info.component.html',
   styleUrls: ['./ebook-info.component.scss']
