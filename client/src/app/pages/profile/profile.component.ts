@@ -38,7 +38,8 @@ export class ProfileComponent {
       author: 'Tiên Sắc Xám',
       year: 'N/A',
       summary:
-        'Ở kiếp này, Khan là anh trai nhân vật chính nhưng số mệnh của hắn lại không may mắn hưởng ké được miếng hào quang nào của cậu ta...',
+        'Ở kiếp này, Khan là anh trai nhân vật chính nhưng số mệnh của hắn lại không may mắn hưởng ké được miếng hào quang nào của cậu ta.' +
+        ' Khan lấy lại được ký ức tiền kiếp mình trong hoàn cảnh hoàn toàn bất lợi. Hắn nhận ra mình chỉ là một nhân vật phụ, một nhân vật phản diện bé nhỏ trong bộ tiểu thuyết dài kỳ được viết bởi nhỏ em gái của mình ở kiếp trước viết ra...',
     },
     {
       id: 4,
