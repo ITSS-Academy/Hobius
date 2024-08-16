@@ -167,29 +167,6 @@ mat-tab-group {
   color: #415e91 !important;
 }
 
-//Change Active Tab Bottom Border Color
-//::ng-deep
-//  .mat-mdc-tab-group.mat-accent
-//  .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab-indicator__content--underline,
-//::ng-deep
-//  .mat-mdc-tab-group.mat-accent
-//  .mat-mdc-tab-link:not(
-//    .mat-mdc-tab-disabled
-//  ).mdc-tab-indicator__content--underline,
-//::ng-deep
-//  .mat-mdc-tab-nav-bar.mat-accent
-//  .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab-indicator__content--underline,
-//::ng-deep
-//  .mat-mdc-tab-nav-bar.mat-accent
-//  .mat-mdc-tab-link:not(
-//    .mat-mdc-tab-disabled
-//  ).mdc-tab-indicator__content--underline {
-//  border-color: var(
-//    --mdc-tab-indicator-active-indicator-color,
-//    #415e91
-//  ) !important;
-//}
-
 .content {
   width: 100%;
   height: calc(100% - 84px);
@@ -239,6 +216,8 @@ mat-tab-group {
 }
 
 .title {
+  width: fit-content;
+  height: fit-content;
   font-size: 18px;
   color: #191c20;
   cursor: pointer;
