@@ -13,8 +13,8 @@ import { merge, Subscription } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CloudStorageService } from '../../../services/cloud-storage.service';
 import { Store } from '@ngrx/store';
-import { FileUploadState } from '../../../ngrx/file-upload/file-upload.state';
-import * as UploadActions from '../../../ngrx/file-upload/file-upload.actions';
+import { FileUploadState } from '../../../ngrxs/file-upload/file-upload.state';
+import * as UploadActions from '../../../ngrxs/file-upload/file-upload.actions';
 import { Event } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 

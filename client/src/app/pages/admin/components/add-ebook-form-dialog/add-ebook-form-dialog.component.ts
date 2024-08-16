@@ -10,7 +10,7 @@ import { MaterialModule } from '../../../../../shared/modules/material.module';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
 import { EbookFormDialogComponent } from '../../../../components/ebook-form-dialog/ebook-form-dialog.component';
 import { CloudStorageService } from '../../../../../services/cloud-storage.service';
-import { FileUploadState } from '../../../../../ngrx/file-upload/file-upload.state';
+import { FileUploadState } from '../../../../../ngrxs/file-upload/file-upload.state';
 import { Store } from '@ngrx/store';
 import { MatSnackBar } from '@angular/material/snack-bar';
 

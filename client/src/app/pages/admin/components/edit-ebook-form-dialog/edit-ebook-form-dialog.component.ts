@@ -12,7 +12,7 @@ import { EbookModel } from '../../../../../models/ebook.model';
 import { EbookFormDialogComponent } from '../../../../components/ebook-form-dialog/ebook-form-dialog.component';
 import { CloudStorageService } from '../../../../../services/cloud-storage.service';
 import { Store } from '@ngrx/store';
-import { FileUploadState } from '../../../../../ngrx/file-upload/file-upload.state';
+import { FileUploadState } from '../../../../../ngrxs/file-upload/file-upload.state';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
