@@ -31,6 +31,7 @@
   width: fit-content;
   height: fit-content;
   color: #415e91;
+  font-size: 32px;
   display: flex;
   align-items: center;
 }
@@ -81,7 +82,7 @@
   cursor: context-menu;
 
   #name {
-    font-size: 45px;
+    font-size: 28px;
     color: white;
   }
 
@@ -115,6 +116,7 @@
 .icon {
   width: 18px;
   height: 18px;
+  font-size: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
