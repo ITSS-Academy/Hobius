@@ -5,6 +5,7 @@ import {
   QueryList,
   ElementRef,
   ViewChild,
+  OnInit,
 } from '@angular/core';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
@@ -20,7 +21,7 @@ import { NgForOf } from '@angular/common';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent implements AfterViewInit {
+export class HomeComponent implements AfterViewInit, OnInit {
   @ViewChildren('viewport') viewports!: QueryList<ElementRef>;
   lichSuCards: EbookModel[] = [];
   thinhHanhCards: EbookModel[] = [];

@@ -6,14 +6,14 @@
     </mat-form-field>
   </div>
   <div id="categories-header-title">
-    <button mat-icon-button>
+    <button mat-icon-button [routerLink]="['/']">
       <mat-icon>arrow_backward</mat-icon>
     </button>
   </div>
   <div id="categories-content">
     <div id="topBox">
       <div id="thinhHanhBox">
-        <p>THỊNH HÀNH</p>
+        <p>{{ headerName }}</p>
       </div>
     </div>
     <div class="cardBox">

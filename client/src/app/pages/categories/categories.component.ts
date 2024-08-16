@@ -4,6 +4,7 @@ import {
   ViewChildren,
   QueryList,
   ElementRef,
+  OnInit,
 } from '@angular/core';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
@@ -11,6 +12,7 @@ import { CardComponent } from '../../components/card/card.component';
 import { EbookModel } from '../../../models/ebook.model';
 import { CardService } from '../../../services/card.service';
 import { NgForOf } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-categories',
@@ -19,12 +21,16 @@ import { NgForOf } from '@angular/common';
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })
-export class CategoriesComponent implements AfterViewInit {
+export class CategoriesComponent implements AfterViewInit, OnInit {
   @ViewChildren('viewport') viewports!: QueryList<ElementRef>;
   theLoai: string[] = [];
   thinhHanhCards: EbookModel[] = [];
+  headerName: string = '';
 
-  constructor(private cardService: CardService) {}
+  constructor(
+    private cardService: CardService,
+    private activatedRoute: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
     this.theLoai = [
@@ -42,6 +48,25 @@ export class CategoriesComponent implements AfterViewInit {
       'Literature',
     ]; // Example categories
     this.thinhHanhCards = this.cardService.cards;
+    this.activatedRoute.paramMap.subscribe((params) => {
+      const type = params.get('type');
+      if (type) {
+        switch (type) {
+          case 'history':
+            this.headerName = 'Lịch sử';
+            break;
+          case 'trends':
+            this.headerName = 'Thịnh hành';
+            break;
+          case 'recommend':
+            this.headerName = 'Đề cử';
+            break;
+          case 'rank':
+            this.headerName = 'Bảng xếp hạng';
+            break;
+        }
+      }
+    });
   }
 
   ngAfterViewInit() {
