@@ -6,7 +6,7 @@
 
   #categories-header {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     font-size: 2rem;
     font-weight: bold;
@@ -56,6 +56,25 @@
       overflow: hidden;
       white-space: nowrap;
       cursor: grab;
+
+      #categories-header {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        position: relative;
+
+        #categories-header-title {
+          position: absolute;
+          left: 0;
+          margin-left: 20px;
+        }
+
+        #categories-header-search {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+        }
+      }
 
       &.active {
         cursor: grabbing;
