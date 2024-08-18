@@ -80,24 +80,41 @@ export class EbookFormDialogComponent implements OnInit, OnDestroy {
     merge(this.image.statusChanges, this.image.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateImageErrorMessage());
+  }
 
-    this.store
-      .select('file_upload', 'downloadPdfURL')
-      .pipe(takeUntilDestroyed())
-      .subscribe((downloadURL) => {
-        if (downloadURL != null && downloadURL != '') {
-          this.ebookFormGroup.patchValue({ pdf: downloadURL });
-        }
-      });
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
 
-    this.store
-      .select('file_upload', 'downloadCoverURL')
-      .pipe(takeUntilDestroyed())
-      .subscribe((downloadURL) => {
-        if (downloadURL != null && downloadURL != '') {
-          this.ebookFormGroup.patchValue({ image: downloadURL });
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.store.select('file_upload', 'downloadCoverURL').subscribe((url) => {
+        if (url != null) {
+          this.ebookFormGroup.patchValue({ image: url });
+          this._snackBar.open('File uploaded successfully', 'Close', {
+            duration: 5000,
+          });
         }
-      });
+      }),
+      this.store.select('file_upload', 'downloadPdfURL').subscribe((url) => {
+        if (url != null) {
+          this.ebookFormGroup.patchValue({ pdf: url });
+          this._snackBar.open('File uploaded successfully', 'Close', {
+            duration: 5000,
+          });
+        }
+      }),
+      this.store.select('file_upload', 'isLoading').subscribe((isLoading) => {
+        this.isLoading = isLoading;
+      }),
+      this.store.select('file_upload', 'error').subscribe((error) => {
+        if (error) {
+          this._snackBar.open('Error uploading file', 'Close', {
+            duration: 5000,
+          });
+        }
+      }),
+    );
   }
 
   updateTitleErrorMessage() {
@@ -165,38 +182,5 @@ export class EbookFormDialogComponent implements OnInit, OnDestroy {
   sendForm() {
     // console.log(this.ebookFormGroup.value);
     return this.ebookFormGroup.value;
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
-  }
-
-  ngOnInit(): void {
-    this.subscriptions.push(
-      this.store.select('file_upload', 'downloadCoverURL').subscribe((url) => {
-        if (url != null) {
-          this._snackBar.open('File uploaded successfully', 'Close', {
-            duration: 5000,
-          });
-        }
-      }),
-      this.store.select('file_upload', 'downloadPdfURL').subscribe((url) => {
-        if (url != null) {
-          this._snackBar.open('File uploaded successfully', 'Close', {
-            duration: 5000,
-          });
-        }
-      }),
-      this.store.select('file_upload', 'isLoading').subscribe((isLoading) => {
-        this.isLoading = isLoading;
-      }),
-      this.store.select('file_upload', 'error').subscribe((error) => {
-        if (error) {
-          this._snackBar.open('Error uploading file', 'Close', {
-            duration: 5000,
-          });
-        }
-      }),
-    );
   }
 }
