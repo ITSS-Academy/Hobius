@@ -32,11 +32,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class EditEbookFormDialogComponent extends EbookFormDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EbookModel,
-    protected override cloudStorageService: CloudStorageService,
     protected override store: Store<{ file_upload: FileUploadState }>,
     protected override _snackBar: MatSnackBar,
   ) {
-    super(cloudStorageService, store, _snackBar);
+    super(store, _snackBar);
     console.log(data);
     this.ebookFormGroup.patchValue({ ...data });
   }

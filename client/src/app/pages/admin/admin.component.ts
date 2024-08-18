@@ -341,14 +341,14 @@ export class AdminComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        let newEbook: EbookModel = {
-          ...result,
-          id: (this.dataSource.data.length + 1).toString(),
-          like: 0,
-          view: 0,
-          date: new Date().toDateString(),
-        };
-        console.log(newEbook);
+        // let newEbook: EbookModel = {
+        //   ...result,
+        //   id: (this.dataSource.data.length + 1).toString(),
+        //   like: 0,
+        //   view: 0,
+        //   date: new Date().toDateString(),
+        // };
+        console.log(result);
       }
     });
   }

@@ -11,11 +11,9 @@ import { SharedModule } from '../../../shared/modules/shared.module';
 import { GENRES } from '../../pages/admin/admin.component';
 import { merge, Subscription } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CloudStorageService } from '../../../services/cloud-storage.service';
 import { Store } from '@ngrx/store';
 import { FileUploadState } from '../../../ngrxs/file-upload/file-upload.state';
 import * as UploadActions from '../../../ngrxs/file-upload/file-upload.actions';
-import { Event } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -53,7 +51,6 @@ export class EbookFormDialogComponent implements OnInit, OnDestroy {
   imageErrorMessage = signal('');
 
   constructor(
-    protected cloudStorageService: CloudStorageService,
     protected store: Store<{
       file_upload: FileUploadState;
     }>,

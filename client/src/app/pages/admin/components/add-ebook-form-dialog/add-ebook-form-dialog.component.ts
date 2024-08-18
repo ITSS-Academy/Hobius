@@ -30,12 +30,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AddEbookFormDialogComponent extends EbookFormDialogComponent {
   constructor(
-    protected override cloudStorageService: CloudStorageService,
     protected override store: Store<{
       file_upload: FileUploadState;
     }>,
     protected override _snackBar: MatSnackBar,
   ) {
-    super(cloudStorageService, store, _snackBar);
+    super(store, _snackBar);
   }
 }

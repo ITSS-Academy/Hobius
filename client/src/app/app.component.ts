@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  NavigationEnd,
-  NavigationExtras,
-  Router,
-  RouterOutlet,
-} from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { Store } from '@ngrx/store';
@@ -19,10 +14,8 @@ import * as AuthActions from '../ngrxs/auth/auth.actions';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  title = 'client';
+  title = 'Hobius';
   isLoginPage = false;
-
-  mainClass = ['login-scaffold'];
 
   constructor(
     private router: Router,
