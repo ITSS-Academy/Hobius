@@ -3,7 +3,7 @@
   width: 100%;
   display: flex;
   flex-direction: row;
-  align-items: end;
+  align-items: center;
 
   #sidebar-container {
     height: 95%;
@@ -21,7 +21,5 @@
   .login-scaffold {
     width: 100% !important;
     margin: 0 !important;
-    //background: none !important;
-    //border-radius: 0 !important;
   }
 }
