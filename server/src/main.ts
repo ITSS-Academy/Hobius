@@ -3,6 +3,14 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+  app.enableCors();
+  // app.useGlobalFilters(new HttpExceptionFilter());
+  // app.useGlobalPipes(new ValidationPipe());
+  await app.listen(6868);
+
+  console.log(`Application is running on: ${await app.getUrl()}`);
 }
-bootstrap();
+
+bootstrap()
+  .then(() => console.log('Tic Tic Boom!!!'))
+  .catch((e) => console.error(e));
