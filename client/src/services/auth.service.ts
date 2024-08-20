@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {
   Auth,
   signInWithPopup,
   GoogleAuthProvider,
   signOut,
 } from '@angular/fire/auth';
-import { from, of } from 'rxjs';
+import { from, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 
@@ -41,13 +41,24 @@ export class AuthService {
   }
 
   signInWithStaticUser(email: string, password: string) {
-    return this.http.post<{ access_token: string }>(
-      `${environment.apiUrl}/auth/login`,
-      {
+    return this.http
+      .post<{ access_token: string }>(`${environment.apiUrl}/auth/login`, {
         email: email,
         password: password,
-      },
-    );
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred!';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side or network error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Backend error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    return throwError(errorMessage);
   }
 
   logout() {

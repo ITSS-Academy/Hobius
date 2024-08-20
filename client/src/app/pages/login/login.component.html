@@ -12,9 +12,10 @@
         height="100px"
         alt="Blue-Book"
       />
-      <h6>Sign in</h6>
-      <p>Use your <b>Google Account</b></p>
-      <p>or Sign in with <b>Email & Password</b></p>
+      <h6>Đăng nhập</h6>
+      <p>Sử dụng <b>tài khoản Google</b></p>
+      <p>hoặc đăng nhập bằng</p>
+      <b> Email & Password</b>
     </div>
     <form [formGroup]="loginForm" id="form" (ngSubmit)="onSubmit()">
       <div class="form-login">
@@ -22,19 +23,19 @@
           <mat-label>Email</mat-label>
           <input matInput formControlName="email" placeholder="Email" />
           @if (loginForm.get("email")?.invalid) {
-            <mat-error>Invalid email</mat-error>
+            <mat-error>Email không hợp lệ</mat-error>
           }
         </mat-form-field>
         <mat-form-field appearance="outline">
-          <mat-label>Password</mat-label>
+          <mat-label>Mật khẩu</mat-label>
           <input
             matInput
             formControlName="password"
-            placeholder="Password"
+            placeholder="Mật khẩu"
             type="password"
           />
           @if (loginForm.get("password")?.invalid) {
-            <mat-error>Invalid password</mat-error>
+            <mat-error>Mật khẩu không hợp lệ</mat-error>
           }
         </mat-form-field>
       </div>
@@ -51,15 +52,16 @@
             height="16"
             alt="google logo"
           />
-          Sign in with Google
+          Đăng nhập bằng Google
         </button>
         <button
           type="submit"
           class="btn-submit"
           mat-flat-button
           [disabled]="loginForm.invalid"
+          (click)="signInWithStaticUser()"
         >
-          Sign in
+          Đăng nhập
         </button>
       </div>
     </form>

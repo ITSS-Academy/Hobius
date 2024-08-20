@@ -81,6 +81,7 @@ export class UsersService {
 
   async checkUser(email: string, password: string): Promise<User> {
     try {
+      console.log(email, password);
       const user = await this.usersRepository.findOne({
         where: { email },
       });
