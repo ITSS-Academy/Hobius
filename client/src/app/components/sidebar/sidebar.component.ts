@@ -21,9 +21,9 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
       routeLink: '/admin',
       isActive: false,
     },
-    { name: 'Home', icon: 'home', routeLink: '/home', isActive: false },
+    { name: 'Trang chủ', icon: 'home', routeLink: '/home', isActive: false },
     {
-      name: 'Profile',
+      name: 'Hồ sơ',
       icon: 'person',
       routeLink: '/profile',
       isActive: false,
