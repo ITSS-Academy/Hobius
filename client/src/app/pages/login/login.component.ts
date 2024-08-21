@@ -70,4 +70,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       }),
     );
   }
+
+  goToHome() {
+    this.router.navigate(['/home']).then();
+  }
 }

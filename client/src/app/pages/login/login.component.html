@@ -5,6 +5,9 @@
     </div>
   }
   <div id="login-card">
+    <!--    <button mat-icon-button>-->
+    <!--      <mat-icon>home</mat-icon>-->
+    <!--    </button>-->
     <div id="title">
       <img
         [src]="'public/assets/logos/logo.png'"
@@ -62,6 +65,14 @@
           (click)="signInWithStaticUser()"
         >
           Đăng nhập
+        </button>
+        <button
+          type="button"
+          class="btn-home"
+          mat-icon-button
+          (click)="goToHome()"
+        >
+          <mat-icon>home</mat-icon>
         </button>
       </div>
     </form>
