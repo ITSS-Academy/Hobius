@@ -1,26 +1,44 @@
 <div id="sidebar-container">
   <ul class="sidenav-nav">
     <img
-      src="../../../../public/assets/logos/logo.png"
+      [src]="'../../../../public/assets/logos/logo.png'"
       alt="logo"
       id="logo"
       (click)="navigate(1)"
     />
-    @for (link of links; track i; let i = $index) {
+    @if (isStaticUser) {
       <li
         class="sidenav-nav-item"
-        [class]="link.isActive ? 'active' : 'inactive'"
-        (click)="navigate(i)"
+        [class]="links[0].isActive ? 'active' : 'inactive'"
+        (click)="navigate(0)"
       >
         <a class="sidenav-nav-link">
           <mat-icon class="material-symbols-rounded sidenav-link-icon">
-            {{ link.icon }}
+            {{ links[0].icon }}
           </mat-icon>
         </a>
         <p class="sidenav-link-text">
-          {{ link.name }}
+          {{ links[0].name }}
         </p>
       </li>
+    }
+    @for (link of links; track i; let i = $index) {
+      @if (i != 0) {
+        <li
+          class="sidenav-nav-item"
+          [class]="link.isActive ? 'active' : 'inactive'"
+          (click)="navigate(i)"
+        >
+          <a class="sidenav-nav-link">
+            <mat-icon class="material-symbols-rounded sidenav-link-icon">
+              {{ link.icon }}
+            </mat-icon>
+          </a>
+          <p class="sidenav-link-text">
+            {{ link.name }}
+          </p>
+        </li>
+      }
     }
   </ul>
 </div>

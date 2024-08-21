@@ -12,6 +12,7 @@
     display: flex;
     flex-direction: column;
     justify-content: start;
+    gap: 20px;
 
     #logo {
       margin: 10px 0;
@@ -48,6 +49,12 @@
         text-align: center;
       }
     }
+
+    //set the style for the index 1 and 2 of the sidenav-nav-item
+    //.sidenav-nav-item:nth-child(2),
+    //.sidenav-nav-item:nth-child(3) {
+    //  margin: 20px 0;
+    //}
   }
 
   .sidenav-nav-link {
@@ -83,11 +90,5 @@
   .inactive:hover {
     .sidenav-nav-link {
     }
-  }
-
-  //set the style for the index 1 and 2 of the sidenav-nav-item
-  .sidenav-nav-item:nth-child(2),
-  .sidenav-nav-item:nth-child(3) {
-    margin: 20px 0;
   }
 }

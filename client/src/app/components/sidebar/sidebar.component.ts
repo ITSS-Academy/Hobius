@@ -3,6 +3,8 @@ import { SharedModule } from '../../../shared/modules/shared.module';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { filter, Subscription } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AuthState } from '../../../ngrxs/auth/auth.state';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,6 +15,7 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
   subscriptions: Subscription[] = [];
+  isStaticUser = false;
 
   links = [
     {
@@ -30,9 +33,18 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
     },
   ];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private store: Store<{ auth: AuthState }>,
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.store.select('auth', 'isStaticUser').subscribe((isStaticUser) => {
+        this.isStaticUser = isStaticUser;
+      }),
+    );
+  }
 
   ngAfterViewInit(): void {
     this.subscriptions.push(
