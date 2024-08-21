@@ -5,9 +5,6 @@
     </div>
   }
   <div id="login-card">
-    <!--    <button mat-icon-button>-->
-    <!--      <mat-icon>home</mat-icon>-->
-    <!--    </button>-->
     <div id="title">
       <img
         [src]="'public/assets/logos/logo.png'"
@@ -20,7 +17,7 @@
       <p>hoặc đăng nhập bằng</p>
       <b> Email & Password</b>
     </div>
-    <form [formGroup]="loginForm" id="form" (ngSubmit)="signInWithStaticUser()">
+    <form [formGroup]="loginForm" id="form">
       <div class="form-login">
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
@@ -58,7 +55,7 @@
           Đăng nhập bằng Google
         </button>
         <button
-          type="button"
+          type="submit"
           class="btn-submit"
           mat-flat-button
           [disabled]="loginForm.invalid"

@@ -6,7 +6,7 @@ import {
   GoogleAuthProvider,
   signOut,
 } from '@angular/fire/auth';
-import { from, of, throwError } from 'rxjs';
+import { from, Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 
@@ -68,5 +68,17 @@ export class AuthService {
         return of(error);
       }),
     );
+  }
+
+  isSignedIn(): Observable<boolean> {
+    return new Observable<boolean>((observer) => {
+      this.auth.onAuthStateChanged((user) => {
+        if (user) {
+          observer.next(true);
+        } else {
+          observer.next(false);
+        }
+      });
+    });
   }
 }

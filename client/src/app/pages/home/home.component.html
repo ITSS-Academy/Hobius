@@ -64,7 +64,9 @@
         </button>
       </div>
       <div class="cardBox" #viewport>
-        <app-card *ngFor="let card of lichSuCards" [ebook]="card"></app-card>
+        @for (card of thinhHanhCards; track card) {
+          <app-card [ebook]="card"></app-card>
+        }
         <!--        <div class="end-of-scroll" #endOfScrollIndicator>End of List</div>-->
       </div>
     </div>
@@ -76,8 +78,10 @@
         </button>
       </div>
       <div class="cardBox" #viewport>
-        <app-card *ngFor="let card of thinhHanhCards" [ebook]="card"></app-card>
-        <div class="end-of-scroll" #endOfScrollIndicator>End of List</div>
+        @for (card of thinhHanhCards; track card) {
+          <app-card [ebook]="card"></app-card>
+        }
+        <!--        <div class="end-of-scroll" #endOfScrollIndicator>End of List</div>-->
       </div>
     </div>
     <div class="boxContener">
@@ -88,7 +92,9 @@
         </button>
       </div>
       <div class="cardBox" #viewport>
-        <app-card *ngFor="let card of deCuCards" [ebook]="card"></app-card>
+        @for (card of thinhHanhCards; track card) {
+          <app-card [ebook]="card"></app-card>
+        }
       </div>
     </div>
     <div class="boxContener">
@@ -99,11 +105,10 @@
         </button>
       </div>
       <div class="cardBox" #viewport>
-        <app-card
-          *ngFor="let card of bangXepHangCards"
-          [ebook]="card"
-        ></app-card>
-        <div class="end-of-scroll" #endOfScrollIndicator>End of List</div>
+        @for (card of thinhHanhCards; track card) {
+          <app-card [ebook]="card"></app-card>
+        }
+        <!--        <div class="end-of-scroll" #endOfScrollIndicator>End of List</div>-->
       </div>
       <div id="free-space"></div>
     </div>
