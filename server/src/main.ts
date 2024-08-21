@@ -6,12 +6,12 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalPipes(new ValidationPipe());
   admin.initializeApp({
     credential: admin.credential.cert('firebase-admin-key.json'),
   });
-  app.enableCors();
   await app.listen(6868);
   console.log(`Application is running on: ${await app.getUrl()}`);
 }

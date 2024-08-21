@@ -17,7 +17,7 @@
       <p>hoặc đăng nhập bằng</p>
       <b> Email & Password</b>
     </div>
-    <form [formGroup]="loginForm" id="form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="loginForm" id="form" (ngSubmit)="signInWithStaticUser()">
       <div class="form-login">
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
@@ -41,7 +41,7 @@
       </div>
       <div class="btn-grp">
         <button
-          type="submit"
+          type="button"
           class="btn-submit"
           mat-stroked-button
           (click)="signInWithGoogle()"
@@ -55,7 +55,7 @@
           Đăng nhập bằng Google
         </button>
         <button
-          type="submit"
+          type="button"
           class="btn-submit"
           mat-flat-button
           [disabled]="loginForm.invalid"

@@ -58,13 +58,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     );
   }
 
-  onSubmit() {
-    if (this.loginForm.valid) {
-      // Handle form submission
-      console.log(this.loginForm.value);
-    }
-  }
-
   signInWithGoogle() {
     this.store.dispatch(AuthActions.signInWithGoogle());
   }

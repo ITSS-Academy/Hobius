@@ -53,10 +53,10 @@ export class AuthService {
     let errorMessage = 'An unknown error occurred!';
     if (error.error instanceof ErrorEvent) {
       // Client-side or network error
-      errorMessage = `Error: ${error.error.message}`;
+      errorMessage = `Đang xảy ra lỗi`;
     } else {
       // Backend error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      errorMessage = `Đang xảy ra lỗi`;
     }
     return throwError(errorMessage);
   }
