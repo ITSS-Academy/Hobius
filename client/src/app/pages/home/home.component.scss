@@ -2,6 +2,9 @@
   height: 100%;
   width: 100%;
   overflow-x: hidden;
+  overflow-y: auto;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none;
 
   #home-header {
     height: 100px;
@@ -25,7 +28,7 @@
 
     #home-header-search {
       width: 50%;
-      min-width: 360px;
+      //min-width: 360px;
     }
 
     #home-header-avatar {
@@ -53,6 +56,10 @@
     #home-header-button {
       display: flex;
       margin: auto 20px auto 0;
+
+      #icon-btn {
+        display: none;
+      }
     }
   }
 
@@ -163,6 +170,40 @@
       }
       100% {
         transform: translateX(0);
+      }
+    }
+  }
+}
+
+#home-container::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  #home-container {
+    #home-header {
+      #home-header-title {
+        h1 {
+          font-size: 1.5rem;
+        }
+      }
+
+      #home-header-search {
+        width: 100%;
+      }
+
+      #home-header-avatar {
+        display: none;
+      }
+
+      #home-header-button {
+        #txt-btn {
+          display: none;
+        }
+
+        #icon-btn {
+          display: flex;
+        }
       }
     }
   }

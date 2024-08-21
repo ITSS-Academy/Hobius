@@ -20,7 +20,25 @@
       </div>
     } @else {
       <div id="home-header-button">
-        <button mat-flat-button [routerLink]="'/login'">Đăng nhập</button>
+        <button mat-flat-button [routerLink]="'/login'" id="txt-btn">
+          Đăng nhập
+        </button>
+        <button mat-icon-button [matMenuTriggerFor]="optionMenu" id="icon-btn">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #optionMenu="matMenu">
+          @if (userInfo != null) {
+            <button mat-menu-item (click)="openConfirmLogoutDialog()">
+              <mat-icon>logout</mat-icon>
+              Đăng xuất
+            </button>
+          } @else {
+            <button mat-menu-item [routerLink]="'/login'">
+              <mat-icon>login</mat-icon>
+              Đăng nhập
+            </button>
+          }
+        </mat-menu>
       </div>
     }
   </div>
