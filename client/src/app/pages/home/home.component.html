@@ -38,6 +38,18 @@
               Đăng nhập
             </button>
           }
+          <button mat-menu-item [routerLink]="'/home'" id="home-option-btn">
+            <mat-icon>home</mat-icon>
+            Trang chủ
+          </button>
+          <button
+            mat-menu-item
+            [routerLink]="'/profile'"
+            id="profile-option-btn"
+          >
+            <mat-icon>person</mat-icon>
+            Hồ sơ
+          </button>
         </mat-menu>
       </div>
     }

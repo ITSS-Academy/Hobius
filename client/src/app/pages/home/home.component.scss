@@ -209,6 +209,40 @@
       }
     }
   }
+  #home-option-btn {
+    display: none;
+  }
+
+  #profile-option-btn {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  #home-container {
+    #home-header {
+      #home-header-button {
+        #txt-btn {
+          display: none;
+        }
+
+        #icon-btn {
+          display: flex;
+          margin-left: 20px;
+        }
+
+        #option-menu {
+        }
+      }
+    }
+  }
+  #home-option-btn {
+    display: flex;
+  }
+
+  #profile-option-btn {
+    display: flex;
+  }
 }
 
 :host {
