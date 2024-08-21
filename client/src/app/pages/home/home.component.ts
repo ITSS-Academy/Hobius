@@ -20,6 +20,7 @@ import { Auth, onAuthStateChanged, User } from '@angular/fire/auth';
 import { AuthState } from '../../../ngrxs/auth/auth.state';
 import { Store } from '@ngrx/store';
 import * as AuthActions from '../../../ngrxs/auth/auth.actions';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -29,6 +30,7 @@ import * as AuthActions from '../../../ngrxs/auth/auth.actions';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
+  subscriptions: Subscription[] = [];
   @ViewChildren('viewport') viewports!: QueryList<ElementRef>;
   lichSuCards: EbookModel[] = [];
   thinhHanhCards: EbookModel[] = [];
@@ -37,30 +39,29 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   readonly dialog = inject(MatDialog);
 
   isStaticUser = false;
-  userInfo: User | null = null;
+  idToken: string = '';
 
   constructor(
     private cardService: CardService,
-    private auth: Auth,
     private store: Store<{ auth: AuthState }>,
-  ) {
-    onAuthStateChanged(this.auth, (user) => {
-      if (user) {
-        this.userInfo = user;
-      } else {
-        this.userInfo = null;
-      }
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.lichSuCards = this.cardService.cards;
     this.thinhHanhCards = this.cardService.cards;
     this.deCuCards = this.cardService.cards;
     this.bangXepHangCards = this.cardService.cards;
+    this.subscriptions.push(
+      this.store.select('auth', 'idToken').subscribe((value) => {
+        console.log('idToken: ', value);
+        this.idToken = value;
+      }),
+    );
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
 
   ngAfterViewInit() {
     this.viewports.forEach((viewport) => {

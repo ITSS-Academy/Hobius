@@ -8,7 +8,7 @@
       <input matInput placeholder="Tìm kiếm sách..." />
     </mat-form-field>
 
-    @if (userInfo != null) {
+    @if (idToken != "") {
       <div id="home-header-avatar">
         <mat-icon [matMenuTriggerFor]="avaMenu">account_circle</mat-icon>
         <mat-menu #avaMenu="matMenu">
@@ -27,7 +27,7 @@
           <mat-icon>menu</mat-icon>
         </button>
         <mat-menu #optionMenu="matMenu">
-          @if (userInfo != null) {
+          @if (idToken != "") {
             <button mat-menu-item (click)="openConfirmLogoutDialog()">
               <mat-icon>logout</mat-icon>
               Đăng xuất

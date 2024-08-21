@@ -7,19 +7,15 @@
       (click)="navigate(1)"
     />
     @if (isStaticUser) {
-      <li
-        class="sidenav-nav-item"
-        [class]="links[0].isActive ? 'active' : 'inactive'"
-        (click)="navigate(0)"
-      >
-        <a class="sidenav-nav-link">
-          <mat-icon class="material-symbols-rounded sidenav-link-icon">
-            {{ links[0].icon }}
-          </mat-icon>
-        </a>
-        <p class="sidenav-link-text">
-          {{ links[0].name }}
-        </p>
+      <li (click)="navigate(0)" id="sidenav-nav-admin-item">
+        <button
+          mat-fab
+          aria-label="Example icon button with a admin icon"
+          matTooltip="Trang admin"
+          class="mat-elevation-z0"
+        >
+          <mat-icon>{{ links[0].icon }}</mat-icon>
+        </button>
       </li>
     }
     @for (link of links; track i; let i = $index) {
