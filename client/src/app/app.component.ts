@@ -1,7 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { Subscription } from 'rxjs';
+import { Auth, onAuthStateChanged } from '@angular/fire/auth';
+import { Store } from '@ngrx/store';
+import { AuthState } from '../ngrxs/auth/auth.state';
+import * as AuthActions from '../ngrxs/auth/auth.actions';
 
 @Component({
   selector: 'app-root',
@@ -10,26 +13,29 @@ import { Subscription } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit, OnDestroy {
-  title = 'client';
-  subscriptions: Subscription[] = [];
+export class AppComponent implements OnInit {
+  title = 'Hobius';
   isLoginPage = false;
 
-  mainClass = ['login-scaffold'];
-
-  constructor(private router: Router) {}
-
-  ngOnDestroy(): void {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
-  }
+  constructor(
+    private router: Router,
+    private auth: Auth,
+    private store: Store<{ auth: AuthState }>,
+  ) {}
 
   ngOnInit(): void {
-    this.subscriptions.push(
-      this.router.events.subscribe((event) => {
-        if (event instanceof NavigationEnd) {
-          this.isLoginPage = event.url.includes('login');
-        }
-      }),
-    );
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.isLoginPage = event.url.includes('login');
+      }
+    });
+    onAuthStateChanged(this.auth, async (user) => {
+      if (user) {
+        const token = await user.getIdTokenResult();
+        this.store.dispatch(AuthActions.storeIdToken({ idToken: token.token }));
+      } else {
+        console.log('User is not sign in');
+      }
+    });
   }
 }

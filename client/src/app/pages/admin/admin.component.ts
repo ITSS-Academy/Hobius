@@ -315,6 +315,13 @@ export class AdminComponent implements AfterViewInit {
     // console.log(this.selection.selected);
   }
 
+  reInitTable(ebook: EbookModel) {
+    this.ebooks.push(ebook);
+    this.dataSource = new MatTableDataSource(this.ebooks);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
   openCreateEbookDialog() {
     const dialogRef = this.dialog.open(AddEbookFormDialogComponent);
 
@@ -327,8 +334,7 @@ export class AdminComponent implements AfterViewInit {
           view: 0,
           date: new Date().toDateString(),
         };
-        this.ebooks.push(newEbook);
-        this.dataSource = new MatTableDataSource(this.ebooks);
+        this.reInitTable(newEbook);
         console.log(newEbook);
       }
     });
@@ -341,14 +347,14 @@ export class AdminComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        let newEbook: EbookModel = {
-          ...result,
-          id: (this.dataSource.data.length + 1).toString(),
-          like: 0,
-          view: 0,
-          date: new Date().toDateString(),
-        };
-        console.log(newEbook);
+        // let newEbook: EbookModel = {
+        //   ...result,
+        //   id: (this.dataSource.data.length + 1).toString(),
+        //   like: 0,
+        //   view: 0,
+        //   date: new Date().toDateString(),
+        // };
+        console.log(result);
       }
     });
   }

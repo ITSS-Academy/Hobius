@@ -4,7 +4,9 @@ import {
   ViewChildren,
   QueryList,
   ElementRef,
-  ViewChild,
+  OnInit,
+  inject,
+  OnDestroy,
 } from '@angular/core';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
@@ -12,6 +14,12 @@ import { CardComponent } from '../../components/card/card.component';
 import { EbookModel } from '../../../models/ebook.model';
 import { CardService } from '../../../services/card.service';
 import { NgForOf } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
+import { Auth, onAuthStateChanged, User } from '@angular/fire/auth';
+import { AuthState } from '../../../ngrxs/auth/auth.state';
+import { Store } from '@ngrx/store';
+import * as AuthActions from '../../../ngrxs/auth/auth.actions';
 
 @Component({
   selector: 'app-home',
@@ -20,14 +28,30 @@ import { NgForOf } from '@angular/common';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent implements AfterViewInit {
+export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChildren('viewport') viewports!: QueryList<ElementRef>;
   lichSuCards: EbookModel[] = [];
   thinhHanhCards: EbookModel[] = [];
   deCuCards: EbookModel[] = [];
   bangXepHangCards: EbookModel[] = [];
+  readonly dialog = inject(MatDialog);
 
-  constructor(private cardService: CardService) {}
+  isStaticUser = false;
+  userInfo: User | null = null;
+
+  constructor(
+    private cardService: CardService,
+    private auth: Auth,
+    private store: Store<{ auth: AuthState }>,
+  ) {
+    onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+        this.userInfo = user;
+      } else {
+        this.userInfo = null;
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.lichSuCards = this.cardService.cards;
@@ -35,6 +59,8 @@ export class HomeComponent implements AfterViewInit {
     this.deCuCards = this.cardService.cards;
     this.bangXepHangCards = this.cardService.cards;
   }
+
+  ngOnDestroy() {}
 
   ngAfterViewInit() {
     this.viewports.forEach((viewport) => {
@@ -126,5 +152,30 @@ export class HomeComponent implements AfterViewInit {
         }
       };
     });
+  }
+
+  openConfirmLogoutDialog() {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Logout',
+        message: 'Are you sure you want to logout?',
+      },
+      restoreFocus: false,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      if (result == true) {
+        console.log('User confirmed logout');
+        this.logout();
+      }
+    });
+  }
+
+  logout() {
+    if (this.isStaticUser) {
+      this.store.dispatch(AuthActions.signOut());
+    } else {
+      this.store.dispatch(AuthActions.signOut());
+    }
   }
 }

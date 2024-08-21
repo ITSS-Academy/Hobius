@@ -10,8 +10,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideEffects } from '@ngrx/effects';
 import { provideStore } from '@ngrx/store';
 import { provideHttpClient } from '@angular/common/http';
-import { fileUploadReducer } from '../ngrx/file-upload/file-upload.reducer';
-import { FileUploadEffects } from '../ngrx/file-upload/file-upload.effects';
+import { fileUploadReducer } from '../ngrxs/file-upload/file-upload.reducer';
+import { FileUploadEffects } from '../ngrxs/file-upload/file-upload.effects';
+import { authReducer } from '../ngrxs/auth/auth.reducer';
+import { AuthEffects } from '../ngrxs/auth/auth.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,9 +21,10 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     provideAnimationsAsync(),
-    provideEffects(FileUploadEffects),
+    provideEffects(FileUploadEffects, AuthEffects),
     provideStore({
       file_upload: fileUploadReducer,
+      auth: authReducer,
     }),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
