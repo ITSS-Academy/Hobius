@@ -157,8 +157,8 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   openConfirmLogoutDialog() {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: 'Logout',
-        message: 'Are you sure you want to logout?',
+        title: 'Đăng xuất',
+        message: 'Bạn có chắc chắn muốn đăng xuất?',
       },
       restoreFocus: false,
     });
