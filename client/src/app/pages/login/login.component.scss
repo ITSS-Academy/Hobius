@@ -21,10 +21,12 @@
   }
 
   #login-card {
-    padding: 60px;
+    padding: 30px;
     border-radius: var(--container-border-radius);
     display: flex;
     background-color: var(--surfaceContainerLowest);
+    gap: 15px;
+    position: relative;
 
     #title {
       display: flex;
@@ -48,6 +50,12 @@
         display: flex;
         justify-content: space-between;
         width: 100%;
+
+        .btn-home {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+        }
       }
     }
   }
@@ -62,41 +70,43 @@
 }
 
 @media (max-width: 900px) {
-  #login-card {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 50%;
-    width: 300px;
-
-    #title {
-      width: 100%;
-      text-align: center;
-      margin-bottom: 20px;
+  #login-container {
+    #login-card {
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-    }
+      width: 300px;
+      gap: 0;
 
-    #form {
-      width: 100%;
-
-      .form-login {
+      #title {
         width: 100%;
-        display: flex;
-        justify-content: space-between;
-
-        mat-form-field {
-          width: 100%;
-        }
+        text-align: center;
+        margin-bottom: 20px;
+        justify-content: center;
+        align-items: center;
       }
 
-      .btn-grp {
+      #form {
         width: 100%;
-        flex-wrap: wrap;
-        gap: 15px;
+        gap: 20px;
 
-        .btn-submit {
+        .form-login {
           width: 100%;
+          justify-content: space-between;
+
+          mat-form-field {
+            width: 100%;
+          }
+        }
+
+        .btn-grp {
+          width: 100%;
+          flex-wrap: wrap;
+          gap: 15px;
+
+          .btn-submit {
+            width: 100%;
+          }
         }
       }
     }
@@ -104,33 +114,35 @@
 }
 
 @media (min-width: 1024px) {
-  #login-card {
-    width: 1040px;
-    height: 384px;
-    flex-direction: row;
-    align-items: center;
+  #login-container {
+    #login-card {
+      width: 1040px;
+      height: 384px;
+      flex-direction: row;
+      align-items: center;
 
-    #title {
-      width: 30%;
-      height: 100%;
-      text-align: center;
-      margin-bottom: 20px;
-      padding-left: 50px;
-      justify-content: center;
-      align-items: start;
-    }
-
-    #form {
-      width: 70%;
-      height: 100%;
-
-      .form-login {
-        width: 100%;
-        height: 135px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
+      #title {
+        width: 30%;
+        height: 100%;
+        text-align: center;
         margin-bottom: 20px;
+        padding-left: 50px;
+        justify-content: center;
+        align-items: start;
+      }
+
+      #form {
+        width: 70%;
+        height: 100%;
+
+        .form-login {
+          width: 100%;
+          height: 135px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-evenly;
+          margin-bottom: 20px;
+        }
       }
     }
   }

@@ -71,8 +71,8 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
       let velocity = 0;
       let lastMoveTime: number;
       let lastMoveX: number;
-      const safetyMargin = 50; // Safety margin before bounce-back
-      const minVelocityForBounce = 0.5; // Minimum velocity to trigger bounce-back
+      const safetyMargin = 100; // Safety margin before bounce-back
+      const minVelocityForBounce = 0.8; // Minimum velocity to trigger bounce-back
       let debounceTimeout: any;
 
       slider.addEventListener('mousedown', (e) => {
