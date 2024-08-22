@@ -7,6 +7,354 @@
   border: var(--container-border-radius);
 }
 
+//for desktop
+@media (min-width: 1024px) {
+  #profile-container {
+    width: 98%;
+
+    #header-bar {
+      width: 100%;
+      font-size: 32px;
+
+      #background-img {
+        width: 100%;
+
+        #name {
+          font-size: 28px;
+        }
+
+        #birth {
+          font-size: 14px;
+        }
+      }
+    }
+
+    #background-img {
+      width: 95%;
+
+      #avatar {
+        width: 120px;
+        height: 120px;
+      }
+
+      #detail-profile > div {
+        gap: 8px;
+      }
+
+      #note > div {
+        font-size: 18px;
+        width: fit-content;
+        gap: 8px;
+        padding: 8px 16px;
+      }
+
+      #name {
+        font-size: 28px;
+        color: white;
+        padding-bottom: 10px;
+      }
+
+      #birth {
+        font-size: 14px;
+        color: #f0f0f7;
+        padding-bottom: 8px;
+      }
+    }
+
+    #profile-content {
+      width: 95%;
+
+      .my-custom-class {
+        font-size: 16px;
+      }
+
+      .my-custom-class1 {
+        font-size: 16px;
+      }
+
+      .content {
+        width: 98%;
+
+        .book-card {
+          width: 98%;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          background-color: white;
+          border-bottom: 1px solid #c4c6d0;
+          justify-content: space-between;
+
+          .img {
+            display: flex;
+            align-items: center;
+          }
+
+          img {
+            width: 60px;
+            height: 80px;
+          }
+
+          .left-card {
+            width: 5%;
+          }
+
+          .middle {
+            width: 85%;
+
+            .title {
+              font-size: 18px;
+            }
+
+            .info {
+              font-size: 14px;
+              padding-top: 8px;
+              max-width: 700px;
+              min-width: 700px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            .sum {
+              max-width: 700px;
+              min-width: 700px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+
+          .right-card {
+            width: 5%;
+          }
+        }
+      }
+    }
+  }
+}
+
+//for tablet
+@media (min-width: 768px) and (max-width: 991px) {
+  #profile-container {
+    width: 100%;
+
+    #header-bar {
+      width: 100%;
+      font-size: 24px;
+    }
+
+    #background-img {
+      width: 100%;
+      color: white;
+
+      #name {
+        font-size: 24px;
+      }
+
+      #birth {
+        font-size: 12px;
+      }
+
+      #note > div {
+        font-size: 14px;
+      }
+    }
+
+    #profile-content {
+      width: 100%;
+
+      .my-custom-class {
+        font-size: 16px;
+      }
+
+      .my-custom-class1 {
+        font-size: 16px;
+      }
+
+      .content {
+        width: 100%;
+
+        .book-card {
+          width: 96%;
+          display: flex;
+          align-items: center;
+
+          .img {
+            display: flex;
+            align-items: center;
+          }
+
+          img {
+            width: 60px;
+            height: 80px;
+            padding-right: 4px;
+          }
+
+          .middle {
+            width: 60%;
+
+            .title {
+              font-size: 18px;
+            }
+
+            .info {
+              font-size: 14px;
+              padding-top: 8px;
+              max-width: 400px;
+              min-width: 400px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            .sum {
+              max-width: 400px;
+              min-width: 400px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+
+          .right-card {
+            width: 10%;
+
+            .sum {
+              max-width: 100px;
+              min-width: 100px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+//for mobile
+@media (max-width: 767px) {
+  #profile-container {
+    width: 100%;
+
+    #header-bar {
+      width: 100%;
+      font-size: 14px;
+    }
+
+    #background-img {
+      width: 100%;
+      align-items: center;
+      color: white;
+
+      #avatar {
+        width: 100px;
+        height: 100px;
+      }
+
+      #detail-profile > div {
+        gap: 2px;
+      }
+
+      #name {
+        font-size: 14px;
+      }
+
+      #birth {
+        font-size: 10px;
+        padding-top: 2px;
+      }
+
+      #note {
+        display: flex;
+        flex-direction: column;
+        font-size: 8px;
+      }
+
+      #note > div {
+        font-size: 8px;
+        width: 140px;
+        gap: 2px;
+        padding: 4px 8px;
+      }
+    }
+
+    #profile-content {
+      width: 100%;
+
+      .my-custom-class {
+        font-size: 12px;
+      }
+
+      .my-custom-class1 {
+        font-size: 12px;
+      }
+
+      .content {
+        width: 98%;
+
+        .book-card {
+          width: 93%;
+          display: flex;
+          align-items: center;
+
+          img {
+            width: 40px;
+            height: 60px;
+            padding-right: 2px;
+          }
+
+          .middle {
+            width: 60%;
+
+            .title {
+              font-size: 14px;
+              white-space: nowrap;
+            }
+
+            .info {
+              font-size: 10px;
+              padding-top: 6px;
+              max-width: 200px;
+              min-width: 200px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            .sum {
+              max-width: 200px;
+              min-width: 200px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+
+          .right-card {
+            width: 10%;
+
+            .sum {
+              max-width: 50px;
+              min-width: 50px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            mat-icon {
+              font-size: 16px;
+              width: 16px;
+              height: 16px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 #header-bar {
   width: calc(100% - 32px);
   height: 64px;
@@ -31,9 +379,10 @@
   width: fit-content;
   height: fit-content;
   color: #415e91;
-  font-size: 32px;
+  //font-size: 32px;
   display: flex;
   align-items: center;
+  cursor: context-menu;
 }
 
 #right {
@@ -49,7 +398,7 @@
 #background-img {
   width: 95%;
   height: 224px;
-  background-color: #7e0007;
+  //background-color: #7e0007;
   border-radius: 28px;
   margin-bottom: 12px;
   display: flex;
@@ -78,19 +427,19 @@
 #detail-profile {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  //gap: 8px;
   cursor: context-menu;
 
-  #name {
-    font-size: 28px;
-    color: white;
-  }
-
-  #birth {
-    font-size: 14px;
-    color: #f0f0f7;
-    padding-top: 8px;
-  }
+  //#name {
+  //  font-size: 28px;
+  //  color: white;
+  //}
+  //
+  //#birth {
+  //  font-size: 14px;
+  //  color: #f0f0f7;
+  //  padding-top: 8px;
+  //}
 
   #note {
     display: flex;
@@ -191,29 +540,34 @@ mat-tab-group {
 }
 
 .left-card {
-  width: calc(100% - 100px);
+  width: 5%;
   display: flex;
   flex-direction: row;
   gap: 16px;
+}
+
+.middle {
+  width: 90%;
 
   .sum {
-    width: 1100px;
+    max-width: 900px;
+    min-width: 900px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 }
 
-.img {
-  width: 60px;
-  height: 80px;
-  background-color: green;
-
-  img {
-    width: 100%;
-    height: 100%;
-  }
-}
+//.img {
+//  width: 60px;
+//  height: 80px;
+//  //background-color: green;
+//
+//  img {
+//    width: 100%;
+//    height: 100%;
+//  }
+//}
 
 .title {
   width: fit-content;
@@ -236,16 +590,16 @@ mat-tab-group {
   cursor: pointer;
 }
 
-#left > div:hover {
+#left > button:hover {
   filter: brightness(0.85);
   color: #37b7c3;
 }
 
-#page-name:hover {
-  filter: brightness(0.85);
-  color: var(--onSecondaryContainer);
-  cursor: alias;
-}
+//#page-name:hover {
+//  filter: brightness(0.85);
+//  color: var(--onSecondaryContainer);
+//  cursor: alias;
+//}
 
 #right:hover {
   filter: brightness(0.85);
@@ -255,6 +609,11 @@ mat-tab-group {
 
 .title:hover {
   color: #415e91;
+}
+
+.cmt:hover {
+  color: #415e91;
+  cursor: pointer;
 }
 
 .right-card:hover {
