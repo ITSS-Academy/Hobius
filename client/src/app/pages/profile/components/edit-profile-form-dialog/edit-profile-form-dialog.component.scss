@@ -1,0 +1,92 @@
+#edit-profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  //padding: 20px;
+  max-width: 500px;
+
+  h2 {
+    font-size: 20px;
+  }
+
+  #info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    mat-form-field {
+      width: 90%;
+      font-size: 14px;
+    }
+
+    mat-label {
+      font-size: 14px;
+    }
+  }
+
+  #birth {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    mat-form-field {
+      width: 30%;
+      font-size: 14px;
+    }
+
+    mat-label {
+      font-size: 14px;
+    }
+  }
+
+  #img {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    mat-form-field {
+      width: 90%;
+      padding: 0;
+    }
+
+    mat-label {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    mat-icon {
+      font-size: 18px;
+    }
+  }
+
+  #button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 20px;
+
+    #btn1 {
+      background-color: #415e91;
+      color: white;
+    }
+
+    #btn2 {
+      color: #415e91;
+    }
+  }
+
+  #button > button {
+    font-size: 14px;
+  }
+}
