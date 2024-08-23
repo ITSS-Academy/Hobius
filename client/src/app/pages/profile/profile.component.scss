@@ -8,9 +8,9 @@
 }
 
 //for desktop
-@media (min-width: 1024px) {
+@media (min-width: 991px) {
   #profile-container {
-    width: 98%;
+    width: 100%;
 
     #header-bar {
       width: 100%;
@@ -234,9 +234,12 @@
 }
 
 //for mobile
-@media (max-width: 767px) {
+@media (max-width: 600px) {
   #profile-container {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
 
     #header-bar {
       width: 100%;
@@ -244,7 +247,7 @@
     }
 
     #background-img {
-      width: 100%;
+      width: 90%;
       align-items: center;
       color: white;
 
@@ -364,7 +367,6 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
-  padding: 0 16px 0 16px;
   border-radius: 16px;
 }
 
