@@ -8,3 +8,10 @@ export class CreateUserDto {
   role: string;
   joinedDate: string;
 }
+
+export class FirebaseUserDto {
+  uid: string;
+  email: string;
+  name: string;
+  picture: string;
+}

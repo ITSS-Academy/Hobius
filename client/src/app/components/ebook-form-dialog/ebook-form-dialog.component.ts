@@ -33,7 +33,7 @@ import { CardService } from '../../../services/card.service';
 export class EbookFormDialogComponent implements OnInit, OnDestroy {
   tempId = Date.now().toString();
   ebookFormGroup: FormGroup;
-  categoryList = this.cardService.initCategorylist();
+  categoryList = this.cardService.initCategoryList();
   isLoading = false;
   subscriptions: Subscription[] = [];
 
@@ -92,17 +92,13 @@ export class EbookFormDialogComponent implements OnInit, OnDestroy {
       this.store.select('file_upload', 'downloadCoverURL').subscribe((url) => {
         if (url != null) {
           this.ebookFormGroup.patchValue({ image: url });
-          this._snackBar.open('File uploaded successfully', 'Close', {
-            duration: 5000,
-          });
+          this.openSnackbar('Đăng tải thành công');
         }
       }),
       this.store.select('file_upload', 'downloadPdfURL').subscribe((url) => {
         if (url != null) {
           this.ebookFormGroup.patchValue({ pdf: url });
-          this._snackBar.open('File uploaded successfully', 'Close', {
-            duration: 5000,
-          });
+          this.openSnackbar('Đăng tải thành công');
         }
       }),
       this.store.select('file_upload', 'isLoading').subscribe((isLoading) => {
@@ -110,17 +106,21 @@ export class EbookFormDialogComponent implements OnInit, OnDestroy {
       }),
       this.store.select('file_upload', 'error').subscribe((error) => {
         if (error) {
-          this._snackBar.open('Error uploading file', 'Close', {
-            duration: 5000,
-          });
+          this.openSnackbar('Đăng tải thất bại');
         }
       }),
     );
   }
 
+  openSnackbar(msg: string) {
+    this._snackBar.open(msg, 'Đóng', {
+      duration: 5000,
+    });
+  }
+
   updateTitleErrorMessage() {
     if (this.title.hasError('required')) {
-      this.titleErrorMessage.set('You must enter a value');
+      this.titleErrorMessage.set('Bạn phải nhập giá trị');
     } else {
       this.titleErrorMessage.set('');
     }
@@ -128,7 +128,7 @@ export class EbookFormDialogComponent implements OnInit, OnDestroy {
 
   updateAuthorErrorMessage() {
     if (this.author.hasError('required')) {
-      this.authorErrorMessage.set('You must enter a value');
+      this.authorErrorMessage.set('Bạn phải nhập giá trị');
     } else {
       this.authorErrorMessage.set('');
     }
@@ -136,7 +136,7 @@ export class EbookFormDialogComponent implements OnInit, OnDestroy {
 
   updateDetailErrorMessage() {
     if (this.detail.hasError('required')) {
-      this.detailErrorMessage.set('You must enter a value');
+      this.detailErrorMessage.set('Bạn phải nhập giá trị');
     } else {
       this.detailErrorMessage.set('');
     }
@@ -144,7 +144,7 @@ export class EbookFormDialogComponent implements OnInit, OnDestroy {
 
   updatePdfErrorMessage() {
     if (this.pdf.hasError('required')) {
-      this.pdfErrorMessage.set(`You must upload ebook pdf file`);
+      this.pdfErrorMessage.set(`Bạn phải tải lên file pdf`);
     } else {
       this.pdfErrorMessage.set('');
     }
@@ -152,7 +152,7 @@ export class EbookFormDialogComponent implements OnInit, OnDestroy {
 
   updateImageErrorMessage() {
     if (this.image.hasError('required')) {
-      this.imageErrorMessage.set('You must upload ebook cover');
+      this.imageErrorMessage.set('Bạn phải tải lên ảnh bìa');
     } else {
       this.imageErrorMessage.set('');
     }

@@ -1,46 +1,44 @@
 import { Injectable } from '@angular/core';
-import { CardComponent } from '../app/components/card/card.component';
 import { EbookModel } from '../models/ebook.model';
 import { CategoryModel } from '../models/category.model';
 
 /** Constants used to fill up our data base. */
 export const GENRES: string[] = [
-  'Adventure',
-  'Science Fiction',
-  'Fantasy',
-  'Mystery',
-  'Historical Fiction',
-  'Horror',
-  'Thriller',
-  'Romance',
-  'Westerns',
-  'Dystopian',
-  'Memoir',
-  'Biography',
-  'Self-help',
-  'Cookbooks',
-  'History',
-  'Travel',
-  'True Crime',
-  'Humor',
-  'Children’s',
-  'Young Adult',
-  'Poetry',
-  'Science',
-  'Nature',
-  'Math',
-  'Philosophy',
-  'Religion',
-  'Spirituality',
-  'New Age',
-  'Art',
-  'Photography',
-  'Architecture',
-  'Music',
-  'Film',
-  'Fashion',
-  'Performing Arts',
-  'Graphic Novels',
+  'Khoa học viễn tưởng',
+  'Giả tưởng',
+  'Bí ẩn',
+  'Lịch sử hư cấu',
+  'Kinh dị',
+  'Giật gân',
+  'Lãng mạn',
+  'Miền Tây',
+  'Chống không tưởng',
+  'Hồi ký',
+  'Tiểu sử',
+  'Tự lực',
+  'Sách nấu ăn',
+  'Lịch sử',
+  'Du lịch',
+  'Tội phạm thực sự',
+  'Hài hước',
+  'Thiếu nhi',
+  'Thanh thiếu niên',
+  'Thơ ca',
+  'Khoa học',
+  'Thiên nhiên',
+  'Toán học',
+  'Triết học',
+  'Tôn giáo',
+  'Tâm linh',
+  'Thời đại mới',
+  'Nghệ thuật',
+  'Nhiếp ảnh',
+  'Kiến trúc',
+  'Âm nhạc',
+  'Phim ảnh',
+  'Thời trang',
+  'Nghệ thuật biểu diễn',
+  'Tiểu thuyết đồ họa',
   'Manga',
 ];
 export const NAMES: string[] = [
@@ -413,7 +411,7 @@ export class CardService {
     };
   }
 
-  initCategorylist(): CategoryModel[] {
+  initCategoryList(): CategoryModel[] {
     const categories: CategoryModel[] = [];
     for (let i = 0; i < GENRES.length; i++) {
       categories.push({

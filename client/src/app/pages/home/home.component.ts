@@ -23,6 +23,7 @@ import { Store } from '@ngrx/store';
 import * as AuthActions from '../../../ngrxs/auth/auth.actions';
 import { Subscription } from 'rxjs';
 import { SearchBarComponent } from '../../components/search-bar/search-bar.component';
+import { UserState } from '../../../ngrxs/user/user.state';
 
 @Component({
   selector: 'app-home',
@@ -50,10 +51,12 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
 
   isStaticUser = false;
   idToken: string = '';
+  user$ = this.store.select('user', 'user');
+  isGettingUser$ = this.store.select('user', 'isGetting');
 
   constructor(
     private cardService: CardService,
-    private store: Store<{ auth: AuthState }>,
+    private store: Store<{ auth: AuthState; user: UserState }>,
   ) {}
 
   ngOnInit(): void {
@@ -201,5 +204,10 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
     } else {
       this.store.dispatch(AuthActions.signOut());
     }
+  }
+
+  onImageError(event: Event) {
+    const target = event.target as HTMLImageElement;
+    target.src = 'public/assets/profile_pictures/img_7.png'; // Path to your fallback image
   }
 }

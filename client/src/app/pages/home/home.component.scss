@@ -53,6 +53,25 @@
         color: var(--onPrimary);
         background: var(--primary);
       }
+
+      #avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+        }
+
+        .skeleton-avatar {
+          width: 40px;
+          height: 40px;
+          background: #e0e0e0;
+          border-radius: 50%;
+        }
+      }
     }
 
     #home-header-button {

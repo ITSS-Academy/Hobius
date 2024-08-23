@@ -14,17 +14,22 @@ import { fileUploadReducer } from '../ngrxs/file-upload/file-upload.reducer';
 import { FileUploadEffects } from '../ngrxs/file-upload/file-upload.effects';
 import { authReducer } from '../ngrxs/auth/auth.reducer';
 import { AuthEffects } from '../ngrxs/auth/auth.effects';
+import { userReducer } from '../ngrxs/user/user.reducer';
+import { UserEffects } from '../ngrxs/user/user.effects';
+import { HttpClientAuth } from '../utils/http-client-auth';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),
+    HttpClientAuth,
     provideAnimationsAsync(),
-    provideEffects(FileUploadEffects, AuthEffects),
+    provideEffects(FileUploadEffects, AuthEffects, UserEffects),
     provideStore({
       file_upload: fileUploadReducer,
       auth: authReducer,
+      user: userReducer,
     }),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
