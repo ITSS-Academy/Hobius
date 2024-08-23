@@ -427,19 +427,7 @@
 #detail-profile {
   display: flex;
   flex-direction: column;
-  //gap: 8px;
   cursor: context-menu;
-
-  //#name {
-  //  font-size: 28px;
-  //  color: white;
-  //}
-  //
-  //#birth {
-  //  font-size: 14px;
-  //  color: #f0f0f7;
-  //  padding-top: 8px;
-  //}
 
   #note {
     display: flex;
@@ -561,7 +549,6 @@ mat-tab-group {
 .img {
   width: 60px;
   height: 80px;
-  background-color: green;
 
   img {
     width: 100%;
