@@ -1,10 +1,8 @@
-export class CreateUserDto {
+export interface UserModel {
   id: string;
   userName: string;
   email: string;
-  password: string;
   avatarURL: string;
   wallPaperURL: string;
-  role: string;
   joinedDate: string;
 }

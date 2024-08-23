@@ -64,6 +64,7 @@ export class AppModule {
             joinedDate: '',
             password: this.configService.get<string>('STATIC_USER_PASSWORD'),
             role: Role.ADMIN,
+            wallPaperURL: '',
           });
         } else {
           console.log('static admin user already exists');
