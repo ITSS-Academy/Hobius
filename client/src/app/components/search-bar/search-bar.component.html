@@ -1,0 +1,23 @@
+<div id="search-container">
+  <div id="search-header">
+    <mat-form-field appearance="fill" id="search-header-search">
+      <mat-icon matPrefix>search</mat-icon>
+      <input
+        matInput
+        placeholder="Tìm kiếm sách..."
+        (input)="onInputChange($event)"
+      />
+    </mat-form-field>
+    <!--    <div id="dropdown">-->
+    @if (showDropdown == true) {
+      <div id="dropdownBox">
+        <p></p>
+        <p>HELLO</p>
+        <p>HELLO</p>
+        <p>HELLO</p>
+        <p>HELLO</p>
+      </div>
+    }
+    <!--    </div>-->
+  </div>
+</div>

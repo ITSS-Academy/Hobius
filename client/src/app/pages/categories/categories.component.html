@@ -1,9 +1,6 @@
 <div id="categories-container">
   <div id="categories-header">
-    <mat-form-field appearance="fill" id="categories-header-search">
-      <mat-icon matPrefix>search</mat-icon>
-      <input matInput placeholder="Tìm kiếm sách..." />
-    </mat-form-field>
+    <app-search-bar></app-search-bar>
   </div>
   <div id="categories-header-title">
     <button mat-icon-button [routerLink]="['/']">

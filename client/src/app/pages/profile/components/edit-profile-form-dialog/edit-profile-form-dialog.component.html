@@ -1,0 +1,74 @@
+<div id="edit-profile-container">
+  <h2 mat-dialog-title>Chỉnh sửa thông tin cá nhân</h2>
+
+  <div id="info">
+    <mat-form-field>
+      <mat-label>Họ tên</mat-label>
+      <input matInput />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Số điện thoại</mat-label>
+      <input matInput />
+    </mat-form-field>
+  </div>
+
+  <div id="birth">
+    <mat-form-field>
+      <mat-label>Ngày sinh</mat-label>
+      <mat-select>
+        @for (option of ngaySinh; track $index) {
+          <mat-option value="option">{{ option }}</mat-option>
+        }
+      </mat-select>
+      <!--      <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>-->
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Tháng sinh</mat-label>
+      <mat-select>
+        @for (option of thangSinh; track $index) {
+          <mat-option value="option">{{ option }}</mat-option>
+        }
+      </mat-select>
+      <!--      <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>-->
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Năm sinh</mat-label>
+      <mat-select>
+        @for (option of namSinh; track $index) {
+          <mat-option value="option">{{ option }}</mat-option>
+        }
+      </mat-select>
+      <!--      <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>-->
+    </mat-form-field>
+  </div>
+  <div id="img">
+    <mat-form-field>
+      <mat-label>
+        <div>
+          <mat-icon>upload</mat-icon>
+        </div>
+        <div>Đăng tải ảnh đại diện</div>
+      </mat-label>
+      <input matInput />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>
+        <div>
+          <mat-icon>upload</mat-icon>
+        </div>
+        <div>Đăng tải ảnh nền</div>
+      </mat-label>
+      <input matInput />
+    </mat-form-field>
+  </div>
+  <div id="button">
+    <button id="btn1" mat-raised-button (click)="alertSuccess()">Lưu</button>
+    <button id="btn2" mat-raised-button (click)="onNoClick()">Đóng</button>
+  </div>
+</div>

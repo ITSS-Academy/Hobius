@@ -7,6 +7,7 @@ import {
   OnInit,
   inject,
   OnDestroy,
+  ViewChild,
 } from '@angular/core';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
@@ -21,17 +22,26 @@ import { AuthState } from '../../../ngrxs/auth/auth.state';
 import { Store } from '@ngrx/store';
 import * as AuthActions from '../../../ngrxs/auth/auth.actions';
 import { Subscription } from 'rxjs';
+import { SearchBarComponent } from '../../components/search-bar/search-bar.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MaterialModule, SharedModule, CardComponent, NgForOf],
+  imports: [
+    MaterialModule,
+    SharedModule,
+    CardComponent,
+    NgForOf,
+    SearchBarComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   @ViewChildren('viewport') viewports!: QueryList<ElementRef>;
+  @ViewChild('viewport') viewport!: ElementRef;
+  isDragging = false;
   lichSuCards: EbookModel[] = [];
   thinhHanhCards: EbookModel[] = [];
   deCuCards: EbookModel[] = [];
@@ -78,7 +88,8 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
 
       slider.addEventListener('mousedown', (e) => {
         isDown = true;
-        slider.classList.add('active');
+        this.isDragging = false;
+        slider.classList.add('clicking');
         startX = e.pageX - slider.offsetLeft;
         scrollLeft = slider.scrollLeft;
         lastMoveTime = Date.now();
@@ -93,12 +104,16 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
       slider.addEventListener('mouseup', () => {
         isDown = false;
         slider.classList.remove('active');
+        setTimeout(() => {
+          this.isDragging = false;
+        }, 0);
         applyInertia();
       });
 
       slider.addEventListener('mousemove', (e) => {
         if (!isDown) return;
         e.preventDefault();
+        this.isDragging = true;
         const x = e.pageX - slider.offsetLeft;
         const walk = (x - startX) * 1.1; //scroll-fast
         slider.scrollLeft = scrollLeft - walk;
@@ -126,7 +141,11 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
         requestAnimationFrame(step);
       }
 
+      let isBouncingBack = false;
+
       const checkEndOfScroll = () => {
+        if (isBouncingBack) return;
+
         if (
           slider.scrollLeft + slider.clientWidth >=
           slider.scrollWidth - safetyMargin
@@ -134,9 +153,11 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
           if (Math.abs(velocity) > minVelocityForBounce) {
             if (debounceTimeout) clearTimeout(debounceTimeout);
             debounceTimeout = setTimeout(() => {
+              isBouncingBack = true;
               slider.classList.add('bounce-back');
               setTimeout(() => {
                 slider.classList.remove('bounce-back');
+                isBouncingBack = false;
               }, 500);
             }, 10);
           }
@@ -144,9 +165,11 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
           if (Math.abs(velocity) > minVelocityForBounce) {
             if (debounceTimeout) clearTimeout(debounceTimeout);
             debounceTimeout = setTimeout(() => {
+              isBouncingBack = true;
               slider.classList.add('bounce-back-start');
               setTimeout(() => {
                 slider.classList.remove('bounce-back-start');
+                isBouncingBack = false;
               }, 500);
             }, 10);
           }
