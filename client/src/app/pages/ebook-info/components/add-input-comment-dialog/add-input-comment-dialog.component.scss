@@ -1,0 +1,42 @@
+#comment-container{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+#add_comment{
+    width: 100%;
+    align-items: center;
+}
+#add_comment p{
+    margin-left: 10px;
+    padding: 0;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+#input-comment{
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+#input-comment mat-form-field{
+    width: 100%;
+}
+#btn-comment{
+    width: 100%;
+    display: flex;
+    justify-content: right;
+}
+#btn-comment-cancel{
+    margin-right: 10px;
+    background-color: var(--outline);
+}
+#btn-comment-cancel:hover{
+    background-color: var(--error);
+}
+#btn-comment-add{
+  margin-right: 10px;
+}
+#btn-comment-add:hover{
+    background-color: var(--onPrimaryFixedVariant);
+}
