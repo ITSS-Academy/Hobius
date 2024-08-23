@@ -41,7 +41,18 @@ export class UsersService {
 
   async findOne(id: string) {
     try {
-      const user = await this.usersRepository.findOneBy({ id });
+      const user = await this.usersRepository
+        .createQueryBuilder('user')
+        .select([
+          'user.id',
+          'user.userName',
+          'user.email',
+          'user.joinedDate',
+          'user.avatarURL',
+          'user.wallPaperURL',
+        ])
+        .where('user.id = :id', { id })
+        .getOne();
       if (!user) {
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
       }

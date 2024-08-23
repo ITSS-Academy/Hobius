@@ -21,7 +21,12 @@
       <div class="form-login">
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
-          <input matInput formControlName="email" placeholder="Email" />
+          <input
+            matInput
+            formControlName="email"
+            placeholder="Email"
+            autocomplete="username"
+          />
           @if (loginForm.get("email")?.invalid) {
             <mat-error>Email không hợp lệ</mat-error>
           }
@@ -33,6 +38,7 @@
             formControlName="password"
             placeholder="Mật khẩu"
             type="password"
+            autocomplete="current-password"
           />
           @if (loginForm.get("password")?.invalid) {
             <mat-error>Mật khẩu không hợp lệ</mat-error>

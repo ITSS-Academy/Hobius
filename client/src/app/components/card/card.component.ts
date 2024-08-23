@@ -62,7 +62,7 @@ export class CardComponent implements OnInit {
   @HostListener('click', ['$event'])
   onClick(event: MouseEvent): void {
     if (!this.moved) {
-      this.router.navigate(['/ebook-info']);
+      this.router.navigate(['/ebook-info', this.ebook.id]).then();
     }
   }
 }

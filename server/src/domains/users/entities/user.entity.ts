@@ -26,6 +26,9 @@ export class User {
   @Column({ default: '' })
   avatarURL: string;
 
+  @Column({ default: '' })
+  wallPaperURL: string;
+
   @Column({
     type: 'enum',
     enum: Role,

@@ -8,13 +8,13 @@ import {
 } from '@angular/material/dialog';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
-import { GENRES } from '../../pages/admin/admin.component';
 import { merge, Subscription } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import { FileUploadState } from '../../../ngrxs/file-upload/file-upload.state';
 import * as UploadActions from '../../../ngrxs/file-upload/file-upload.actions';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CardService } from '../../../services/card.service';
 
 @Component({
   selector: 'app-ebook-form-dialog',
@@ -33,14 +33,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class EbookFormDialogComponent implements OnInit, OnDestroy {
   tempId = Date.now().toString();
   ebookFormGroup: FormGroup;
-  genreList = GENRES;
+  categoryList = this.cardService.initCategorylist();
   isLoading = false;
   subscriptions: Subscription[] = [];
 
   title = new FormControl('', [Validators.required]);
   author = new FormControl('', [Validators.required]);
   detail = new FormControl('', [Validators.required]);
-  genre = new FormControl('', [Validators.required]);
+  categories = new FormControl('', [Validators.required]);
   pdf = new FormControl(null, [Validators.required]);
   image = new FormControl(null, [Validators.required]);
 
@@ -51,6 +51,7 @@ export class EbookFormDialogComponent implements OnInit, OnDestroy {
   imageErrorMessage = signal('');
 
   constructor(
+    protected cardService: CardService,
     protected store: Store<{
       file_upload: FileUploadState;
     }>,
@@ -62,7 +63,7 @@ export class EbookFormDialogComponent implements OnInit, OnDestroy {
       detail: new FormControl('', [Validators.required]),
       image: new FormControl('', [Validators.required]),
       pdf: new FormControl('', [Validators.required]),
-      genre: new FormControl([], [Validators.required]),
+      categories: new FormControl([], [Validators.required]),
     });
 
     merge(this.title.statusChanges, this.title.valueChanges)

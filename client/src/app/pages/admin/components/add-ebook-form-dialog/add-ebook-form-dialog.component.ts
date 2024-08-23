@@ -13,6 +13,7 @@ import { CloudStorageService } from '../../../../../services/cloud-storage.servi
 import { FileUploadState } from '../../../../../ngrxs/file-upload/file-upload.state';
 import { Store } from '@ngrx/store';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CardService } from '../../../../../services/card.service';
 
 @Component({
   selector: 'app-add-ebook-form-dialog',
@@ -34,7 +35,8 @@ export class AddEbookFormDialogComponent extends EbookFormDialogComponent {
       file_upload: FileUploadState;
     }>,
     protected override _snackBar: MatSnackBar,
+    protected override cardService: CardService,
   ) {
-    super(store, _snackBar);
+    super(cardService, store, _snackBar);
   }
 }

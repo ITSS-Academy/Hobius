@@ -11,6 +11,8 @@ import { Role } from './domains/users/entities/user.entity';
 import { EbooksModule } from './domains/ebooks/ebooks.module';
 import { CommentsModule } from './domains/comments/comments.module';
 import { AuthModule } from './domains/auth/auth.module';
+import { SearchModule } from './domains/search/search.module';
+import { CategoriesModule } from './domains/categories/categories.module';
 
 @Module({
   imports: [
@@ -38,7 +40,9 @@ import { AuthModule } from './domains/auth/auth.module';
     UsersModule,
     EbooksModule,
     CommentsModule,
+    CategoriesModule,
     AuthModule,
+    SearchModule,
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -60,6 +64,7 @@ export class AppModule {
             joinedDate: '',
             password: this.configService.get<string>('STATIC_USER_PASSWORD'),
             role: Role.ADMIN,
+            wallPaperURL: '',
           });
         } else {
           console.log('static admin user already exists');
