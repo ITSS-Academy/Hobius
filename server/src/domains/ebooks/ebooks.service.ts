@@ -28,7 +28,18 @@ export class EbooksService {
   async findAll() {
     try {
       return await this.ebooksRepository.find({
-        select: ['id', 'title', 'categories', 'image', 'author'],
+        select: [
+          'id',
+          'title',
+          'author',
+          'detail',
+          'image',
+          'publishedDate',
+          'view',
+          'like',
+          'categories',
+          'pdf',
+        ],
         relations: {
           categories: true,
         },
@@ -38,13 +49,54 @@ export class EbooksService {
     }
   }
 
+  async listByTrend(limit: number) {
+    try {
+      return await this.ebooksRepository
+        .createQueryBuilder('ebook')
+        .leftJoinAndSelect('ebook.categories', 'categories')
+        .select(['ebook', 'categories'])
+        .orderBy('ebook.view', 'DESC')
+        .limit(limit)
+        .getMany();
+    } catch (e) {
+      throw new HttpException(e, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async listByRating(limit: number) {
+    try {
+      return await this.ebooksRepository
+        .createQueryBuilder('ebook')
+        .leftJoinAndSelect('ebook.categories', 'categories')
+        .select(['ebook', 'categories'])
+        .orderBy('ebook.like', 'DESC')
+        .limit(limit)
+        .getMany();
+    } catch (e) {
+      throw new HttpException(e, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async listByRandom(limit: number) {
+    try {
+      return await this.ebooksRepository
+        .createQueryBuilder('ebook')
+        .leftJoinAndSelect('ebook.categories', 'categories')
+        .select(['ebook', 'categories'])
+        .orderBy('RANDOM()')
+        .limit(limit)
+        .getMany();
+    } catch (e) {
+      throw new HttpException(e, HttpStatus.BAD_REQUEST);
+    }
+  }
+
   async findOne(id: string) {
     try {
       return await this.ebooksRepository
         .createQueryBuilder('ebook')
-        .leftJoinAndSelect('ebook.author', 'author')
         .leftJoinAndSelect('ebook.categories', 'categories')
-        .select(['ebook', 'author.id', 'author.name', 'categories'])
+        .select(['ebook', 'categories'])
         .where('ebook.id = :id', { id })
         .getOne();
     } catch (e) {

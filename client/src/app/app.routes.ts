@@ -28,7 +28,7 @@ export const routes: Routes = [
     path: 'admin',
     loadChildren: () =>
       import('./pages/admin/admin.route').then((m) => m.ADMIN_ROUTES),
-    canActivate: [RoleGuards.canActivateAdmin],
+    // canActivate: [RoleGuards.canActivateAdmin],
   },
   {
     path: 'login',

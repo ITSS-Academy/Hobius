@@ -12,16 +12,12 @@
           <mat-icon [matMenuTriggerFor]="avaMenu">account_circle</mat-icon>
         } @else {
           <div id="avatar">
-            @if (!(isGettingUser$ | async)) {
-              <img
-                [src]="(user$ | async)?.avatarURL"
-                alt="avatar"
-                [matMenuTriggerFor]="avaMenu"
-                (error)="onImageError($event)"
-              />
-            } @else {
-              <div class="skeleton-avatar"></div>
-            }
+            <img
+              [src]="(user$ | async)?.avatarURL"
+              [alt]="(user$ | async)?.userName"
+              [matMenuTriggerFor]="avaMenu"
+              (error)="onImageError($event)"
+            />
           </div>
         }
         <mat-menu #avaMenu="matMenu">

@@ -6,7 +6,7 @@ export interface EbookModel {
   author: string;
   detail: string;
   image: string;
-  date: string;
+  publishedDate: string;
   view: number;
   like: number;
   pdf: string;

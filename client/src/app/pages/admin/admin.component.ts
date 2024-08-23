@@ -1,5 +1,13 @@
-import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  Injectable,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { MaterialModule } from '../../../shared/modules/material.module';
@@ -9,8 +17,35 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEbookFormDialogComponent } from './components/add-ebook-form-dialog/add-ebook-form-dialog.component';
 import { EditEbookFormDialogComponent } from './components/edit-ebook-form-dialog/edit-ebook-form-dialog.component';
-import { CategoryModel } from '../../../models/category.model';
-import { CardService, GENRES } from '../../../services/card.service';
+import { Subject, Subscription } from 'rxjs';
+import { EbookState } from '../../../ngrxs/ebook/ebook.state';
+import { Store } from '@ngrx/store';
+import * as EbookActions from '../../../ngrxs/ebook/ebook.actions';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+@Injectable()
+export class MyCustomPaginatorIntl implements MatPaginatorIntl {
+  changes = new Subject<void>();
+
+  // For internationalization, the `$localize` function from
+  // the `@angular/localize` package can be used.
+  firstPageLabel = `Trang đầu`;
+  itemsPerPageLabel = `Số ebook mỗi trang:`;
+  lastPageLabel = `Trang cuối`;
+
+  // You can set labels to an arbitrary string too, or dynamically compute
+  // it through other third-party internationalization libraries.
+  nextPageLabel = 'Trang kế';
+  previousPageLabel = 'Trang trước';
+
+  getRangeLabel(page: number, pageSize: number, length: number): string {
+    if (length === 0) {
+      return `Trang 1 trên 1`;
+    }
+    const amountPages = Math.ceil(length / pageSize);
+    return `Trang ${page + 1} trên ${amountPages}`;
+  }
+}
 
 @Component({
   selector: 'app-admin',
@@ -18,8 +53,11 @@ import { CardService, GENRES } from '../../../services/card.service';
   imports: [SharedModule, MaterialModule],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
+  providers: [{ provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl }],
 })
-export class AdminComponent implements AfterViewInit {
+export class AdminComponent implements OnInit, OnDestroy, AfterViewInit {
+  subscriptions: Subscription[] = [];
+
   //table
   displayedColumns: string[] = [
     'select',
@@ -30,7 +68,7 @@ export class AdminComponent implements AfterViewInit {
     'detail',
     'view',
     'like',
-    'genre',
+    'categories',
   ];
   dataSource: MatTableDataSource<EbookModel>;
   selection = new SelectionModel<EbookModel>(true, []);
@@ -38,18 +76,45 @@ export class AdminComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   ebooks: EbookModel[] = [];
+  isLoadingEbooks$ = this.store.select('ebook', 'isLoadingEbooks');
 
   //dialog
   readonly dialog = inject(MatDialog);
+  readonly _snackBar = inject(MatSnackBar);
 
-  constructor(private cardService: CardService) {
+  constructor(
+    // private cardService: CardService,
+    private store: Store<{ ebook: EbookState }>,
+  ) {
     // Create 100 ebooks
-    this.ebooks = Array.from({ length: 10 }, (_, k) =>
-      cardService.createNewEbook(k + 1),
-    );
+    // this.ebooks = Array.from({ length: 10 }, (_, k) =>
+    //   this.cardService.createNewEbook(k + 1),
+    // );
+
+    this.store.dispatch(EbookActions.findAll());
 
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(this.ebooks);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.store.select('ebook', 'ebooks').subscribe((val) => {
+        this.ebooks = val;
+        this.dataSource = new MatTableDataSource(this.ebooks);
+      }),
+      this.store.select('ebook', 'isLoadingEbooksError').subscribe((val) => {
+        if (val != null) {
+          this._snackBar.open('Đã có lỗi xảy ra trong quá trình tải', 'Đóng', {
+            duration: 2000,
+          });
+        }
+      }),
+    );
   }
 
   ngAfterViewInit(): void {
@@ -128,5 +193,17 @@ export class AdminComponent implements AfterViewInit {
         console.log(result);
       }
     });
+  }
+
+  isRefreshing = false;
+
+  reload() {
+    if (this.isRefreshing) return;
+
+    this.isRefreshing = true;
+    // Perform the refresh operation here
+    setTimeout(() => {
+      this.isRefreshing = false;
+    }, 3000); // Re-enable the button after 3 seconds
   }
 }

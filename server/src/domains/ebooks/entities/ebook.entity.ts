@@ -33,4 +33,10 @@ export class Ebook {
 
   @Column()
   author: string;
+
+  @Column({ default: 0 })
+  view: number;
+
+  @Column({ default: 0 })
+  like: number;
 }

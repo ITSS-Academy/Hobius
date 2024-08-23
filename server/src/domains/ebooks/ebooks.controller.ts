@@ -9,6 +9,7 @@ import {
   Request,
   HttpException,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { EbooksService } from './ebooks.service';
 import { CreateEbookDto } from './dto/create-ebook.dto';
@@ -28,12 +29,30 @@ export class EbooksController {
     }
   }
 
-  @Public()
   @Get()
   async findAll() {
     return await this.ebooksService.findAll();
   }
 
+  @Public()
+  @Get('trend')
+  async listByTrend(@Query('limit') limit: string) {
+    return await this.ebooksService.listByTrend(+limit);
+  }
+
+  @Public()
+  @Get('recommend')
+  async listByRecommend(@Query('limit') limit: string) {
+    return await this.ebooksService.listByRandom(+limit);
+  }
+
+  @Public()
+  @Get('rating')
+  async listByRating(@Query('limit') limit: string) {
+    return await this.ebooksService.listByRating(+limit);
+  }
+
+  @Public()
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return await this.ebooksService.findOne(id);

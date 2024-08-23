@@ -1,4 +1,9 @@
 <div id="admin-container">
+  @if (isLoadingEbooks$ | async) {
+    <div class="progress-bar-overlay">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+  }
   <div id="admin-header">
     <div id="admin-header-button-grp">
       <div id="admin-header-button-grp-left-side">
@@ -7,6 +12,9 @@
         </button>
       </div>
       <div id="admin-header-button-grp-right-side">
+        <button mat-icon-button (click)="reload()">
+          <mat-icon>refresh</mat-icon>
+        </button>
         <button mat-icon-button (click)="openCreateEbookDialog()">
           <mat-icon>add_circle</mat-icon>
         </button>
@@ -22,11 +30,11 @@
   </div>
   <div id="admin-content">
     <mat-form-field id="filter-search">
-      <mat-label>Filter</mat-label>
+      <mat-label>Bộ lọc</mat-label>
       <input
         matInput
         (keyup)="applyFilter($event)"
-        placeholder="Ex. Mia"
+        placeholder="Ví dụ. Mia"
         #input
       />
     </mat-form-field>
@@ -49,7 +57,7 @@
 
           <!-- Image Column -->
           <ng-container matColumnDef="image">
-            <th mat-header-cell *matHeaderCellDef>Image</th>
+            <th mat-header-cell *matHeaderCellDef>Ảnh bìa</th>
             <td mat-cell *matCellDef="let row">
               <img
                 [src]="row.image"
@@ -62,7 +70,7 @@
 
           <!-- Title Column -->
           <ng-container matColumnDef="title">
-            <th mat-header-cell *matHeaderCellDef>Title</th>
+            <th mat-header-cell *matHeaderCellDef>Tiêu đề</th>
             <td mat-cell *matCellDef="let row">
               <span>{{ row.title }}</span>
             </td>
@@ -70,13 +78,13 @@
 
           <!-- Author Column -->
           <ng-container matColumnDef="author">
-            <th mat-header-cell *matHeaderCellDef>Author</th>
+            <th mat-header-cell *matHeaderCellDef>Tác giả</th>
             <td mat-cell *matCellDef="let row">{{ row.author }}</td>
           </ng-container>
 
           <!-- Detail Column -->
           <ng-container matColumnDef="detail">
-            <th mat-header-cell *matHeaderCellDef>Detail</th>
+            <th mat-header-cell *matHeaderCellDef>Mô tả</th>
             <td mat-cell *matCellDef="let row">
               <span>{{ row.detail }}</span>
             </td>
@@ -84,23 +92,25 @@
 
           <!-- View Column -->
           <ng-container matColumnDef="view">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>View</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Lượt xem</th>
             <td mat-cell *matCellDef="let row">{{ row.view }}</td>
           </ng-container>
 
           <!-- Like Column -->
           <ng-container matColumnDef="like">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Like</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Lượt thích
+            </th>
             <td mat-cell *matCellDef="let row">{{ row.like }}</td>
           </ng-container>
 
           <!-- Genre Column -->
-          <ng-container matColumnDef="genre">
-            <th mat-header-cell *matHeaderCellDef>Genre</th>
+          <ng-container matColumnDef="categories">
+            <th mat-header-cell *matHeaderCellDef>Thể loại</th>
             <td mat-cell *matCellDef="let row">
               <mat-chip-set aria-label="Categories Chip">
-                @for (genre of row.genre; track $index) {
-                  <mat-chip>{{ genre }}</mat-chip>
+                @for (category of row.categories; track $index) {
+                  <mat-chip>{{ category.name }}</mat-chip>
                 }
               </mat-chip-set>
             </td>
@@ -109,18 +119,16 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
-          <!-- Row shown when there is no matching data. -->
+          <!-- Row shown when there is no data    -->
           <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="4">
-              No data matching the filter "{{ input.value }}"
-            </td>
+            <td class="mat-cell" colspan="4">Không có dữ liệu nào</td>
           </tr>
         </table>
       </div>
     </cdk-virtual-scroll-viewport>
     <mat-paginator
       [pageSizeOptions]="[10, 5, 25, 100]"
-      aria-label="Select page of users"
+      aria-label="Select page"
     ></mat-paginator>
   </div>
 </div>
