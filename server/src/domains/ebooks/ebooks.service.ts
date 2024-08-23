@@ -28,9 +28,9 @@ export class EbooksService {
   async findAll() {
     try {
       return await this.ebooksRepository.find({
-        select: ['id', 'title', 'genre', 'image', 'author'],
+        select: ['id', 'title', 'categories', 'image', 'author'],
         relations: {
-          genre: true,
+          categories: true,
         },
       });
     } catch (e) {

@@ -11,9 +11,8 @@ import { Role } from './domains/users/entities/user.entity';
 import { EbooksModule } from './domains/ebooks/ebooks.module';
 import { CommentsModule } from './domains/comments/comments.module';
 import { AuthModule } from './domains/auth/auth.module';
-import { SearchsModule } from './domain/searchs/searchs.module';
-import { SearchsModule } from './domains/searchs/searchs.module';
 import { SearchModule } from './domains/search/search.module';
+import { CategoriesModule } from './domains/categories/categories.module';
 
 @Module({
   imports: [
@@ -41,8 +40,8 @@ import { SearchModule } from './domains/search/search.module';
     UsersModule,
     EbooksModule,
     CommentsModule,
+    CategoriesModule,
     AuthModule,
-    SearchsModule,
     SearchModule,
   ],
   controllers: [AppController],

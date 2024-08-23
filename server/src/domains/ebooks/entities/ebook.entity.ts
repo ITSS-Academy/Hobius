@@ -15,10 +15,9 @@ export class Ebook {
   @Column()
   title: string;
 
-  // @Column("simple-array")
   @ManyToMany(() => Category, { cascade: true })
   @JoinTable()
-  genre: Category[];
+  categories: Category[];
 
   @Column({ type: 'timestamp' })
   publishedDate: string;
