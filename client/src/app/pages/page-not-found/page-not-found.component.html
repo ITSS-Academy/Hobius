@@ -6,7 +6,10 @@
     <div id="page-not-found-title">404</div>
     <div id="page-not-found-subtitle">Trang không tồn tại</div>
     <div id="page-not-found-description">
-      <a routerLink="/">Quay lại trang chủ</a>
+      <button mat-flat-button (click)="navigateBack()">
+        <mat-icon>arrow_back</mat-icon>
+        <span>Quay lại</span>
+      </button>
     </div>
   </div>
 </div>
