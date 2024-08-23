@@ -1,8 +1,15 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, inject, model, signal } from '@angular/core';
 
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { EditProfileFormDialogComponent } from './components/edit-profile-form-dialog/edit-profile-form-dialog.component';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogClose,
+  MatDialogRef,
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-profile',
@@ -141,5 +148,16 @@ export class ProfileComponent {
 
   removeBookCard(index: number) {
     const [removed] = this.bookCard.splice(index, 1);
+  }
+
+  readonly name = model('');
+  readonly dialog = inject(MatDialog);
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(EditProfileFormDialogComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result);
+    });
   }
 }
