@@ -3,10 +3,8 @@
     <div id="home-header-title">
       <h1>Hobius</h1>
     </div>
-    <mat-form-field appearance="fill" id="home-header-search">
-      <mat-icon matPrefix>search</mat-icon>
-      <input matInput placeholder="Tìm kiếm sách..." />
-    </mat-form-field>
+
+    <app-search-bar></app-search-bar>
 
     @if (idToken != "") {
       <div id="home-header-avatar">
@@ -54,6 +52,12 @@
       </div>
     }
   </div>
+  <!--  </cdk-virtual-scroll-viewport>-->
+  <!--  <cdk-virtual-scroll-viewport-->
+  <!--    itemSize="50"-->
+  <!--    id="main-viewport"-->
+  <!--    orientation="horizontal"-->
+  <!--  >-->
   <div id="home-content">
     <!--    <cdk-virtual-scroll-viewport itemSize="50" id="main-viewport">-->
     <div class="boxContener">
@@ -67,7 +71,6 @@
         @for (card of thinhHanhCards; track card) {
           <app-card [ebook]="card"></app-card>
         }
-        <!--        <div class="end-of-scroll" #endOfScrollIndicator>End of List</div>-->
       </div>
     </div>
     <div class="boxContener">
@@ -112,6 +115,6 @@
       </div>
       <div id="free-space"></div>
     </div>
-    <!--    </cdk-virtual-scroll-viewport>-->
   </div>
+  <!--  </cdk-virtual-scroll-viewport>-->
 </div>

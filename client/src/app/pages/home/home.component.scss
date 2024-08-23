@@ -1,10 +1,12 @@
 #home-container {
   height: 100%;
   width: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none;
+
+  #home-container::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+  }
 
   #home-header {
     height: 100px;
@@ -26,10 +28,10 @@
       }
     }
 
-    #home-header-search {
-      width: 50%;
-      //min-width: 360px;
-    }
+    //#home-header-search {
+    //  width: 50%;
+    //  //min-width: 360px;
+    //}
 
     #home-header-avatar {
       height: 50px;
@@ -63,6 +65,11 @@
     }
   }
 
+  //#main-viewport {
+  //  height: 100%;
+  //  width: 100%;
+  //  overflow-y: auto;
+
   #home-content {
     height: calc(100% - 100px);
     width: 100%;
@@ -75,16 +82,11 @@
       display: flex;
     }
 
-    #main-viewport {
-      flex: 1;
-      width: 100%;
-      -webkit-overflow-scrolling: touch;
-      overflow-x: hidden;
-    }
-
     .boxContener {
       width: 100%;
       height: auto;
+      scrollbar-width: none; /* Hide scrollbar for Firefox */
+      -ms-overflow-style: none;
     }
 
     .titleName {
@@ -118,8 +120,8 @@
     }
 
     .cardBox.active {
-      cursor: grabbing;
-      transition: transform 0.5s ease-out;
+      cursor: grabbing; /* Khi đang kéo */
+      transition: transform 0.5s ease-out; /* Hiệu ứng chuyển động khi kéo */
     }
 
     .mat-icon-button {
@@ -175,6 +177,8 @@
   }
 }
 
+//}
+
 #home-container::-webkit-scrollbar {
   display: none;
 }
@@ -209,6 +213,7 @@
       }
     }
   }
+
   #home-option-btn {
     display: none;
   }

@@ -13,11 +13,18 @@ import { EbookModel } from '../../../models/ebook.model';
 import { CardService } from '../../../services/card.service';
 import { NgForOf } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { SearchBarComponent } from '../../components/search-bar/search-bar.component';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [MaterialModule, SharedModule, CardComponent, NgForOf],
+  imports: [
+    MaterialModule,
+    SharedModule,
+    CardComponent,
+    NgForOf,
+    SearchBarComponent,
+  ],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })
@@ -34,18 +41,18 @@ export class CategoriesComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     this.theLoai = [
-      'History',
-      'Humor',
-      'Mystery',
-      'Non-fiction',
-      'Philosophy',
-      'Poetry',
-      'Romance',
-      'Religion',
-      'Science fiction',
-      'Short stories',
-      'Teen',
-      'Literature',
+      'Lịch sử',
+      'Hài hước',
+      'Bí ẩn',
+      'Phi hư cấu',
+      'Triết học',
+      'Thơ ca',
+      'Lãng mạn',
+      'Tôn giáo',
+      'Viễn tưởng',
+      'Truyện ngắn',
+      'Tuổi teen',
+      'Văn học',
     ]; // Example categories
     this.thinhHanhCards = this.cardService.cards;
     this.activatedRoute.paramMap.subscribe((params) => {
