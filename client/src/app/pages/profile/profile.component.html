@@ -17,13 +17,12 @@
         mat-icon-button
         aria-label="Example icon button with a vertical three dot icon"
       >
-        <mat-icon>edit</mat-icon>
+        <mat-icon (click)="openDialog()">edit</mat-icon>
       </button>
     </div>
   </div>
 
   <div id="background-img">
-    <!--    <div><img src="../public/assets/profile_pictures/img_8.png" alt=""></div>-->
     <div id="avatar">
       <img src="../public/assets/profile_pictures/img_7.png" alt="" />
     </div>
@@ -54,7 +53,6 @@
           <span class="my-custom-class">Yêu thích</span>
         </ng-template>
         <div class="content">
-          <!--          <cdk-virtual-scroll-viewport itemSize="50" class="list-viewport">-->
           @for (item of bookCard; track $index) {
             <div class="book-card">
               <div class="left-card">
@@ -80,8 +78,6 @@
               </div>
             </div>
           }
-
-          <!--          </cdk-virtual-scroll-viewport>-->
         </div>
       </mat-tab>
 
@@ -90,7 +86,6 @@
           <span class="my-custom-class1">Bình luận</span>
         </ng-template>
         <div class="content">
-          <!--          <cdk-virtual-scroll-viewport itemSize="50" class="list-viewport">-->
           @for (item of cmtCard; track $index) {
             <div class="book-card">
               <div class="left-card">
@@ -110,7 +105,6 @@
               </div>
             </div>
           }
-          <!--          </cdk-virtual-scroll-viewport>-->
         </div>
       </mat-tab>
     </mat-tab-group>
