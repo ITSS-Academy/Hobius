@@ -26,10 +26,10 @@ export class UsersController {
     return await this.usersService.create(req.user);
   }
 
-  @Get('all')
-  async findAll() {
-    return await this.usersService.findAll();
-  }
+  // @Get('all')
+  // async findAll() {
+  //   return await this.usersService.findAll();
+  // }
 
   @Get()
   async findOne(@Request() req: any) {
@@ -38,6 +38,6 @@ export class UsersController {
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    return await this.usersService.remove(+id);
+    return await this.usersService.remove(id);
   }
 }

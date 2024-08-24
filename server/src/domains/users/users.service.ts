@@ -79,7 +79,7 @@ export class UsersService {
     return await this.usersRepository.findOneBy({ role });
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     try {
       const deleteResult = await this.usersRepository.delete(id);
       if (deleteResult.affected === 0) {

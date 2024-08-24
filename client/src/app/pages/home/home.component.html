@@ -16,7 +16,6 @@
               [src]="(user$ | async)?.avatarURL"
               [alt]="(user$ | async)?.userName"
               [matMenuTriggerFor]="avaMenu"
-              (error)="onImageError($event)"
             />
           </div>
         }

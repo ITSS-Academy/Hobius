@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.store.select('auth', 'error').subscribe((error) => {
         if (error) {
           // console.log('Error:', error);
-          this._matSnackBar.open(error, 'Close', {
+          this._matSnackBar.open(error, 'Đóng', {
             duration: 5000,
           });
         }

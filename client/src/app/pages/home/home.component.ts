@@ -52,7 +52,6 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   isStaticUser = false;
   idToken: string = '';
   user$ = this.store.select('user', 'user');
-  isGettingUser$ = this.store.select('user', 'isGetting');
 
   constructor(
     private cardService: CardService,
@@ -68,6 +67,9 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
       this.store.select('auth', 'idToken').subscribe((value) => {
         console.log('idToken: ', value);
         this.idToken = value;
+      }),
+      this.store.select('auth', 'isStaticUser').subscribe((value) => {
+        this.isStaticUser = value;
       }),
     );
   }
@@ -199,15 +201,6 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   logout() {
-    if (this.isStaticUser) {
-      this.store.dispatch(AuthActions.signOut());
-    } else {
-      this.store.dispatch(AuthActions.signOut());
-    }
-  }
-
-  onImageError(event: Event) {
-    const target = event.target as HTMLImageElement;
-    target.src = 'public/assets/profile_pictures/img_7.png'; // Path to your fallback image
+    this.store.dispatch(AuthActions.signOut());
   }
 }
