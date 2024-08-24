@@ -10,15 +10,27 @@ import {
   MatDialogClose,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { UserModel } from '../../../models/user.model';
+import { NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [MaterialModule, SharedModule],
+  imports: [MaterialModule, SharedModule, NgStyle],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
 export class ProfileComponent {
+  user: UserModel = {
+    id: '1',
+    userName: 'Gia Huy',
+    email: 'dhghuy@gmail.com',
+    avatarURL: '../public/assets/profile_pictures/img_7.png',
+    wallPaperURL:
+      'https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/03/hinh-nen-desktop.jpg',
+    joinedDate: 'N/A',
+  };
+
   bookCard: any[] = [
     {
       id: 1,
@@ -139,15 +151,13 @@ export class ProfileComponent {
 
   constructor(private _snackBar: MatSnackBar) {}
 
-  openSnackBar() {
+  removeBookCard(index: number) {
+    const [removed] = this.bookCard.splice(index, 1);
+
     this._snackBar.open('Đã bỏ theo dõi', 'Đóng', {
       duration: 1000,
       panelClass: ['snackbar'],
     });
-  }
-
-  removeBookCard(index: number) {
-    const [removed] = this.bookCard.splice(index, 1);
   }
 
   readonly name = model('');
