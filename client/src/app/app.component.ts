@@ -6,7 +6,6 @@ import { Store } from '@ngrx/store';
 import { AuthState } from '../ngrxs/auth/auth.state';
 import * as AuthActions from '../ngrxs/auth/auth.actions';
 import * as UserActions from '../ngrxs/user/user.actions';
-import { combineLatest } from 'rxjs';
 import { UserState } from '../ngrxs/user/user.state';
 
 @Component({
@@ -31,6 +30,17 @@ export class AppComponent implements OnInit {
         this.store.dispatch(AuthActions.storeIdToken({ idToken: token.token }));
       }
     });
+    // console.log(this.get('idToken'));
+    if (this.getValueFromSession('idToken') != '') {
+      this.store.dispatch(
+        AuthActions.toggleStaticUserMode({ isStaticUser: true }),
+      );
+      this.store.dispatch(
+        AuthActions.storeIdToken({
+          idToken: this.getValueFromSession('idToken'),
+        }),
+      );
+    }
   }
 
   ngOnInit(): void {
@@ -54,5 +64,9 @@ export class AppComponent implements OnInit {
         this.store.dispatch(UserActions.getById());
       }
     });
+  }
+
+  getValueFromSession(key: string) {
+    return sessionStorage.getItem(key) || '';
   }
 }

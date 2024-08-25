@@ -6,7 +6,7 @@ export class SearchController {
   constructor(private readonly searchService: SearchService) {}
 
   @Get('ebooks')
-  async searchPosts(@Body() request: any) {
+  async searchEbooks(@Body() request: any) {
     return this.searchService.searchEbooks(request.query);
   }
 

@@ -5,11 +5,14 @@ import { Ebook } from './entities/ebook.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SearchService } from '../search/search.service';
+import { UserEbook } from '../user_ebooks/entities/user_ebook.entity';
+import { UserEbooksService } from '../user_ebooks/user_ebooks.service';
 
 @Injectable()
 export class EbooksService {
   constructor(
     @InjectRepository(Ebook) private ebooksRepository: Repository<Ebook>,
+    private userEbooksService: UserEbooksService,
     private readonly searchService: SearchService,
   ) {}
 
@@ -91,6 +94,54 @@ export class EbooksService {
     }
   }
 
+  async like(id: string, userId: string) {
+    try {
+      const ebook = await this.ebooksRepository.findOneBy({ id });
+      if (!ebook) {
+        throw new HttpException('Ebook not found', HttpStatus.BAD_REQUEST);
+      }
+      ebook.like++;
+      //check that user has already viewed this ebook
+      const userEbook = await this.userEbooksService.findOneByEbookIdAndUserId(
+        id,
+        userId,
+      );
+      if (userEbook) {
+        userEbook.isLiked = true;
+        await this.userEbooksService.update(
+          userEbook.ebook.id,
+          userId,
+          userEbook,
+        );
+      } else {
+        //create new userEbook
+        const userEbook = new UserEbook();
+        userEbook.ebook = ebook;
+        userEbook.user = { id: userId } as any;
+        userEbook.isLiked = true;
+        await this.userEbooksService.create(userEbook);
+      }
+      await this.ebooksRepository.save(ebook);
+      return;
+    } catch (e) {
+      throw new HttpException(e, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async view(id: string) {
+    try {
+      const ebook = await this.ebooksRepository.findOneBy({ id });
+      if (!ebook) {
+        throw new HttpException('Ebook not found', HttpStatus.BAD_REQUEST);
+      }
+      ebook.view++;
+      await this.ebooksRepository.save(ebook);
+      return;
+    } catch (e) {
+      throw new HttpException(e, HttpStatus.BAD_REQUEST);
+    }
+  }
+
   async findOne(id: string) {
     try {
       return await this.ebooksRepository
@@ -111,7 +162,7 @@ export class EbooksService {
         await this.ebooksRepository.save({ ...ebook, ...updateEbookDto });
         await this.searchService.updateEbook(ebook);
       } else {
-        throw new HttpException('Ebook not found', HttpStatus.NOT_FOUND);
+        throw new HttpException('Ebook not found', HttpStatus.BAD_REQUEST);
       }
       return;
     } catch (e) {
@@ -123,7 +174,7 @@ export class EbooksService {
     try {
       const deleteResult = await this.ebooksRepository.delete(id);
       if (deleteResult.affected === 0) {
-        throw new HttpException('Ebook not found', HttpStatus.NOT_FOUND);
+        throw new HttpException('Ebook not found', HttpStatus.BAD_REQUEST);
       }
       return;
     } catch (e) {

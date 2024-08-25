@@ -91,4 +91,11 @@ export const authReducer = createReducer(
       loading: false,
     };
   }),
+  on(AuthActions.toggleStaticUserMode, (state, action) => {
+    console.log(action.type);
+    return <AuthState>{
+      ...state,
+      isStaticUser: action.isStaticUser,
+    };
+  }),
 );

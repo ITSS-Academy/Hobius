@@ -10,7 +10,6 @@ export class SearchService {
     this.esClient = new Client({
       node: 'https://es.ext.akademy.dev',
     });
-
     console.log('esClient', this.esClient);
   }
 
@@ -23,6 +22,7 @@ export class SearchService {
         title: ebook.title,
         author: ebook.author,
         detail: ebook.detail,
+        categories: ebook.categories.map((category) => category.name),
       },
     });
   }

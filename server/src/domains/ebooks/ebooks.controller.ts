@@ -53,7 +53,7 @@ export class EbooksController {
   }
 
   @Public()
-  @Get(':id')
+  @Get('one/:id')
   async findOne(@Param('id') id: string) {
     return await this.ebooksService.findOne(id);
   }
@@ -78,5 +78,16 @@ export class EbooksController {
     } else {
       throw new HttpException('Permission denied', HttpStatus.FORBIDDEN);
     }
+  }
+
+  @Patch('like/:id')
+  async like(@Param('id') id: string, @Request() req: any) {
+    return await this.ebooksService.like(id, req.user.id);
+  }
+
+  @Public()
+  @Patch('view/:id')
+  async view(@Param('id') id: string) {
+    return await this.ebooksService.view(id);
   }
 }

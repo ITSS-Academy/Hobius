@@ -33,7 +33,10 @@ export class AuthEffects {
       ofType(AuthActions.signOut),
       exhaustMap(() => {
         return this.authService.logout().pipe(
-          map(() => AuthActions.signOutSuccess()),
+          map(() => {
+            AuthActions.signOutSuccess();
+            return AuthActions.signOutSuccess();
+          }),
           catchError((error) => {
             return of(AuthActions.signOutFailure({ error: error }));
           }),
@@ -49,11 +52,12 @@ export class AuthEffects {
         return this.authService
           .signInWithStaticUser(action.email, action.password)
           .pipe(
-            map((response) =>
-              AuthActions.signInWithStaticUserSuccess({
+            map((response) => {
+              this.saveTokenInSession(response.access_token);
+              return AuthActions.signInWithStaticUserSuccess({
                 idToken: response.access_token,
-              }),
-            ),
+              });
+            }),
             catchError((error) => {
               return of(
                 AuthActions.signInWithStaticUserFailure({ error: error }),
@@ -63,6 +67,14 @@ export class AuthEffects {
       }),
     ),
   );
+
+  saveTokenInSession(idToken: string) {
+    sessionStorage.setItem('idToken', idToken);
+  }
+
+  removeTokenInSession() {
+    sessionStorage.removeItem('idToken');
+  }
 
   constructor(
     private actions$: Actions,

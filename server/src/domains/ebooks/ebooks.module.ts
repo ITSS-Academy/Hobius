@@ -4,9 +4,10 @@ import { EbooksController } from './ebooks.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Ebook } from './entities/ebook.entity';
 import { SearchModule } from '../search/search.module';
+import { UserEbooksModule } from '../user_ebooks/user_ebooks.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Ebook]), SearchModule],
+  imports: [TypeOrmModule.forFeature([Ebook]), SearchModule, UserEbooksModule],
   controllers: [EbooksController],
   providers: [EbooksService],
 })
