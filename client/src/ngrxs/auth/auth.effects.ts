@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 import { map, exhaustMap, catchError } from 'rxjs/operators';
 import * as AuthActions from './auth.actions';
 import { AuthService } from '../../services/auth.service';
+import { SessionStorageService } from '../../services/session-storage.service';
 
 @Injectable()
 export class AuthEffects {
@@ -34,7 +35,7 @@ export class AuthEffects {
       exhaustMap(() => {
         return this.authService.logout().pipe(
           map(() => {
-            AuthActions.signOutSuccess();
+            this.sessionStorageService.removeTokenInSession();
             return AuthActions.signOutSuccess();
           }),
           catchError((error) => {
@@ -53,7 +54,9 @@ export class AuthEffects {
           .signInWithStaticUser(action.email, action.password)
           .pipe(
             map((response) => {
-              this.saveTokenInSession(response.access_token);
+              this.sessionStorageService.saveTokenInSession(
+                response.access_token,
+              );
               return AuthActions.signInWithStaticUserSuccess({
                 idToken: response.access_token,
               });
@@ -68,16 +71,9 @@ export class AuthEffects {
     ),
   );
 
-  saveTokenInSession(idToken: string) {
-    sessionStorage.setItem('idToken', idToken);
-  }
-
-  removeTokenInSession() {
-    sessionStorage.removeItem('idToken');
-  }
-
   constructor(
     private actions$: Actions,
     private authService: AuthService,
+    private sessionStorageService: SessionStorageService,
   ) {}
 }

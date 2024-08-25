@@ -6,7 +6,10 @@ import { Store } from '@ngrx/store';
 import { AuthState } from '../ngrxs/auth/auth.state';
 import * as AuthActions from '../ngrxs/auth/auth.actions';
 import * as UserActions from '../ngrxs/user/user.actions';
+import * as CategoryActions from '../ngrxs/category/category.actions';
 import { UserState } from '../ngrxs/user/user.state';
+import { JWTTokenService } from '../services/jwttoken.service';
+import { SessionStorageService } from '../services/session-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -20,10 +23,16 @@ export class AppComponent implements OnInit {
   isLoginPage = false;
 
   constructor(
+    private jwtTokenService: JWTTokenService,
+    private sessionStorageService: SessionStorageService,
     private router: Router,
     private auth: Auth,
-    private store: Store<{ auth: AuthState; user: UserState }>,
+    private store: Store<{
+      auth: AuthState;
+      user: UserState;
+    }>,
   ) {
+    this.store.dispatch(CategoryActions.getAll());
     onAuthStateChanged(this.auth, async (user) => {
       if (user) {
         const token = await user.getIdTokenResult();
@@ -31,13 +40,20 @@ export class AppComponent implements OnInit {
       }
     });
     // console.log(this.get('idToken'));
-    if (this.getValueFromSession('idToken') != '') {
+    if (this.sessionStorageService.getValueFromSession('idToken') != '') {
+      this.jwtTokenService.setToken(
+        this.sessionStorageService.getValueFromSession('idToken'),
+      );
+      if (this.jwtTokenService.isTokenExpired()) {
+        this.sessionStorageService.removeTokenInSession();
+        return;
+      }
       this.store.dispatch(
         AuthActions.toggleStaticUserMode({ isStaticUser: true }),
       );
       this.store.dispatch(
         AuthActions.storeIdToken({
-          idToken: this.getValueFromSession('idToken'),
+          idToken: this.sessionStorageService.getValueFromSession('idToken'),
         }),
       );
     }
@@ -64,9 +80,5 @@ export class AppComponent implements OnInit {
         this.store.dispatch(UserActions.getById());
       }
     });
-  }
-
-  getValueFromSession(key: string) {
-    return sessionStorage.getItem(key) || '';
   }
 }

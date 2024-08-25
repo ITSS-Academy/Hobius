@@ -1,5 +1,9 @@
 <div id="admin-container">
-  @if (isLoadingEbooks$ | async) {
+  @if (
+    (isLoadingEbooks$ | async) ||
+    (isCreatingEbook$ | async) ||
+    (isUpdatingEbook$ | async)
+  ) {
     <div class="progress-bar-overlay">
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>

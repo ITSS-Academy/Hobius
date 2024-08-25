@@ -55,7 +55,7 @@ export class MyCustomPaginatorIntl implements MatPaginatorIntl {
   styleUrl: './admin.component.scss',
   providers: [{ provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl }],
 })
-export class AdminComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AdminComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   //table
@@ -77,6 +77,8 @@ export class AdminComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ebooks: EbookModel[] = [];
   isLoadingEbooks$ = this.store.select('ebook', 'isLoadingEbooks');
+  isCreatingEbook$ = this.store.select('ebook', 'isCreatingEbook');
+  isUpdatingEbook$ = this.store.select('ebook', 'isUpdatingEbook');
 
   //dialog
   readonly dialog = inject(MatDialog);
@@ -105,7 +107,7 @@ export class AdminComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscriptions.push(
       this.store.select('ebook', 'ebooks').subscribe((val) => {
         this.ebooks = val;
-        this.dataSource = new MatTableDataSource(this.ebooks);
+        this.initTable();
       }),
       this.store.select('ebook', 'isLoadingEbooksError').subscribe((val) => {
         if (val != null) {
@@ -114,12 +116,37 @@ export class AdminComponent implements OnInit, OnDestroy, AfterViewInit {
           });
         }
       }),
+      this.store.select('ebook', 'isCreatingEbookSuccess').subscribe((val) => {
+        if (val) {
+          this._snackBar.open('Tạo ebook thành công', 'Đóng', {
+            duration: 2000,
+          });
+          this.store.dispatch(EbookActions.findAll());
+        }
+      }),
+      this.store.select('ebook', 'isCreatingEbookError').subscribe((val) => {
+        if (val) {
+          this._snackBar.open('Tạo ebook thất bại', 'Đóng', {
+            duration: 2000,
+          });
+        }
+      }),
+      this.store.select('ebook', 'isUpdatingEbookSuccess').subscribe((val) => {
+        if (val) {
+          this._snackBar.open('Cập nhật ebook thành công', 'Đóng', {
+            duration: 2000,
+          });
+          this.store.dispatch(EbookActions.findAll());
+        }
+      }),
+      this.store.select('ebook', 'isUpdatingEbookError').subscribe((val) => {
+        if (val) {
+          this._snackBar.open('Cập nhật ebook thất bại', 'Đóng', {
+            duration: 2000,
+          });
+        }
+      }),
     );
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {
@@ -151,8 +178,7 @@ export class AdminComponent implements OnInit, OnDestroy, AfterViewInit {
     // console.log(this.selection.selected);
   }
 
-  reInitTable(ebook: EbookModel) {
-    this.ebooks.push(ebook);
+  initTable() {
     this.dataSource = new MatTableDataSource(this.ebooks);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -165,13 +191,13 @@ export class AdminComponent implements OnInit, OnDestroy, AfterViewInit {
       if (result) {
         let newEbook: EbookModel = {
           ...result,
-          id: (this.dataSource.data.length + 1).toString(),
           like: 0,
           view: 0,
-          date: new Date().toDateString(),
+          publishedDate: new Date().toDateString(),
         };
-        this.reInitTable(newEbook);
+        // this.reInitTable(newEbook);
         console.log(newEbook);
+        this.store.dispatch(EbookActions.create({ ebook: newEbook }));
       }
     });
   }
@@ -183,14 +209,18 @@ export class AdminComponent implements OnInit, OnDestroy, AfterViewInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // let newEbook: EbookModel = {
-        //   ...result,
-        //   id: (this.dataSource.data.length + 1).toString(),
-        //   like: 0,
-        //   view: 0,
-        //   date: new Date().toDateString(),
-        // };
-        console.log(result);
+        let updatedEbook: EbookModel = {
+          ...result,
+          like: this.selection.selected[0].like,
+          view: this.selection.selected[0].view,
+        };
+        console.log(updatedEbook);
+        this.store.dispatch(
+          EbookActions.update({
+            id: this.selection.selected[0].id,
+            ebook: updatedEbook,
+          }),
+        );
       }
     });
   }
@@ -198,12 +228,17 @@ export class AdminComponent implements OnInit, OnDestroy, AfterViewInit {
   isRefreshing = false;
 
   reload() {
-    if (this.isRefreshing) return;
-
+    if (this.isRefreshing) {
+      this._snackBar.open('Vui lòng không spam!!!', 'Đóng', {
+        duration: 2000,
+      });
+      return;
+    }
     this.isRefreshing = true;
+    this.store.dispatch(EbookActions.findAll());
     // Perform the refresh operation here
     setTimeout(() => {
       this.isRefreshing = false;
-    }, 3000); // Re-enable the button after 3 seconds
+    }, 2000); // Re-enable the button after 2 seconds
   }
 }

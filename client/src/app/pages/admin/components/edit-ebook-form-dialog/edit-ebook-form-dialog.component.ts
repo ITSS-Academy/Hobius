@@ -40,5 +40,6 @@ export class EditEbookFormDialogComponent extends EbookFormDialogComponent {
     super(cardService, store, _snackBar);
     console.log(data);
     this.ebookFormGroup.patchValue({ ...data });
+    this.tempId = data.id;
   }
 }

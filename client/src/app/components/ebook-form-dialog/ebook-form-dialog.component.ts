@@ -58,6 +58,7 @@ export class EbookFormDialogComponent implements OnInit, OnDestroy {
     protected _snackBar: MatSnackBar,
   ) {
     this.ebookFormGroup = new FormGroup({
+      id: new FormControl(this.tempId),
       title: new FormControl('', [Validators.required]),
       author: new FormControl('', [Validators.required]),
       detail: new FormControl('', [Validators.required]),

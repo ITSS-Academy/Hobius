@@ -19,6 +19,8 @@ import { UserEffects } from '../ngrxs/user/user.effects';
 import { HttpClientAuth } from '../utils/http-client-auth';
 import { ebookReducer } from '../ngrxs/ebook/ebook.reducer';
 import { EbookEffects } from '../ngrxs/ebook/ebook.effects';
+import { categoryReducer } from '../ngrxs/category/category.reducer';
+import { CategoryEffects } from '../ngrxs/category/category.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,12 +29,19 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     HttpClientAuth,
     provideAnimationsAsync(),
-    provideEffects(FileUploadEffects, AuthEffects, UserEffects, EbookEffects),
+    provideEffects(
+      FileUploadEffects,
+      AuthEffects,
+      UserEffects,
+      EbookEffects,
+      CategoryEffects,
+    ),
     provideStore({
       file_upload: fileUploadReducer,
       auth: authReducer,
       user: userReducer,
       ebook: ebookReducer,
+      category: categoryReducer,
     }),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
