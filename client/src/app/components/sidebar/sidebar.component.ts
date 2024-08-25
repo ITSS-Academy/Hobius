@@ -24,7 +24,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
       routeLink: '/admin',
       isActive: false,
     },
-    { name: 'Trang chủ', icon: 'home', routeLink: '/home', isActive: false },
+    { name: 'Trang chủ', icon: 'home', routeLink: '/home', isActive: true },
     {
       name: 'Hồ sơ',
       icon: 'person',
@@ -51,6 +51,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
       this.router.events
         .pipe(filter((event) => event instanceof NavigationEnd))
         .subscribe((event) => {
+          // console.log(event);
           this.links.forEach((link) => {
             link.isActive = this.router.url.includes(link.routeLink);
           });
