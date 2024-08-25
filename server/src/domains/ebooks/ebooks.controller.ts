@@ -85,6 +85,11 @@ export class EbooksController {
     return await this.ebooksService.like(id, req.user.id);
   }
 
+  @Patch('unlike/:id')
+  async unlike(@Param('id') id: string, @Request() req: any) {
+    return await this.ebooksService.unlike(id, req.user.id);
+  }
+
   @Public()
   @Patch('view/:id')
   async view(@Param('id') id: string) {

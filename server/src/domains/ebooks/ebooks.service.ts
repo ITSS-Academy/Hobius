@@ -128,6 +128,40 @@ export class EbooksService {
     }
   }
 
+  async unlike(id: string, userId: string) {
+    try {
+      const ebook = await this.ebooksRepository.findOneBy({ id });
+      if (!ebook) {
+        throw new HttpException('Ebook not found', HttpStatus.BAD_REQUEST);
+      }
+      ebook.like--;
+      //check that user has already viewed this ebook
+      const userEbook = await this.userEbooksService.findOneByEbookIdAndUserId(
+        id,
+        userId,
+      );
+      if (userEbook) {
+        userEbook.isLiked = false;
+        await this.userEbooksService.update(
+          userEbook.ebook.id,
+          userId,
+          userEbook,
+        );
+      } else {
+        //create new userEbook
+        const userEbook = new UserEbook();
+        userEbook.ebook = ebook;
+        userEbook.user = { id: userId } as any;
+        userEbook.isLiked = false;
+        await this.userEbooksService.create(userEbook);
+      }
+      await this.ebooksRepository.save(ebook);
+      return;
+    } catch (e) {
+      throw new HttpException(e, HttpStatus.BAD_REQUEST);
+    }
+  }
+
   async view(id: string) {
     try {
       const ebook = await this.ebooksRepository.findOneBy({ id });

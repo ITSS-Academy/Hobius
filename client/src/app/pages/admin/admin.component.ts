@@ -22,6 +22,7 @@ import { EbookState } from '../../../ngrxs/ebook/ebook.state';
 import { Store } from '@ngrx/store';
 import * as EbookActions from '../../../ngrxs/ebook/ebook.actions';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { JWTTokenService } from '../../../services/jwttoken.service';
 
 @Injectable()
 export class MyCustomPaginatorIntl implements MatPaginatorIntl {
@@ -87,6 +88,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   constructor(
     // private cardService: CardService,
     private store: Store<{ ebook: EbookState }>,
+    private jwtTokenService: JWTTokenService,
   ) {
     // Create 100 ebooks
     // this.ebooks = Array.from({ length: 10 }, (_, k) =>
@@ -228,17 +230,21 @@ export class AdminComponent implements OnInit, OnDestroy {
   isRefreshing = false;
 
   reload() {
-    if (this.isRefreshing) {
-      this._snackBar.open('Vui lòng không spam!!!', 'Đóng', {
-        duration: 2000,
-      });
-      return;
+    if (this.jwtTokenService.isTokenExpired()) {
+      this.jwtTokenService.alertTokenExpired();
+    } else {
+      if (this.isRefreshing) {
+        this._snackBar.open('Vui lòng không spam!!!', 'Đóng', {
+          duration: 2000,
+        });
+        return;
+      }
+      this.isRefreshing = true;
+      this.store.dispatch(EbookActions.findAll());
+      // Perform the refresh operation here
+      setTimeout(() => {
+        this.isRefreshing = false;
+      }, 2000); // Re-enable the button after 2 seconds
     }
-    this.isRefreshing = true;
-    this.store.dispatch(EbookActions.findAll());
-    // Perform the refresh operation here
-    setTimeout(() => {
-      this.isRefreshing = false;
-    }, 2000); // Re-enable the button after 2 seconds
   }
 }
