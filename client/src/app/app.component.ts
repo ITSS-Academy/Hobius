@@ -67,6 +67,7 @@ export class AppComponent implements OnInit {
     });
     this.store.select('auth', 'idToken').subscribe((val) => {
       if (val != '') {
+        this.jwtTokenService.setToken(val);
         this.store.dispatch(UserActions.getById());
       }
     });
