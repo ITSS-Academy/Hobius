@@ -54,8 +54,9 @@
   height: calc(400px + 10px);
   background-color: var(--surfaceContainerLow);
   z-index: 1; /* ensure it is not overlapped by other elements */
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
+  //border-bottom-left-radius: 12px;
+  //border-bottom-right-radius: 12px;
+  border-radius: 12px;
   align-items: center;
   flex-direction: column;
   text-overflow: ellipsis;
@@ -124,9 +125,10 @@
   }
   #dropdownBox {
     top: 100px; /* Adjust top position for tablets */
-    left: 0; /* Align to the left edge */
-    width: 100%; /* Extend to the full width of the screen */
-    transform: none; /* Remove centering transform */
+    left: 60%; /* Center the element horizontally */
+    width: 450px; /* Set a fixed width */
+    transform: translateX(-50%); /* Center the element horizontally */
+    border-top-left-radius: 10px;
   }
   .book-icon {
     width: 10%; /* Adjust size as needed */
