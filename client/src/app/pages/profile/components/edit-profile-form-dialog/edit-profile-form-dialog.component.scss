@@ -127,7 +127,7 @@
       width: 90%;
       padding-bottom: 20px;
 
-      #btn1 {
+      .btn1 {
         background-color: #415e91;
         color: white;
         margin-left: 10px;
@@ -273,7 +273,7 @@
       width: 90%;
       padding-bottom: 20px;
 
-      #btn1 {
+      .btn1 {
         background-color: #415e91;
         color: white;
         margin-left: 10px;
@@ -426,7 +426,7 @@
       width: 90%;
       padding-bottom: 20px;
 
-      #btn1 {
+      .btn1 {
         background-color: #415e91;
         color: white;
         margin-left: 5px;
@@ -441,6 +441,15 @@
       font-size: 12px;
     }
   }
+}
+
+mat-hint {
+  color: red;
+}
+
+.btn1:hover {
+  filter: brightness(0.85);
+  color: #37b7c3;
 }
 
 input[type="file"] {
