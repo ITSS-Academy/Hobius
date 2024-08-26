@@ -61,7 +61,7 @@ export class AuthService {
       // Backend error
       errorMessage = `Đang xảy ra lỗi`;
     }
-    return throwError(errorMessage);
+    return throwError(() => errorMessage);
   }
 
   logout() {

@@ -14,17 +14,34 @@ import { fileUploadReducer } from '../ngrxs/file-upload/file-upload.reducer';
 import { FileUploadEffects } from '../ngrxs/file-upload/file-upload.effects';
 import { authReducer } from '../ngrxs/auth/auth.reducer';
 import { AuthEffects } from '../ngrxs/auth/auth.effects';
+import { userReducer } from '../ngrxs/user/user.reducer';
+import { UserEffects } from '../ngrxs/user/user.effects';
+import { HttpClientAuth } from '../utils/http-client-auth';
+import { ebookReducer } from '../ngrxs/ebook/ebook.reducer';
+import { EbookEffects } from '../ngrxs/ebook/ebook.effects';
+import { categoryReducer } from '../ngrxs/category/category.reducer';
+import { CategoryEffects } from '../ngrxs/category/category.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),
+    HttpClientAuth,
     provideAnimationsAsync(),
-    provideEffects(FileUploadEffects, AuthEffects),
+    provideEffects(
+      FileUploadEffects,
+      AuthEffects,
+      UserEffects,
+      EbookEffects,
+      CategoryEffects,
+    ),
     provideStore({
       file_upload: fileUploadReducer,
       auth: authReducer,
+      user: userReducer,
+      ebook: ebookReducer,
+      category: categoryReducer,
     }),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),

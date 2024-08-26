@@ -1,14 +1,27 @@
 import { Category } from '../../categories/entities/category.entity';
+import { IsString, IsArray } from 'class-validator';
 
 export class CreateEbookDto {
+  @IsString()
   id: string;
+
+  @IsString()
   title: string;
-  publisher: string;
-  isbn: string;
+
+  @IsArray()
   categories: Category[];
+
   publishedDate: string;
-  language: string;
-  coverImageURL: string;
-  summary: string;
-  filePath: string;
+
+  @IsString()
+  image: string;
+
+  @IsString()
+  detail: string;
+
+  @IsString()
+  pdf: string;
+
+  @IsString()
+  author: string;
 }

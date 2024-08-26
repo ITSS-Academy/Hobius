@@ -8,7 +8,17 @@
 
     @if (idToken != "") {
       <div id="home-header-avatar">
-        <mat-icon [matMenuTriggerFor]="avaMenu">account_circle</mat-icon>
+        @if (isStaticUser) {
+          <mat-icon [matMenuTriggerFor]="avaMenu">account_circle</mat-icon>
+        } @else {
+          <div id="avatar">
+            <img
+              [src]="(user$ | async)?.avatarURL"
+              [alt]="(user$ | async)?.userName"
+              [matMenuTriggerFor]="avaMenu"
+            />
+          </div>
+        }
         <mat-menu #avaMenu="matMenu">
           <button mat-menu-item (click)="openConfirmLogoutDialog()">
             <mat-icon>logout</mat-icon>
@@ -40,6 +50,7 @@
             <mat-icon>home</mat-icon>
             Trang chủ
           </button>
+
           <button
             mat-menu-item
             [routerLink]="'/profile'"

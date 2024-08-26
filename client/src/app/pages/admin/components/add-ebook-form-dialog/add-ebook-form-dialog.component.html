@@ -3,15 +3,15 @@
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
   </div>
 }
-<h2 mat-dialog-title>Add New Ebook</h2>
+<h2 mat-dialog-title>Tạo mới Ebook</h2>
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="ebookFormGroup">
     <!--   title form control   -->
     <mat-form-field appearance="fill">
-      <mat-label>Title</mat-label>
+      <mat-label>Tiêu đề</mat-label>
       <input
         matInput
-        placeholder="title..."
+        placeholder="Tiêu đề..."
         formControlName="title"
         (blur)="updateTitleErrorMessage()"
         required
@@ -28,10 +28,10 @@
 
     <!--   author form control   -->
     <mat-form-field appearance="fill">
-      <mat-label>Author</mat-label>
+      <mat-label>Tác giả</mat-label>
       <input
         matInput
-        placeholder="author..."
+        placeholder="Tác giả..."
         formControlName="author"
         (blur)="updateAuthorErrorMessage()"
         required
@@ -48,10 +48,10 @@
 
     <!--   detail form control   -->
     <mat-form-field appearance="fill">
-      <mat-label>Detail</mat-label>
+      <mat-label>Mô tả</mat-label>
       <textarea
         matInput
-        placeholder="detail..."
+        placeholder="Mô tả..."
         formControlName="detail"
         (blur)="updateDetailErrorMessage()"
         required
@@ -69,42 +69,39 @@
 
     <!--      genres form control-->
     <mat-form-field>
-      <mat-label>Genre</mat-label>
+      <mat-label>Thể loại</mat-label>
       <mat-select
-        placeholder="genre..."
-        formControlName="genre"
+        placeholder="Thể loại ..."
+        formControlName="categories"
         multiple
         required
       >
         <mat-select-trigger>
-          {{ ebookFormGroup.get("categories")?.value?.[0].name || "" }}
-          @if ((ebookFormGroup.get("categories")?.value?.length || 0) > 1) {
+          {{ ebookFormGroup.controls["categories"].value[0]?.name || "" }}
+          @if ((ebookFormGroup.controls["categories"].value.length || 0) > 1) {
             <span class="additional-selection">
-              (+{{ (ebookFormGroup.get("categories")?.value?.length || 0) - 1 }}
-              {{
-                ebookFormGroup.get("categories")?.value?.length === 2
-                  ? "other"
-                  : "others"
+              (+{{
+                (ebookFormGroup.controls["categories"].value.length || 0) - 1
               }}
-              )
+              thể loại)
             </span>
           }
         </mat-select-trigger>
-        @for (category of categoryList; track category) {
+        @for (category of categories$ | async; track category) {
           <mat-option [value]="category">{{ category.name }}</mat-option>
         }
       </mat-select>
       @if (categories.hasError("required")) {
-        <mat-error>You must make a selection</mat-error>
+        <mat-error>Vui lòng chọn danh mục cho sách</mat-error>
       }
     </mat-form-field>
 
     <!--   image file form control   -->
     <mat-form-field appearance="fill">
-      <mat-label>Image Url</mat-label>
+      <mat-label>Url ảnh bìa</mat-label>
       <input
         matInput
-        placeholder="image url..."
+        placeholder="Url ảnh bìa..."
         formControlName="image"
         (blur)="updateImageErrorMessage()"
         required
@@ -127,9 +124,7 @@
         (blur)="updateImageErrorMessage()"
         (change)="onImagePicked($event)"
       />
-      <label class="mdc-floating-label" for="cover-file-input"
-        >Image file</label
-      >
+      <label class="mdc-floating-label" for="cover-file-input">File ảnh</label>
       <div class="mdc-line-ripple"></div>
     </div>
     <div class="mdc-text-field--error">
@@ -139,10 +134,10 @@
     </div>
     <!--   file form control   -->
     <mat-form-field appearance="fill">
-      <mat-label>Pdf Url</mat-label>
+      <mat-label>Url pdf</mat-label>
       <input
         matInput
-        placeholder="pdf url..."
+        placeholder="Url pdf..."
         formControlName="pdf"
         (blur)="updatePdfErrorMessage()"
         required
@@ -165,7 +160,7 @@
         (blur)="updatePdfErrorMessage()"
         (change)="onPdfPicked($event)"
       />
-      <label class="mdc-floating-label" for="pdf-file-input">Pdf file</label>
+      <label class="mdc-floating-label" for="pdf-file-input">File Pdf</label>
       <div class="mdc-line-ripple"></div>
     </div>
     <div class="mdc-text-field--error">
@@ -176,12 +171,12 @@
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button mat-dialog-close>Hủy</button>
   <button
     mat-flat-button
     [mat-dialog-close]="sendForm()"
     [disabled]="ebookFormGroup.invalid"
   >
-    Submit
+    Tạo
   </button>
 </mat-dialog-actions>

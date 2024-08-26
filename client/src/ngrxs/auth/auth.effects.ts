@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 import { map, exhaustMap, catchError } from 'rxjs/operators';
 import * as AuthActions from './auth.actions';
 import { AuthService } from '../../services/auth.service';
+import { SessionStorageService } from '../../services/session-storage.service';
 
 @Injectable()
 export class AuthEffects {
@@ -33,7 +34,10 @@ export class AuthEffects {
       ofType(AuthActions.signOut),
       exhaustMap(() => {
         return this.authService.logout().pipe(
-          map(() => AuthActions.signOutSuccess()),
+          map(() => {
+            this.sessionStorageService.removeTokenInSession();
+            return AuthActions.signOutSuccess();
+          }),
           catchError((error) => {
             return of(AuthActions.signOutFailure({ error: error }));
           }),
@@ -49,11 +53,14 @@ export class AuthEffects {
         return this.authService
           .signInWithStaticUser(action.email, action.password)
           .pipe(
-            map((response) =>
-              AuthActions.signInWithStaticUserSuccess({
+            map((response) => {
+              this.sessionStorageService.saveTokenInSession(
+                response.access_token,
+              );
+              return AuthActions.signInWithStaticUserSuccess({
                 idToken: response.access_token,
-              }),
-            ),
+              });
+            }),
             catchError((error) => {
               return of(
                 AuthActions.signInWithStaticUserFailure({ error: error }),
@@ -67,5 +74,6 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
+    private sessionStorageService: SessionStorageService,
   ) {}
 }

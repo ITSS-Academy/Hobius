@@ -23,6 +23,7 @@
     "@angular/router": "^18.1.0",
     "@ngrx/effects": "^18.0.2",
     "@ngrx/store": "^18.0.2",
+    "jwt-decode": "^4.0.0",
     "ngx-extended-pdf-viewer": "^21.1.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

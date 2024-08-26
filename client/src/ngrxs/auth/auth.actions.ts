@@ -4,6 +4,12 @@ export const storeIdToken = createAction(
   '[Auth] Store Id Token',
   props<{ idToken: string }>(),
 );
+
+export const toggleStaticUserMode = createAction(
+  '[Auth] Toggle Static User Mode',
+  props<{ isStaticUser: boolean }>(),
+);
+
 export const signInWithGoogle = createAction('[Auth] Sign In With Google');
 export const signInWithGoogleSuccess = createAction(
   '[Auth] Sign In With Google Success',

@@ -53,6 +53,36 @@
         color: var(--onPrimary);
         background: var(--primary);
       }
+
+      #avatar {
+        position: relative;
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        overflow: hidden;
+
+        img {
+          max-width: 100%;
+          max-height: 100%;
+        }
+
+        img::after {
+          content: attr(alt);
+          display: flex;
+          align-items: center;
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          color: var(--onPrimary);
+          background-color: var(--primary);
+          white-space: pre;
+          padding-left: calc(50% - 0.5ch);
+          font-family: monospace;
+          letter-spacing: 2rem;
+        }
+      }
     }
 
     #home-header-button {
@@ -280,5 +310,14 @@
 
   ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
     background: var(--background);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

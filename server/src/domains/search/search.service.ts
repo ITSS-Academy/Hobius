@@ -10,7 +10,6 @@ export class SearchService {
     this.esClient = new Client({
       node: 'https://es.ext.akademy.dev',
     });
-
     console.log('esClient', this.esClient);
   }
 
@@ -23,6 +22,7 @@ export class SearchService {
         title: ebook.title,
         author: ebook.author,
         detail: ebook.detail,
+        categories: ebook.categories.map((category) => category.name),
       },
     });
   }
@@ -43,16 +43,20 @@ export class SearchService {
 
   async updateEbook(ebook: Ebook) {
     // delete first
-    await this.deletePost(ebook.id);
+    await this.deleteEbook(ebook.id);
     // index
     await this.indexEbook(ebook);
   }
 
-  async deletePost(postId: string) {
-    await this.esClient.delete({
-      index: 'hobius_ebooks',
-      id: postId,
-    });
+  async deleteEbook(ebookId: string) {
+    try {
+      await this.esClient.delete({
+        index: 'hobius_ebooks',
+        id: ebookId,
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async searchAny(indexName: string, query: string) {

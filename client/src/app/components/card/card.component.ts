@@ -27,7 +27,7 @@ export class CardComponent implements OnInit {
     // Simulate loading delay
     setTimeout(() => {
       this.isLoading = false;
-    }, 2000);
+    }, 500);
   }
 
   @HostListener('mousedown', ['$event'])

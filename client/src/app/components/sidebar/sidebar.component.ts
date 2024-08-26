@@ -5,6 +5,7 @@ import { filter, Subscription } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../../../ngrxs/auth/auth.state';
+import { JWTTokenService } from '../../../services/jwttoken.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -24,7 +25,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
       routeLink: '/admin',
       isActive: false,
     },
-    { name: 'Trang chủ', icon: 'home', routeLink: '/home', isActive: false },
+    { name: 'Trang chủ', icon: 'home', routeLink: '/home', isActive: true },
     {
       name: 'Hồ sơ',
       icon: 'person',
@@ -36,6 +37,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private router: Router,
     private store: Store<{ auth: AuthState }>,
+    private jwtTokenService: JWTTokenService,
   ) {}
 
   ngOnInit(): void {
@@ -51,6 +53,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
       this.router.events
         .pipe(filter((event) => event instanceof NavigationEnd))
         .subscribe((event) => {
+          // console.log(event);
           this.links.forEach((link) => {
             link.isActive = this.router.url.includes(link.routeLink);
           });
@@ -65,6 +68,15 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   navigate(index: number) {
+    if (
+      this.links[index].routeLink === '/admin' ||
+      this.links[index].routeLink === '/profile'
+    ) {
+      this.jwtTokenService.checkTokenExpired();
+      if (this.jwtTokenService.isTokenExpired()) {
+        return;
+      }
+    }
     this.router.navigate([this.links[index].routeLink]).then(() => {});
   }
 }

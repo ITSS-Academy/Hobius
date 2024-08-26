@@ -15,6 +15,7 @@ import { Store } from '@ngrx/store';
 import { FileUploadState } from '../../../../../ngrxs/file-upload/file-upload.state';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CardService } from '../../../../../services/card.service';
+import { CategoryState } from '../../../../../ngrxs/category/category.state';
 
 @Component({
   selector: 'app-edit-ebook-form-dialog',
@@ -33,12 +34,16 @@ import { CardService } from '../../../../../services/card.service';
 export class EditEbookFormDialogComponent extends EbookFormDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: EbookModel,
-    protected override store: Store<{ file_upload: FileUploadState }>,
+    protected override store: Store<{
+      file_upload: FileUploadState;
+      category: CategoryState;
+    }>,
     protected override _snackBar: MatSnackBar,
     protected override cardService: CardService,
   ) {
     super(cardService, store, _snackBar);
-    console.log(data);
     this.ebookFormGroup.patchValue({ ...data });
+    console.log(this.ebookFormGroup.value);
+    this.tempId = data.id;
   }
 }

@@ -17,7 +17,12 @@ export class AuthService {
   async signIn(email: string, pass: string): Promise<{ access_token: string }> {
     try {
       const user = await this.usersService.checkUser(email, pass);
-      const payload = { sub: user.id, username: user.userName };
+      const payload = {
+        id: user.id,
+        username: user.userName,
+        role: user.role,
+        email: user.email,
+      };
       // TODO: Generate a JWT and return it here
       // instead of the user object
       return {

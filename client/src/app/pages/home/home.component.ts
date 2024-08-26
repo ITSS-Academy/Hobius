@@ -23,6 +23,7 @@ import { Store } from '@ngrx/store';
 import * as AuthActions from '../../../ngrxs/auth/auth.actions';
 import { Subscription } from 'rxjs';
 import { SearchBarComponent } from '../../components/search-bar/search-bar.component';
+import { UserState } from '../../../ngrxs/user/user.state';
 
 @Component({
   selector: 'app-home',
@@ -50,10 +51,11 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
 
   isStaticUser = false;
   idToken: string = '';
+  user$ = this.store.select('user', 'user');
 
   constructor(
     private cardService: CardService,
-    private store: Store<{ auth: AuthState }>,
+    private store: Store<{ auth: AuthState; user: UserState }>,
   ) {}
 
   ngOnInit(): void {
@@ -65,6 +67,9 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
       this.store.select('auth', 'idToken').subscribe((value) => {
         console.log('idToken: ', value);
         this.idToken = value;
+      }),
+      this.store.select('auth', 'isStaticUser').subscribe((value) => {
+        this.isStaticUser = value;
       }),
     );
   }
@@ -196,10 +201,6 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   logout() {
-    if (this.isStaticUser) {
-      this.store.dispatch(AuthActions.signOut());
-    } else {
-      this.store.dispatch(AuthActions.signOut());
-    }
+    this.store.dispatch(AuthActions.signOut());
   }
 }

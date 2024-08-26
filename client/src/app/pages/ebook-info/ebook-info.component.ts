@@ -5,19 +5,11 @@ import {
   OnInit,
   QueryList,
   ViewChildren,
-  inject,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AddInputCommentDialogComponent } from './components/add-input-comment-dialog/add-input-comment-dialog.component';
-import { CdkFixedSizeVirtualScroll } from '@angular/cdk/scrolling';
-import {
-  MatButton,
-  MatFabButton,
-  MatIconButton,
-} from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
-import { MatIcon } from '@angular/material/icon';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
 
@@ -61,12 +53,14 @@ export class EbookInfoComponent implements AfterViewInit, OnInit {
   constructor(
     private router: Router,
     private dialog: MatDialog,
+    private cd: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.checkTextOverflow();
+    this.cd.detectChanges();
   }
 
   resetExpandedStatus(): void {
