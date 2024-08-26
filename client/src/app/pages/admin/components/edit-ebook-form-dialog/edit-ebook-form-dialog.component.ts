@@ -14,6 +14,7 @@ import { CloudStorageService } from '../../../../../services/cloud-storage.servi
 import { Store } from '@ngrx/store';
 import { FileUploadState } from '../../../../../ngrxs/file-upload/file-upload.state';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CardService } from '../../../../../services/card.service';
 
 @Component({
   selector: 'app-edit-ebook-form-dialog',
@@ -34,8 +35,9 @@ export class EditEbookFormDialogComponent extends EbookFormDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: EbookModel,
     protected override store: Store<{ file_upload: FileUploadState }>,
     protected override _snackBar: MatSnackBar,
+    protected override cardService: CardService,
   ) {
-    super(store, _snackBar);
+    super(cardService, store, _snackBar);
     console.log(data);
     this.ebookFormGroup.patchValue({ ...data });
   }

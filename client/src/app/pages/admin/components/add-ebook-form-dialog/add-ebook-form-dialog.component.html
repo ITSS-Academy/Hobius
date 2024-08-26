@@ -77,12 +77,12 @@
         required
       >
         <mat-select-trigger>
-          {{ ebookFormGroup.get("genre")?.value?.[0] || "" }}
-          @if ((ebookFormGroup.get("genre")?.value?.length || 0) > 1) {
+          {{ ebookFormGroup.get("categories")?.value?.[0].name || "" }}
+          @if ((ebookFormGroup.get("categories")?.value?.length || 0) > 1) {
             <span class="additional-selection">
-              (+{{ (ebookFormGroup.get("genre")?.value?.length || 0) - 1 }}
+              (+{{ (ebookFormGroup.get("categories")?.value?.length || 0) - 1 }}
               {{
-                ebookFormGroup.get("genre")?.value?.length === 2
+                ebookFormGroup.get("categories")?.value?.length === 2
                   ? "other"
                   : "others"
               }}
@@ -90,11 +90,11 @@
             </span>
           }
         </mat-select-trigger>
-        @for (genre of genreList; track genre) {
-          <mat-option [value]="genre">{{ genre }}</mat-option>
+        @for (category of categoryList; track category) {
+          <mat-option [value]="category">{{ category.name }}</mat-option>
         }
       </mat-select>
-      @if (genre.hasError("required")) {
+      @if (categories.hasError("required")) {
         <mat-error>You must make a selection</mat-error>
       }
     </mat-form-field>

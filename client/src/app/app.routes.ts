@@ -36,7 +36,7 @@ export const routes: Routes = [
       import('./pages/login/login.route').then((m) => m.LOGIN_ROUTES),
   },
   {
-    path: 'ebook-info',
+    path: 'ebook-info/:id',
     loadChildren: () =>
       import('./pages/ebook-info/ebook-info.route').then(
         (m) => m.EBOOK_INFO_ROUTES,

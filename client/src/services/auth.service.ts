@@ -7,8 +7,10 @@ import {
   signOut,
 } from '@angular/fire/auth';
 import { from, Observable, of, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from '../environments/environment';
+import { AuthState } from '../ngrxs/auth/auth.state';
+import { Store } from '@ngrx/store';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +19,7 @@ export class AuthService {
   constructor(
     private auth: Auth,
     private http: HttpClient,
+    private store: Store<{ auth: AuthState }>,
   ) {}
 
   signInWithGoogle() {
@@ -73,12 +76,14 @@ export class AuthService {
   isSignedIn(): Observable<boolean> {
     return new Observable<boolean>((observer) => {
       this.auth.onAuthStateChanged((user) => {
-        if (user) {
-          observer.next(true);
-        } else {
-          observer.next(false);
-        }
+        observer.next(!!user);
       });
     });
+  }
+
+  isStaticUser(): Observable<boolean> {
+    return this.store
+      .select('auth', 'isStaticUser')
+      .pipe(map((staticUser) => !!staticUser));
   }
 }

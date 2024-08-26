@@ -1,3 +1,5 @@
+import { CategoryModel } from './category.model';
+
 export interface EbookModel {
   id: string;
   title: string;
@@ -8,5 +10,5 @@ export interface EbookModel {
   view: number;
   like: number;
   pdf: string;
-  genre: string[];
+  categories: CategoryModel[];
 }

@@ -1,7 +1,0 @@
-DATABASE_HOST=aws-0-ap-southeast-1.pooler.supabase.com
-DATABASE_USERNAME=postgres.tboldughzyuisampxdfh
-DATABASE_PASSWORD=7G2xaK1EgXJ9Mwmo
-DATABASE_NAME=postgres
-JWT_SECRET=8a998ace9f8cfcfea596246c870ef62fe7a340c1240b3f822ae7335561668228
-STATIC_USER_EMAIL=admin@gmail.com
-STATIC_USER_PASSWORD=admin123456
