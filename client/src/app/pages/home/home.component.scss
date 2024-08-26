@@ -210,7 +210,13 @@
   }
 }
 
-//}
+.home-option-btn {
+  display: none;
+}
+
+.profile-option-btn {
+  display: none;
+}
 
 #home-container::-webkit-scrollbar {
   display: none;
@@ -221,7 +227,7 @@
     justify-content: start;
 
     #home-header {
-      justify-content: center;
+      justify-content: space-between;
 
       #home-header-avatar {
         display: flex; // Ensure it is set to flex
