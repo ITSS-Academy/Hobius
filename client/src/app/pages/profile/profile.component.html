@@ -25,17 +25,21 @@
   <div
     #myBackground
     id="background-img"
-    style="background-image: url('{{ user.wallPaperURL }}');
-    background-repeat: no-repeat;
-    background-size: cotain;
-    background-size: 1440px 250px;
-    background-position: center;">
+    style="
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-size: 1440px 250px;
+      background-position: center;
+    "
+  >
     <div id="avatar">
-      <img src="{{ user.avatarURL }}" alt="" />
+      <img src="{{ (user$ | async)?.avatarURL }}" alt="" />
     </div>
     <div id="detail-profile">
-      <div id="name">{{ user.userName }}</div>
-      <div id="birth">Ngày tham gia: {{ user.joinedDate }}</div>
+      <div id="name">{{ (user$ | async)?.userName }}</div>
+      <div id="birth">
+        Ngày tham gia: {{ (user$ | async)?.joinedDate | date }}
+      </div>
       <div id="note">
         <div>
           <mat-icon class="icon">star</mat-icon>

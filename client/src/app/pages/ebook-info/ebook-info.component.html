@@ -18,8 +18,8 @@
     </div>
     <div id="ebook-info-container">
       <div id="book-info">
-        <p id="author">{{ ebookInfo.author }}</p>
-        <p id="date">Đăng ngày: {{ ebookInfo.publishedDate }}</p>
+        <p id="author">Tác giả: {{ ebookInfo.author }}</p>
+        <p id="date">Đăng ngày: {{ ebookInfo.publishedDate|date:'dd/MM/yyyy'}}</p>
         <p id="description">
           {{ ebookInfo.detail }}
         </p>
