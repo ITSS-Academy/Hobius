@@ -124,9 +124,9 @@
   }
   #dropdownBox {
     top: 100px; /* Adjust top position for tablets */
-    left: 0; /* Align to the left edge */
-    width: 100%; /* Extend to the full width of the screen */
-    transform: none; /* Remove centering transform */
+    left: 90px; /* Offset from the left edge */
+    width: calc(100%); /* Extend to the full width of the screen */
+    transform: translateX(0%); /* Center the element horizontally */
   }
   .book-icon {
     width: 10%; /* Adjust size as needed */
