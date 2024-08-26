@@ -17,7 +17,9 @@
     </div>
     <div class="cardBox">
       <div id="theLoaiBox" #viewport>
-        <div class="theLoai" *ngFor="let loai of theLoai">{{ loai }}</div>
+        <div *ngFor="let loai of theLoai" class="theLoai" #theLoai>
+          {{ loai.name }}
+        </div>
       </div>
     </div>
     <cdk-virtual-scroll-viewport itemSize="50" id="bot-viewport">
