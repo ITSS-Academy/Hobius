@@ -1,46 +1,42 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, Inject, inject, input, signal } from '@angular/core';
 import { MatFormField } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { SharedModule } from '../../../../../shared/modules/shared.module';
 import { MaterialModule } from '../../../../../shared/modules/material.module';
-import { MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogClose,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { UserModel } from '../../../../../models/user.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { EbookModel } from '../../../../../models/ebook.model';
 
 @Component({
   selector: 'app-edit-profile-form-dialog',
   standalone: true,
-  imports: [
-    MatFormField,
-    MatIcon,
-    MatSelect,
-    MatOption,
-    SharedModule,
-    MaterialModule,
-  ],
+  imports: [SharedModule, MaterialModule, MatDialogClose],
   templateUrl: './edit-profile-form-dialog.component.html',
   styleUrl: './edit-profile-form-dialog.component.scss',
 })
 export class EditProfileFormDialogComponent {
-  ngaySinh = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-    22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
-  ];
-
-  thangSinh = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-
-  namSinh = [
-    1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001,
-    2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013,
-    2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024,
-  ];
-
   readonly dialogRef = inject(MatDialogRef<EditProfileFormDialogComponent>);
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  profileFormGroup = new FormGroup({
+    id: new FormControl('', [Validators.required]),
+    userName: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    avatarURL: new FormControl('', [Validators.required]),
+    wallPaperURL: new FormControl('', [Validators.required]),
+  });
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: UserModel) {
+    this.profileFormGroup.patchValue({ ...this.data });
   }
 
-  alertSuccess() {
-    alert('Cập nhật thông tin thành công');
+  sendForm() {
+    // console.log(this.ebookFormGroup.value);
+    return this.profileFormGroup.value;
   }
 }
