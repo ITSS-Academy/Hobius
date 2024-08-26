@@ -5,16 +5,16 @@ import {
   OnInit,
   QueryList,
   ViewChildren,
-  ChangeDetectorRef, Input,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AddInputCommentDialogComponent } from './components/add-input-comment-dialog/add-input-comment-dialog.component';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
-import {EbookModel} from "../../../models/ebook.model";
-import {CardService} from "../../../services/card.service";
-import {parseJson} from "@angular/cli/src/utilities/json-file";
+import { EbookModel } from '../../../models/ebook.model';
+import { CardService } from '../../../services/card.service';
+import { CommentModel } from '../../../models/comment.model';
 
 @Component({
   selector: 'app-ebook-info',
@@ -27,30 +27,65 @@ export class EbookInfoComponent implements AfterViewInit, OnInit {
   @ViewChildren('commentText') commentTextElements!: QueryList<ElementRef>;
   // @Input() ebook!: EbookModel;
   ebookInfo!: EbookModel;
-  isLoading: boolean = true;
   isCommentInputVisible: boolean = false;
   newCommentText: string = '';
-  comments: {
-    name: string;
-    text: string;
-    isExpanded: boolean;
-    isOverflowing: boolean;
-  }[] = [
+  comments: CommentModel[] = [
     {
-      name: 'Nguyễn Văn B',
-      text: 'Godamn, tôi chưa bao giờ đọc được quấn sách nào hay như vậy, các nhân này mà có ở ngoài đời thật thì sẽ thú vị như thế nào',
+      user: {
+        id: '1',
+        userName: 'Nguyễn Văn A',
+        email: 'nguyenvana@gmail.com',
+        avatarURL: '',
+        wallPaperURL: '',
+        joinedDate: '',
+      },
+      content:
+        'Godamn, tôi chưa bao giờ đọc được quấn sách nào hay như vậy, các nhân này mà có ở ngoài đời thật thì sẽ thú vị như thế nào',
       isExpanded: false,
       isOverflowing: false,
+      ebook: {
+        id: '',
+        title: '',
+        author: '',
+        detail: '',
+        image: '',
+        publishedDate: '',
+        view: 0,
+        like: 0,
+        pdf: '',
+        categories: [],
+      },
+      commentDate: '',
     },
     {
-      name: 'Nguyễn Văn C',
-      text:
+      user: {
+        id: '2',
+        userName: 'Nguyen Van C',
+        email: 'nguyenvanc@gmail.com',
+        avatarURL: '',
+        wallPaperURL: '',
+        joinedDate: '',
+      },
+      content:
         'Xương rồng đơm lá, đơm hoa Nước ngọt đong đầy trên cao nguyên đá\n' +
         '              Là ngày Hoàng đế về nhà Bảy năm mòn mỏi, kiệu hoa đón ngài Vương\n' +
         '              triều màu Đỏ mất ngai Bao năm chờ đợi, mong ngày phục hưng Cuối\n' +
         '              cùng trời đã đông hừng Đế chế trở lại, chúc mừng Quỷ Vương!',
       isExpanded: false,
       isOverflowing: false,
+      ebook: {
+        id: '',
+        title: '',
+        author: '',
+        detail: '',
+        image: '',
+        publishedDate: '',
+        view: 0,
+        like: 0,
+        pdf: '',
+        categories: [],
+      },
+      commentDate: '',
     },
   ];
   isFavorite: boolean = false;
@@ -60,17 +95,16 @@ export class EbookInfoComponent implements AfterViewInit, OnInit {
     private router: Router,
     private dialog: MatDialog,
     private cd: ChangeDetectorRef,
-    public ebookdetail: CardService,
+    public ebookDetail: CardService,
     private activatedRoute: ActivatedRoute,
   ) {
-    const {id} = this.activatedRoute.snapshot.params;
-    this.ebookInfo =
-      this.ebookdetail.cards.find(ebook =>
-        ebook.id == id) as EbookModel;
+    const { id } = this.activatedRoute.snapshot.params;
+    this.ebookInfo = this.ebookDetail.cards.find(
+      (ebook) => ebook.id == id,
+    ) as EbookModel;
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.checkTextOverflow();
@@ -104,10 +138,30 @@ export class EbookInfoComponent implements AfterViewInit, OnInit {
         this.resetExpandedStatus();
         setTimeout(() => this.checkTextOverflow(), 100);
         this.comments.push({
-          name: 'Tôi',
-          text: result,
+          ebook: {
+            id: '',
+            title: '',
+            author: '',
+            detail: '',
+            image: '',
+            publishedDate: '',
+            view: 0,
+            like: 0,
+            pdf: '',
+            categories: [],
+          },
+          user: {
+            id: '3',
+            userName: 'Nguyen Van D',
+            email: '',
+            avatarURL: '',
+            wallPaperURL: '',
+            joinedDate: '',
+          },
+          content: result as string,
           isExpanded: false,
           isOverflowing: false,
+          commentDate: new Date().toLocaleString(),
         });
       }
     });

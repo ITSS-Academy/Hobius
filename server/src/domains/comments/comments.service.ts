@@ -111,17 +111,17 @@ export class EbookCommentsService {
     updateEbookCommentDto: UpdateEbookCommentDto,
   ) {
     try {
-      // Step 1: Find the Review
+      // Step 1: Find the Ebook Comment
       let review = await this.findOneByEbookIdAndUserId(ebookId, userId);
 
-      // Step 2: Update the Review
+      // Step 2: Update the Entity
       review.content = updateEbookCommentDto.content;
       review.commentDate = new Date().toISOString();
 
       // Step 3: Validate the Updated Entity
       await this.validate(review);
 
-      // Step 4: Save the Updated Review
+      // Step 4: Save the Updated Entity
       await this.ebookCommentsRepository
         .createQueryBuilder()
         .update(EbookComment)

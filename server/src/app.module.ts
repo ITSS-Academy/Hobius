@@ -33,7 +33,6 @@ import { EbookComment } from './domains/comments/entities/comment.entity';
       autoLoadEntities: true,
       logging: true,
       ssl: { rejectUnauthorized: false },
-      entities: [EbookComment],
     }),
     JwtModule.register({
       global: true,
