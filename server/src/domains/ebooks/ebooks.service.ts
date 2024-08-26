@@ -8,6 +8,8 @@ import { SearchService } from '../search/search.service';
 import { UserEbook } from '../user_ebooks/entities/user_ebook.entity';
 import { UserEbooksService } from '../user_ebooks/user_ebooks.service';
 import { Category } from '../categories/entities/category.entity';
+import { User } from '../users/entities/user.entity';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class EbooksService {
@@ -104,6 +106,7 @@ export class EbooksService {
         throw new HttpException('Ebook not found', HttpStatus.BAD_REQUEST);
       }
       ebook.like++;
+
       //check that user has already viewed this ebook
       const userEbook = await this.userEbooksService.findOneByEbookIdAndUserId(
         id,
@@ -119,8 +122,8 @@ export class EbooksService {
       } else {
         //create new userEbook
         const userEbook = new UserEbook();
-        userEbook.ebook = ebook;
-        userEbook.user = { id: userId } as any;
+        userEbook.ebook = ebook.id as any;
+        userEbook.user = userId as any;
         userEbook.isLiked = true;
         await this.userEbooksService.create(userEbook);
       }
@@ -137,7 +140,11 @@ export class EbooksService {
       if (!ebook) {
         throw new HttpException('Ebook not found', HttpStatus.BAD_REQUEST);
       }
+      if (ebook.like === 0) {
+        throw new HttpException('Ebook like is 0', HttpStatus.BAD_REQUEST);
+      }
       ebook.like--;
+
       //check that user has already viewed this ebook
       const userEbook = await this.userEbooksService.findOneByEbookIdAndUserId(
         id,
@@ -153,8 +160,8 @@ export class EbooksService {
       } else {
         //create new userEbook
         const userEbook = new UserEbook();
-        userEbook.ebook = ebook;
-        userEbook.user = { id: userId } as any;
+        userEbook.ebook = ebook.id as any;
+        userEbook.user = userId as any;
         userEbook.isLiked = false;
         await this.userEbooksService.create(userEbook);
       }

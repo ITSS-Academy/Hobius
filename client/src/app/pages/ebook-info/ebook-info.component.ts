@@ -5,13 +5,16 @@ import {
   OnInit,
   QueryList,
   ViewChildren,
-  ChangeDetectorRef,
+  ChangeDetectorRef, Input,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { AddInputCommentDialogComponent } from './components/add-input-comment-dialog/add-input-comment-dialog.component';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
+import {EbookModel} from "../../../models/ebook.model";
+import {CardService} from "../../../services/card.service";
+import {parseJson} from "@angular/cli/src/utilities/json-file";
 
 @Component({
   selector: 'app-ebook-info',
@@ -22,6 +25,9 @@ import { SharedModule } from '../../../shared/modules/shared.module';
 })
 export class EbookInfoComponent implements AfterViewInit, OnInit {
   @ViewChildren('commentText') commentTextElements!: QueryList<ElementRef>;
+  // @Input() ebook!: EbookModel;
+  ebookInfo!: EbookModel;
+  isLoading: boolean = true;
   isCommentInputVisible: boolean = false;
   newCommentText: string = '';
   comments: {
@@ -54,9 +60,22 @@ export class EbookInfoComponent implements AfterViewInit, OnInit {
     private router: Router,
     private dialog: MatDialog,
     private cd: ChangeDetectorRef,
-  ) {}
+    public ebookdetail: CardService,
+    private activatedRoute: ActivatedRoute,
+  ) {
+    const {id} = this.activatedRoute.snapshot.params;
+    this.ebookInfo =
+      this.ebookdetail.cards.find(ebook =>
+        ebook.id == id) as EbookModel;
+    console.log(this.ebookInfo);
+    console.log(this.ebookInfo.id);
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 500);
+  }
 
   ngAfterViewInit(): void {
     this.checkTextOverflow();

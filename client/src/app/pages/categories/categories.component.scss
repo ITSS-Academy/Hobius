@@ -16,6 +16,11 @@
     width: 100%;
     color: var(--primary);
 
+    #categories-header-title > button {
+      display: flex;
+      justify-content: start; // Ensure this line is present
+    }
+
     #categories-header-search {
       width: 50%;
       min-width: 360px;
@@ -69,12 +74,6 @@
           left: 0;
           margin-left: 20px;
           flex-direction: row;
-        }
-
-        #categories-header-search {
-          flex: 1;
-          display: flex;
-          justify-content: center;
         }
       }
 
