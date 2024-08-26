@@ -67,14 +67,9 @@ export class EbookInfoComponent implements AfterViewInit, OnInit {
     this.ebookInfo =
       this.ebookdetail.cards.find(ebook =>
         ebook.id == id) as EbookModel;
-    console.log(this.ebookInfo);
-    console.log(this.ebookInfo.id);
   }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 500);
   }
 
   ngAfterViewInit(): void {
