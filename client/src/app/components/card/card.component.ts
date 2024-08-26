@@ -46,7 +46,7 @@ export class CardComponent implements OnInit {
     if (this.isMouseDown) {
       const deltaX = Math.abs(event.clientX - this.startX);
       const deltaY = Math.abs(event.clientY - this.startY);
-      if (deltaX > 1 || deltaY > 1) {
+      if (deltaX > 0.1 || deltaY > 0.1) {
         this.moved = true;
         clearTimeout(this.holdTimeout);
       }
