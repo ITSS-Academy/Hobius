@@ -256,11 +256,11 @@
     }
   }
 
-  #home-option-btn {
+  .home-option-btn {
     display: none;
   }
 
-  #profile-option-btn {
+  .profile-option-btn {
     display: none;
   }
 }
@@ -310,12 +310,12 @@
     }
   }
 
-  #home-option-btn {
-    display: none;
+  .home-option-btn {
+    display: flex;
   }
 
-  #profile-option-btn {
-    display: none;
+  .profile-option-btn {
+    display: flex;
   }
 }
 
