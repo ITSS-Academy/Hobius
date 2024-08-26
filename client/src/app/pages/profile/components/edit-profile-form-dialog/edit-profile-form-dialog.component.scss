@@ -54,6 +54,38 @@
       justify-content: center;
       align-items: center;
 
+      #avatar {
+        width: 250px;
+        height: fit-content;
+        text-align: center;
+        border: 1px dashed #415e91;
+        border-radius: 28px;
+        font-size: 14px;
+        padding: 20px;
+        margin-bottom: 10px;
+        cursor: pointer;
+      }
+
+      #avatar:hover {
+        color: #415e91;
+      }
+
+      #background {
+        width: 250px;
+        height: fit-content;
+        text-align: center;
+        border: 1px dashed #415e91;
+        border-radius: 28px;
+        font-size: 14px;
+        padding: 20px;
+        cursor: pointer;
+        margin-bottom: 10px;
+      }
+
+      #background:hover {
+        color: #415e91;
+      }
+
       mat-form-field {
         width: 90%;
         padding: 0;
@@ -74,14 +106,15 @@
 
     #button {
       display: flex;
-      justify-content: center;
+      justify-content: end;
       align-items: center;
-      width: 100%;
+      width: 90%;
       padding-bottom: 20px;
 
       #btn1 {
         background-color: #415e91;
         color: white;
+        margin-left: 10px;
       }
 
       #btn2 {
@@ -151,6 +184,38 @@
       justify-content: center;
       align-items: center;
 
+      #avatar {
+        width: 250px;
+        height: fit-content;
+        text-align: center;
+        border: 1px dashed #415e91;
+        border-radius: 28px;
+        font-size: 14px;
+        padding: 20px;
+        margin-bottom: 10px;
+        cursor: pointer;
+      }
+
+      #avatar:hover {
+        color: #415e91;
+      }
+
+      #background {
+        width: 250px;
+        height: fit-content;
+        text-align: center;
+        border: 1px dashed #415e91;
+        border-radius: 28px;
+        font-size: 14px;
+        padding: 20px;
+        cursor: pointer;
+        margin-bottom: 10px;
+      }
+
+      #background:hover {
+        color: #415e91;
+      }
+
       mat-form-field {
         width: 90%;
         padding: 0;
@@ -171,14 +236,15 @@
 
     #button {
       display: flex;
-      justify-content: center;
+      justify-content: end;
       align-items: center;
-      width: 100%;
+      width: 90%;
       padding-bottom: 20px;
 
       #btn1 {
         background-color: #415e91;
         color: white;
+        margin-left: 10px;
       }
 
       #btn2 {
@@ -247,6 +313,38 @@
       justify-content: center;
       align-items: center;
 
+      #avatar {
+        width: 200px;
+        height: fit-content;
+        text-align: center;
+        border: 1px dashed #415e91;
+        border-radius: 28px;
+        font-size: 12px;
+        padding: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+      }
+
+      #avatar:hover {
+        color: #415e91;
+      }
+
+      #background {
+        width: 200px;
+        height: fit-content;
+        text-align: center;
+        border: 1px dashed #415e91;
+        border-radius: 28px;
+        font-size: 12px;
+        padding: 10px;
+        cursor: pointer;
+        margin-bottom: 10px;
+      }
+
+      #background:hover {
+        color: #415e91;
+      }
+
       mat-form-field {
         width: 90%;
         padding: 0;
@@ -267,14 +365,15 @@
 
     #button {
       display: flex;
-      justify-content: center;
+      justify-content: end;
       align-items: center;
-      width: 100%;
+      width: 90%;
       padding-bottom: 20px;
 
       #btn1 {
         background-color: #415e91;
         color: white;
+        margin-left: 5px;
       }
 
       #btn2 {
@@ -286,4 +385,8 @@
       font-size: 12px;
     }
   }
+}
+
+input[type="file"] {
+  display: none;
 }
