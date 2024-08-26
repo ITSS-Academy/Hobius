@@ -15,6 +15,7 @@ import { FileUploadState } from '../../../ngrxs/file-upload/file-upload.state';
 import * as UploadActions from '../../../ngrxs/file-upload/file-upload.actions';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CardService } from '../../../services/card.service';
+import { CategoryState } from '../../../ngrxs/category/category.state';
 
 @Component({
   selector: 'app-ebook-form-dialog',
@@ -37,10 +38,12 @@ export class EbookFormDialogComponent implements OnInit, OnDestroy {
   isLoading = false;
   subscriptions: Subscription[] = [];
 
+  categories$ = this.store.select('category', 'categories');
+
   title = new FormControl('', [Validators.required]);
   author = new FormControl('', [Validators.required]);
   detail = new FormControl('', [Validators.required]);
-  categories = new FormControl('', [Validators.required]);
+  categories = new FormControl([], [Validators.required]);
   pdf = new FormControl(null, [Validators.required]);
   image = new FormControl(null, [Validators.required]);
 
@@ -54,19 +57,22 @@ export class EbookFormDialogComponent implements OnInit, OnDestroy {
     protected cardService: CardService,
     protected store: Store<{
       file_upload: FileUploadState;
+      category: CategoryState;
     }>,
     protected _snackBar: MatSnackBar,
   ) {
     this.ebookFormGroup = new FormGroup({
-      id: new FormControl(this.tempId),
-      title: new FormControl('', [Validators.required]),
-      author: new FormControl('', [Validators.required]),
-      detail: new FormControl('', [Validators.required]),
-      image: new FormControl('', [Validators.required]),
-      pdf: new FormControl('', [Validators.required]),
-      categories: new FormControl([], [Validators.required]),
+      id: new FormControl(this.tempId, [Validators.required]),
+      title: new FormControl(this.title),
+      author: new FormControl(this.author),
+      detail: new FormControl(this.detail),
+      image: new FormControl(this.image),
+      pdf: new FormControl(this.pdf),
+      categories: new FormControl(this.categories),
     });
-
+    this.ebookFormGroup.controls['categories'].valueChanges.subscribe((val) => {
+      console.log(val);
+    });
     merge(this.title.statusChanges, this.title.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateTitleErrorMessage());

@@ -45,8 +45,14 @@ export class JWTTokenService {
   }
 
   alertTokenExpired() {
-    if (confirm('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại!')) {
-      this.store.dispatch(AuthActions.signOut());
+    alert('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại!');
+    this.store.dispatch(AuthActions.signOut());
+    this.setToken('');
+  }
+
+  checkTokenExpired() {
+    if (this.isTokenExpired()) {
+      this.alertTokenExpired();
     }
   }
 }

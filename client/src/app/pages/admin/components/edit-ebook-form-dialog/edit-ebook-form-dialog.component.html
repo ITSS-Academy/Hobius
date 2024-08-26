@@ -69,23 +69,25 @@
 
     <!--      genres form control-->
     <mat-form-field>
-      <mat-label>Danh mục</mat-label>
+      <mat-label>Thể loại</mat-label>
       <mat-select
-        placeholder="Danh mục..."
+        placeholder="Thể loại..."
         formControlName="categories"
         multiple
         required
       >
         <mat-select-trigger>
-          {{ ebookFormGroup.get("categories")?.value?.[0]?.name || "" }}
-          @if ((ebookFormGroup.get("categories")?.value?.length || 0) > 1) {
+          {{ ebookFormGroup.controls["categories"].value[0]?.name || "" }}
+          @if ((ebookFormGroup.controls["categories"].value.length || 0) > 1) {
             <span class="additional-selection">
-              (+{{ (ebookFormGroup.get("categories")?.value?.length || 0) - 1 }}
-              danh mục)
+              (+{{
+                (ebookFormGroup.controls["categories"].value.length || 0) - 1
+              }}
+              thể loại)
             </span>
           }
         </mat-select-trigger>
-        @for (category of categoryList; track category) {
+        @for (category of categories$ | async; track category) {
           <mat-option [value]="category">{{ category.name }}</mat-option>
         }
       </mat-select>

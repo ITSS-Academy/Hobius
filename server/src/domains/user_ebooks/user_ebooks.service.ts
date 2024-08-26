@@ -71,7 +71,7 @@ export class UserEbooksService {
 
   async findOneByEbookIdAndUserId(ebookId: string, userId: string) {
     try {
-      return await this.userEbooksRepository
+      let result = await this.userEbooksRepository
         .createQueryBuilder('userEbook')
         .leftJoinAndSelect('userEbook.ebook', 'ebook')
         .leftJoinAndSelect('userEbook.user', 'user')
@@ -86,6 +86,10 @@ export class UserEbooksService {
         .where('userEbook.userId = :userId', { userId })
         .andWhere('userEbook.ebookId = :ebookId', { ebookId })
         .getOne();
+      if (!result) {
+        throw new HttpException('UserEbook not found', HttpStatus.NOT_FOUND);
+      }
+      return result;
     } catch (e) {
       throw new HttpException(e, HttpStatus.BAD_REQUEST);
     }

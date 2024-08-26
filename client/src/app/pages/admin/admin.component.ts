@@ -23,6 +23,8 @@ import { Store } from '@ngrx/store';
 import * as EbookActions from '../../../ngrxs/ebook/ebook.actions';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { JWTTokenService } from '../../../services/jwttoken.service';
+import { Router } from '@angular/router';
+import { CategoryState } from '../../../ngrxs/category/category.state';
 
 @Injectable()
 export class MyCustomPaginatorIntl implements MatPaginatorIntl {
@@ -89,6 +91,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     // private cardService: CardService,
     private store: Store<{ ebook: EbookState }>,
     private jwtTokenService: JWTTokenService,
+    private router: Router,
   ) {
     // Create 100 ebooks
     // this.ebooks = Array.from({ length: 10 }, (_, k) =>
@@ -187,8 +190,12 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   openCreateEbookDialog() {
+    this.jwtTokenService.checkTokenExpired();
+    if (this.jwtTokenService.isTokenExpired()) {
+      this.router.navigate(['/']).then(() => {});
+      return;
+    }
     const dialogRef = this.dialog.open(AddEbookFormDialogComponent);
-
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         let newEbook: EbookModel = {
@@ -205,10 +212,14 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   openEditEbookDialog() {
+    this.jwtTokenService.checkTokenExpired();
+    if (this.jwtTokenService.isTokenExpired()) {
+      this.router.navigate(['/']).then(() => {});
+      return;
+    }
     const dialogRef = this.dialog.open(EditEbookFormDialogComponent, {
       data: this.selection.selected[0],
     });
-
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         let updatedEbook: EbookModel = {
@@ -230,21 +241,22 @@ export class AdminComponent implements OnInit, OnDestroy {
   isRefreshing = false;
 
   reload() {
+    this.jwtTokenService.checkTokenExpired();
     if (this.jwtTokenService.isTokenExpired()) {
-      this.jwtTokenService.alertTokenExpired();
-    } else {
-      if (this.isRefreshing) {
-        this._snackBar.open('Vui lòng không spam!!!', 'Đóng', {
-          duration: 2000,
-        });
-        return;
-      }
-      this.isRefreshing = true;
-      this.store.dispatch(EbookActions.findAll());
-      // Perform the refresh operation here
-      setTimeout(() => {
-        this.isRefreshing = false;
-      }, 2000); // Re-enable the button after 2 seconds
+      this.router.navigate(['/']).then(() => {});
+      return;
     }
+    if (this.isRefreshing) {
+      this._snackBar.open('Vui lòng không spam!!!', 'Đóng', {
+        duration: 2000,
+      });
+      return;
+    }
+    this.isRefreshing = true;
+    this.store.dispatch(EbookActions.findAll());
+    // Perform the refresh operation here
+    setTimeout(() => {
+      this.isRefreshing = false;
+    }, 2000); // Re-enable the button after 2 seconds
   }
 }

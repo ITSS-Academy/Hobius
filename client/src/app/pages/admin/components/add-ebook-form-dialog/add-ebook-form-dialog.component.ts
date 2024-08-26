@@ -14,6 +14,7 @@ import { FileUploadState } from '../../../../../ngrxs/file-upload/file-upload.st
 import { Store } from '@ngrx/store';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CardService } from '../../../../../services/card.service';
+import { CategoryState } from '../../../../../ngrxs/category/category.state';
 
 @Component({
   selector: 'app-add-ebook-form-dialog',
@@ -33,6 +34,7 @@ export class AddEbookFormDialogComponent extends EbookFormDialogComponent {
   constructor(
     protected override store: Store<{
       file_upload: FileUploadState;
+      category: CategoryState;
     }>,
     protected override _snackBar: MatSnackBar,
     protected override cardService: CardService,

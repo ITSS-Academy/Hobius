@@ -2,15 +2,18 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateEbookDto } from './dto/create-ebook.dto';
 import { UpdateEbookDto } from './dto/update-ebook.dto';
 import { Ebook } from './entities/ebook.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SearchService } from '../search/search.service';
 import { UserEbook } from '../user_ebooks/entities/user_ebook.entity';
 import { UserEbooksService } from '../user_ebooks/user_ebooks.service';
+import { Category } from '../categories/entities/category.entity';
 
 @Injectable()
 export class EbooksService {
   constructor(
+    @InjectRepository(Category)
+    private categoriesRepository: Repository<Category>,
     @InjectRepository(Ebook) private ebooksRepository: Repository<Ebook>,
     private userEbooksService: UserEbooksService,
     private readonly searchService: SearchService,
@@ -178,12 +181,16 @@ export class EbooksService {
 
   async findOne(id: string) {
     try {
-      return await this.ebooksRepository
+      const result = await this.ebooksRepository
         .createQueryBuilder('ebook')
         .leftJoinAndSelect('ebook.categories', 'categories')
         .select(['ebook', 'categories'])
         .where('ebook.id = :id', { id })
         .getOne();
+      if (!result) {
+        throw new HttpException('Ebook not found', HttpStatus.BAD_REQUEST);
+      }
+      return result;
     } catch (e) {
       throw new HttpException(e, HttpStatus.BAD_REQUEST);
     }
@@ -192,12 +199,24 @@ export class EbooksService {
   async update(id: string, updateEbookDto: UpdateEbookDto) {
     try {
       const ebook = await this.ebooksRepository.findOneBy({ id });
-      if (ebook) {
-        await this.ebooksRepository.save({ ...ebook, ...updateEbookDto });
-        await this.searchService.updateEbook(ebook);
-      } else {
+      if (!ebook) {
         throw new HttpException('Ebook not found', HttpStatus.BAD_REQUEST);
       }
+
+      // Fetch categories from the database
+      const categories = await this.categoriesRepository.findBy({
+        id: In(updateEbookDto.categories.map((category) => category.id)),
+      });
+
+      // Update ebook properties
+      ebook.title = updateEbookDto.title;
+      ebook.author = updateEbookDto.author;
+      ebook.detail = updateEbookDto.detail;
+      ebook.image = updateEbookDto.image;
+      ebook.pdf = updateEbookDto.pdf;
+      ebook.categories = categories;
+
+      await this.ebooksRepository.save(ebook);
       return;
     } catch (e) {
       throw new HttpException(e, HttpStatus.BAD_REQUEST);

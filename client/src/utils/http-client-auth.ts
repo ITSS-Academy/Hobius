@@ -68,11 +68,11 @@ export class HttpClientAuth {
     return this.http.delete(newUrl, newOptions);
   }
 
-  patch(url: string, options?: any) {
+  patch(url: string, body: any, options?: any): Observable<any> {
     const { url: newUrl, options: newOptions } = this.transformRequest(
       url,
       options,
     );
-    return this.http.patch(newUrl, newOptions);
+    return this.http.patch(newUrl, body, newOptions);
   }
 }
