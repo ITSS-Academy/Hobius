@@ -32,14 +32,12 @@ export class UserEbooksService {
     }
   }
 
-  async create(createUserEbookDto: CreateUserEbookDto) {
+  async create(userId: string, createUserEbookDto: CreateUserEbookDto) {
     try {
       let userEbook = this.userEbooksRepository.create(createUserEbookDto);
-      userEbook.user = createUserEbookDto.user;
+      userEbook.user = userId as any;
       userEbook.ebook = createUserEbookDto.ebook;
       userEbook.purchaseDate = new Date().toISOString();
-      console.log(userEbook);
-
       await this.userEbooksRepository.save(userEbook);
       return;
     } catch (e) {

@@ -206,4 +206,25 @@ export const ebookReducer = createReducer(
       isUpdatingEbookError: action.error,
     };
   }),
+  on(EbookActions.reset, (state) => {
+    console.log(EbookActions.reset.type);
+    return <EbookState>{
+      ...state,
+      isCreatingEbookSuccess: false,
+      isCreatingEbookError: null,
+
+      isUpdatingEbookSuccess: false,
+      isUpdatingEbookError: null,
+
+      isLoadingEbooksError: null,
+
+      isLoadingSelectedEbookError: null,
+
+      isLoadingTrendingEbooksError: null,
+
+      isLoadingRecommendEbooksError: null,
+      
+      isLoadingRatingEbooksError: null,
+    };
+  }),
 );

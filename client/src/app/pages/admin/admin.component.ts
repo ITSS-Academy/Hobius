@@ -106,6 +106,7 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
+    this.store.dispatch(EbookActions.reset());
   }
 
   ngOnInit(): void {

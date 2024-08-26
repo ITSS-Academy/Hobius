@@ -125,7 +125,7 @@ export class EbooksService {
         userEbook.ebook = ebook.id as any;
         userEbook.user = userId as any;
         userEbook.isLiked = true;
-        await this.userEbooksService.create(userEbook);
+        await this.userEbooksService.create(userId, userEbook);
       }
       await this.ebooksRepository.save(ebook);
       return;
@@ -163,7 +163,7 @@ export class EbooksService {
         userEbook.ebook = ebook.id as any;
         userEbook.user = userId as any;
         userEbook.isLiked = false;
-        await this.userEbooksService.create(userEbook);
+        await this.userEbooksService.create(userId, userEbook);
       }
       await this.ebooksRepository.save(ebook);
       return;

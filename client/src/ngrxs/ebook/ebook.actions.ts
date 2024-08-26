@@ -84,3 +84,5 @@ export const updateError = createAction(
   '[Ebook] Update Error',
   props<{ error: any }>(),
 );
+
+export const reset = createAction('[Ebook] Reset');

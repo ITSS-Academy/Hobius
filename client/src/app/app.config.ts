@@ -21,6 +21,8 @@ import { ebookReducer } from '../ngrxs/ebook/ebook.reducer';
 import { EbookEffects } from '../ngrxs/ebook/ebook.effects';
 import { categoryReducer } from '../ngrxs/category/category.reducer';
 import { CategoryEffects } from '../ngrxs/category/category.effects';
+import { UserEbookEffects } from '../ngrxs/user-ebook/user-ebook.effects';
+import { userEbookReducer } from '../ngrxs/user-ebook/user-ebook.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -35,6 +37,7 @@ export const appConfig: ApplicationConfig = {
       UserEffects,
       EbookEffects,
       CategoryEffects,
+      UserEbookEffects,
     ),
     provideStore({
       file_upload: fileUploadReducer,
@@ -42,6 +45,7 @@ export const appConfig: ApplicationConfig = {
       user: userReducer,
       ebook: ebookReducer,
       category: categoryReducer,
+      user_ebook: userEbookReducer,
     }),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),

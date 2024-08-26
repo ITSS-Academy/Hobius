@@ -12,27 +12,21 @@ export class UserEbookService {
     return this.http.post('user-ebooks', userEbook);
   }
 
-  update(userId: string, ebookId: string, userEbook: UserEbookModel) {
-    return this.http.put(
-      `user-ebooks/one?userId=${userId}&ebookId=${ebookId}`,
-      userEbook,
-    );
+  findAllByUserId() {
+    return this.http.get(`user-ebooks/history/user`);
   }
 
-  findAllByUserId(userId: string) {
-    return this.http.get(`user-ebooks/history/user/${userId}`);
+  findOneByEbookIdAndUserId(ebookId: string) {
+    return this.http.get(`user-ebooks/one?ebookId=${ebookId}`);
   }
 
-  read(userId: string, ebookId: string, userEbook: UserEbookModel) {
-    return this.http.put(
-      `user-ebooks/read?userId=${userId}&ebookId=${ebookId}`,
-      userEbook,
-    );
+  read(ebookId: string, userEbook: UserEbookModel) {
+    return this.http.put(`user-ebooks/read?ebookId=${ebookId}`, userEbook);
   }
 
-  finishReading(userId: string, ebookId: string, userEbook: UserEbookModel) {
+  finishReading(ebookId: string, userEbook: UserEbookModel) {
     return this.http.put(
-      `user-ebooks/finish-reading?userId=${userId}&ebookId=${ebookId}`,
+      `user-ebooks/finish-reading?ebookId=${ebookId}`,
       userEbook,
     );
   }

@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   Put,
+  Request,
 } from '@nestjs/common';
 import { UserEbooksService } from './user_ebooks.service';
 import { CreateUserEbookDto } from './dto/create-user_ebook.dto';
@@ -18,65 +19,70 @@ export class UserEbooksController {
   constructor(private readonly userEbooksService: UserEbooksService) {}
 
   @Post()
-  async create(@Body() createUserEbookDto: CreateUserEbookDto) {
-    return await this.userEbooksService.create(createUserEbookDto);
+  async create(
+    @Request() req: any,
+    @Body() createUserEbookDto: CreateUserEbookDto,
+  ) {
+    return await this.userEbooksService.create(
+      req.user.id || req.user.uid,
+      createUserEbookDto,
+    );
   }
 
-  @Get('history/user/:id')
-  async findAllByUserId(@Param('id') id: string) {
-    return await this.userEbooksService.findAllByUserId(id);
+  @Get('history/user')
+  async findAllByUserId(@Request() req: any) {
+    return await this.userEbooksService.findAllByUserId(
+      req.user.id || req.user.uid,
+    );
   }
 
   @Get('one')
-  async findOne(
-    @Query('userId') userId: string,
-    @Query('ebookId') ebookId: string,
-  ) {
+  async findOne(@Request() req: any, @Query('ebookId') ebookId: string) {
     return await this.userEbooksService.findOneByEbookIdAndUserId(
       ebookId,
-      userId,
+      req.user.id || req.user.uid,
     );
   }
 
   @Patch('read')
   async read(
-    @Query('userId') userId: string,
+    @Request() req: any,
     @Query('ebookId') ebookId: string,
     @Body() updateUserEbookDto: UpdateUserEbookDto,
   ) {
     return await this.userEbooksService.read(
       ebookId,
-      userId,
+      req.user.id || req.user.uid,
       updateUserEbookDto,
     );
   }
 
   @Patch('finish-read')
   async finishRead(
-    @Query('userId') userId: string,
+    @Request() req: any,
     @Query('ebookId') ebookId: string,
     @Body() updateUserEbookDto: UpdateUserEbookDto,
   ) {
     return await this.userEbooksService.finishReading(
       ebookId,
-      userId,
+      req.user.id || req.user.uid,
       updateUserEbookDto,
     );
   }
 
   @Delete()
-  async remove(
-    @Query('userId') userId: string,
-    @Query('ebookId') ebookId: string,
-  ) {
-    return await this.userEbooksService.remove(ebookId, userId);
+  async remove(@Request() req: any, @Query('ebookId') ebookId: string) {
+    return await this.userEbooksService.remove(
+      ebookId,
+      req.user.id || req.user.uid,
+    );
   }
 
-  @Put('restore')
-  async restore(
-    @Query('userId') userId: string,
-    @Query('ebookId') ebookId: string,
-  ) {
-    return await this.userEbooksService.restore(ebookId, userId);
-  }
+  // @Put('restore')
+  // async restore(
+  //   @Query('userId') userId: string,
+  //   @Query('ebookId') ebookId: string,
+  // ) {
+  //   return await this.userEbooksService.restore(ebookId, userId);
+  // }
 }
