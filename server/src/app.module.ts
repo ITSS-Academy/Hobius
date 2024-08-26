@@ -36,7 +36,7 @@ import { UserEbooksModule } from './domains/user_ebooks/user_ebooks.module';
     JwtModule.register({
       global: true,
       secret: configuration().jwt_secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '3600s' },
     }),
     UsersModule,
     EbooksModule,
