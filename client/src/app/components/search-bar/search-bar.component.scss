@@ -48,10 +48,10 @@
 #dropdownBox {
   display: flex;
   margin: 0;
-  top: 88px; /* height of #search-header */
+  top: 100px; /* height of #search-header */
   position: absolute;
   width: 500px;
-  height: 300px;
+  height: calc(400px + 10px);
   background-color: var(--surfaceContainerLow);
   z-index: 1; /* ensure it is not overlapped by other elements */
   border-bottom-left-radius: 12px;
@@ -67,17 +67,21 @@
   height: 100px;
   width: 100%;
   align-items: center;
-  font-size: 18px;
+  font-size: 22px;
 }
 
-.textIn > p {
+.bookInfor {
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Ensure it takes the full width of the parent */
+}
+
+.bookInfor > p {
   margin: 0;
   padding: 0;
-  display: block; /* Change to block to ensure width is respected */
-  align-items: center;
+  display: block; /* Ensure width is respected */
   color: var(--primary);
-  padding-left: 16px; /* Adjust padding to match the input field */
-  width: calc(100% - 24px); /* Adjust width to ensure space for ellipsis */
+  width: 80%; /* Ensure it takes the full width of the parent */
   white-space: nowrap; /* Prevent text wrapping */
   overflow: hidden; /* Hide overflow text */
   text-overflow: ellipsis; /* Apply ellipsis to overflow text */
@@ -89,9 +93,65 @@
 }
 
 .book-icon {
-  width: 10%; /* Adjust size as needed */
-  height: 100%; /* Adjust size as needed */
+  margin-left: 10px;
+  width: 12%; /* Adjust size as needed */
+  height: 90%; /* Adjust size as needed */
   margin-right: 8px; /* Adjust margin to match the previous icon */
   vertical-align: middle; /* Align with text */
   border-radius: 4px;
+}
+
+.author {
+  font-size: 14px;
+}
+
+/* Medium screens (tablets) */
+@media (max-width: 1000px) {
+  #search-container {
+    #search-header {
+      font-size: 1.5rem;
+      height: 80px;
+      width: 100%;
+
+      #search-header-search {
+        height: max-content;
+        min-width: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+  #dropdownBox {
+    top: 100px; /* Adjust top position for tablets */
+    left: 0; /* Align to the left edge */
+    width: 100%; /* Extend to the full width of the screen */
+    transform: none; /* Remove centering transform */
+  }
+  .book-icon {
+    width: 10%; /* Adjust size as needed */
+    height: 90%; /* Adjust size as needed */
+  }
+}
+
+/* Small screens (mobile devices) */
+@media (max-width: 600px) {
+  #search-container {
+    width: 145px;
+
+    #search-header {
+      font-size: 1.5rem;
+      height: 60px;
+      width: 100%;
+
+      #search-header-search {
+      }
+    }
+  }
+  #dropdownBox {
+    top: 80px; /* Adjust top position for mobile devices */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%; /* Adjust width for mobile devices */
+  }
 }

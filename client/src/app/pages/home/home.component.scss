@@ -3,6 +3,7 @@
   width: 100%;
   scrollbar-width: none; /* Hide scrollbar for Firefox */
   -ms-overflow-style: none;
+  overflow-x: hidden;
 
   #home-container::-webkit-scrollbar {
     display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
@@ -217,7 +218,16 @@
 
 @media (max-width: 800px) {
   #home-container {
+    justify-content: start;
+
     #home-header {
+      justify-content: center;
+
+      #home-header-avatar {
+        display: flex; // Ensure it is set to flex
+        justify-content: end;
+      }
+
       #home-header-title {
         h1 {
           font-size: 3rem;
@@ -230,7 +240,7 @@
       }
 
       #home-header-avatar {
-        display: none;
+        display: flex; // Ensure it is set to flex
       }
 
       #home-header-button {
@@ -257,7 +267,36 @@
 
 @media (max-width: 600px) {
   #home-container {
+    justify-content: start;
+
     #home-header {
+      justify-content: space-between;
+      gap: 0;
+
+      .app-search-bar {
+        width: 50%;
+      }
+
+      #home-header-avatar {
+        display: flex; // Ensure it is set to flex
+        justify-content: end;
+      }
+
+      #home-header-title {
+        h1 {
+          font-size: 2rem;
+          margin-right: 20px;
+        }
+      }
+
+      #home-header-search {
+        width: 100%;
+      }
+
+      #home-header-avatar {
+        display: flex; // Ensure it is set to flex
+      }
+
       #home-header-button {
         #txt-btn {
           display: none;
@@ -267,18 +306,16 @@
           display: flex;
           margin-left: 20px;
         }
-
-        #option-menu {
-        }
       }
     }
   }
+
   #home-option-btn {
-    display: flex;
+    display: none;
   }
 
   #profile-option-btn {
-    display: flex;
+    display: none;
   }
 }
 

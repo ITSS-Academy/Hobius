@@ -12,6 +12,11 @@ import { MatInputModule } from '@angular/material/input';
 })
 export class SearchBarComponent {
   showDropdown = false;
+  showSearchBar = false;
+
+  toggleSearchBar() {
+    this.showSearchBar = !this.showSearchBar;
+  }
 
   onInputChange(event: Event): void {
     const input = event.target as HTMLInputElement;
