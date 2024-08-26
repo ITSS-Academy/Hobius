@@ -114,7 +114,6 @@ export class CommentsService {
       let review = await this.findOneByEbookIdAndUserId(ebookId, userId);
 
       // Step 2: Update the Review
-      review.rating = updateCommentDto.rating;
       review.content = updateCommentDto.content;
       review.commentDate = new Date().toISOString();
 

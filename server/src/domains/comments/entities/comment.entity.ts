@@ -22,12 +22,6 @@ export class Comment {
   @JoinColumn({ name: 'ebookId' })
   ebook: Ebook;
 
-  @Column({ default: 1 })
-  @IsInt()
-  @Min(1)
-  @Max(5)
-  rating: number;
-
   @Column()
   content: string;
 

@@ -6,6 +6,7 @@ import { Ebook } from './entities/ebook.entity';
 import { SearchModule } from '../search/search.module';
 import { UserEbooksModule } from '../user_ebooks/user_ebooks.module';
 import { CategoriesModule } from '../categories/categories.module';
+import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [

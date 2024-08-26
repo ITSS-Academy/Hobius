@@ -19,7 +19,7 @@ export enum ReadingStatus {
 @Entity()
 export class UserEbook {
   @PrimaryColumn({ name: 'userId' })
-  @ManyToOne((type) => User, (user) => user.id, {
+  @ManyToOne(() => User, (user) => user.id, {
     nullable: false,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
@@ -28,7 +28,7 @@ export class UserEbook {
   user: User;
 
   @PrimaryColumn({ name: 'ebookId' })
-  @ManyToOne((type) => Ebook, (ebook) => ebook.id, {
+  @ManyToOne(() => Ebook, (ebook) => ebook.id, {
     nullable: false,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',

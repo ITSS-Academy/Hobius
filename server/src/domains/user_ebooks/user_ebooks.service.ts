@@ -35,11 +35,10 @@ export class UserEbooksService {
   async create(createUserEbookDto: CreateUserEbookDto) {
     try {
       let userEbook = this.userEbooksRepository.create(createUserEbookDto);
+      userEbook.user = createUserEbookDto.user;
+      userEbook.ebook = createUserEbookDto.ebook;
       userEbook.purchaseDate = new Date().toISOString();
-      userEbook.readingStatus = ReadingStatus.TO_READ;
-      userEbook.currentPage = 0;
-      userEbook.lastPageRead = 0;
-      userEbook.lastReadDate = null;
+      console.log(userEbook);
 
       await this.userEbooksRepository.save(userEbook);
       return;
@@ -56,11 +55,10 @@ export class UserEbooksService {
         .select([
           'userEbook.readingStatus',
           'userEbook.purchaseDate',
-          'userEbook.lastReadDate',
-          'userEbook.lastPageRead',
-          'userEbook.currentPage',
           'ebook.id',
           'ebook.title',
+          'ebook.author',
+          'ebook.image',
         ])
         .where('userEbook.userId = :userId', { userId })
         .getMany();
@@ -71,7 +69,7 @@ export class UserEbooksService {
 
   async findOneByEbookIdAndUserId(ebookId: string, userId: string) {
     try {
-      let result = await this.userEbooksRepository
+      return await this.userEbooksRepository
         .createQueryBuilder('userEbook')
         .leftJoinAndSelect('userEbook.ebook', 'ebook')
         .leftJoinAndSelect('userEbook.user', 'user')
@@ -86,10 +84,6 @@ export class UserEbooksService {
         .where('userEbook.userId = :userId', { userId })
         .andWhere('userEbook.ebookId = :ebookId', { ebookId })
         .getOne();
-      if (!result) {
-        throw new HttpException('UserEbook not found', HttpStatus.NOT_FOUND);
-      }
-      return result;
     } catch (e) {
       throw new HttpException(e, HttpStatus.BAD_REQUEST);
     }
