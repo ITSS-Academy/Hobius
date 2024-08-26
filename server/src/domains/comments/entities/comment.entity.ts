@@ -2,7 +2,7 @@ import { Column, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Ebook } from '../../ebooks/entities/ebook.entity';
 
-export class Comment {
+export class EbookComment {
   @PrimaryColumn({ name: 'userId' })
   @ManyToOne((type) => User, (user) => user.id, {
     nullable: false,

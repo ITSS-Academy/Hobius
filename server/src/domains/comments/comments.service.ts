@@ -1,18 +1,19 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateCommentDto } from './dto/create-comment.dto';
-import { UpdateCommentDto } from './dto/update-comment.dto';
-import { Comment } from './entities/comment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { validate } from 'class-validator';
+import { EbookComment } from './entities/comment.entity';
+import { CreateEbookCommentDto } from './dto/create-comment.dto';
+import { UpdateEbookCommentDto } from './dto/update-comment.dto';
 
 @Injectable()
-export class CommentsService {
+export class EbookCommentsService {
   constructor(
-    @InjectRepository(Comment) private commentsRepository: Repository<Comment>,
+    @InjectRepository(EbookComment)
+    private ebookCommentsRepository: Repository<EbookComment>,
   ) {}
 
-  async validate(cmt: Comment) {
+  async validate(cmt: EbookComment) {
     // Validate the DTO
     const validationErrors = await validate(cmt);
     if (validationErrors.length > 0) {
@@ -31,15 +32,15 @@ export class CommentsService {
     }
   }
 
-  async create(createCommentDto: CreateCommentDto) {
+  async create(createCommentDto: CreateEbookCommentDto) {
     try {
-      let cmt = this.commentsRepository.create(createCommentDto);
+      let cmt = this.ebookCommentsRepository.create(createCommentDto);
       cmt.commentDate = new Date().toISOString();
 
       await this.validate(cmt);
 
       // Proceed to save the review if validation passes
-      await this.commentsRepository.save(cmt);
+      await this.ebookCommentsRepository.save(cmt);
       return;
     } catch (e) {
       throw new HttpException(e, HttpStatus.BAD_REQUEST);
@@ -48,7 +49,7 @@ export class CommentsService {
 
   async findAllByEbookId(ebookId: string) {
     try {
-      return await this.commentsRepository
+      return await this.ebookCommentsRepository
         .createQueryBuilder('comment')
         .leftJoinAndSelect('comment.user', 'user')
         .select(['comment', 'user.id', 'user.userName', 'user.avatarURL'])
@@ -61,7 +62,7 @@ export class CommentsService {
 
   async findAllByUserId(userId: string) {
     try {
-      return await this.commentsRepository
+      return await this.ebookCommentsRepository
         .createQueryBuilder('comment')
         .leftJoinAndSelect('comment.user', 'user')
         .leftJoinAndSelect('comment.ebook', 'ebook')
@@ -84,7 +85,7 @@ export class CommentsService {
 
   async findOneByEbookIdAndUserId(ebookId: string, userId: string) {
     try {
-      return await this.commentsRepository
+      return await this.ebookCommentsRepository
         .createQueryBuilder('comment')
         .leftJoinAndSelect('comment.user', 'user')
         .leftJoinAndSelect('comment.ebook', 'ebook')
@@ -107,24 +108,24 @@ export class CommentsService {
   async update(
     ebookId: string,
     userId: string,
-    updateCommentDto: UpdateCommentDto,
+    updateEbookCommentDto: UpdateEbookCommentDto,
   ) {
     try {
       // Step 1: Find the Review
       let review = await this.findOneByEbookIdAndUserId(ebookId, userId);
 
       // Step 2: Update the Review
-      review.content = updateCommentDto.content;
+      review.content = updateEbookCommentDto.content;
       review.commentDate = new Date().toISOString();
 
       // Step 3: Validate the Updated Entity
       await this.validate(review);
 
       // Step 4: Save the Updated Review
-      await this.commentsRepository
+      await this.ebookCommentsRepository
         .createQueryBuilder()
-        .update(Comment)
-        .set(updateCommentDto)
+        .update(EbookComment)
+        .set(updateEbookCommentDto)
         .where('ebookId = :ebookId AND userId = :userId', { ebookId, userId })
         .execute();
       // Step 5: Return the Updated Review
@@ -136,10 +137,10 @@ export class CommentsService {
 
   async remove(ebookId: string, userId: string) {
     try {
-      await this.commentsRepository
+      await this.ebookCommentsRepository
         .createQueryBuilder()
         .delete()
-        .from(Comment)
+        .from(EbookComment)
         .where('ebookId = :ebookId AND userId = :userId', { ebookId, userId })
         .execute();
       return;

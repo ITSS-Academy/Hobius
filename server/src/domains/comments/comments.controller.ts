@@ -8,29 +8,29 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
-import { CommentsService } from './comments.service';
-import { CreateCommentDto } from './dto/create-comment.dto';
-import { UpdateCommentDto } from './dto/update-comment.dto';
 import { Public } from '../../utils/custom_decorators';
+import { CreateEbookCommentDto } from './dto/create-comment.dto';
+import { EbookCommentsService } from './comments.service';
+import { UpdateEbookCommentDto } from './dto/update-comment.dto';
 
-@Controller('comments')
-export class CommentsController {
-  constructor(private readonly commentsService: CommentsService) {}
+@Controller('ebook-comments')
+export class EbookCommentsController {
+  constructor(private readonly ebookCommentsService: EbookCommentsService) {}
 
   @Post()
-  async create(@Body() createCommentDto: CreateCommentDto) {
-    return await this.commentsService.create(createCommentDto);
+  async create(@Body() createCommentDto: CreateEbookCommentDto) {
+    return await this.ebookCommentsService.create(createCommentDto);
   }
 
   @Public()
   @Get('all/ebook/:id')
   async findAllByEbookId(@Param('id') ebookId: string) {
-    return await this.commentsService.findAllByEbookId(ebookId);
+    return await this.ebookCommentsService.findAllByEbookId(ebookId);
   }
 
   @Get('all/user/:id')
   async findAllByUserId(@Param('id') userId: string) {
-    return await this.commentsService.findAllByUserId(userId);
+    return await this.ebookCommentsService.findAllByUserId(userId);
   }
 
   @Get('one')
@@ -38,7 +38,7 @@ export class CommentsController {
     @Query('userId') userId: string,
     @Query('ebookId') ebookId: string,
   ) {
-    return await this.commentsService.findOneByEbookIdAndUserId(
+    return await this.ebookCommentsService.findOneByEbookIdAndUserId(
       ebookId,
       userId,
     );
@@ -48,9 +48,13 @@ export class CommentsController {
   async update(
     @Query('userId') userId: string,
     @Query('ebookId') ebookId: string,
-    @Body() updateCommentDto: UpdateCommentDto,
+    @Body() updateCommentDto: UpdateEbookCommentDto,
   ) {
-    return await this.commentsService.update(ebookId, userId, updateCommentDto);
+    return await this.ebookCommentsService.update(
+      ebookId,
+      userId,
+      updateCommentDto,
+    );
   }
 
   @Delete(':id')
@@ -58,6 +62,6 @@ export class CommentsController {
     @Query('userId') userId: string,
     @Query('ebookId') ebookId: string,
   ) {
-    return await this.commentsService.remove(ebookId, userId);
+    return await this.ebookCommentsService.remove(ebookId, userId);
   }
 }

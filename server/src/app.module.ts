@@ -9,11 +9,12 @@ import { JwtModule } from '@nestjs/jwt';
 import { UsersService } from './domains/users/users.service';
 import { Role } from './domains/users/entities/user.entity';
 import { EbooksModule } from './domains/ebooks/ebooks.module';
-import { CommentsModule } from './domains/comments/comments.module';
+import { EbookCommentsModule } from './domains/comments/comments.module';
 import { AuthModule } from './domains/auth/auth.module';
 import { SearchModule } from './domains/search/search.module';
 import { CategoriesModule } from './domains/categories/categories.module';
 import { UserEbooksModule } from './domains/user_ebooks/user_ebooks.module';
+import { EbookComment } from './domains/comments/entities/comment.entity';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { UserEbooksModule } from './domains/user_ebooks/user_ebooks.module';
       autoLoadEntities: true,
       logging: true,
       ssl: { rejectUnauthorized: false },
+      entities: [EbookComment],
     }),
     JwtModule.register({
       global: true,
@@ -40,11 +42,11 @@ import { UserEbooksModule } from './domains/user_ebooks/user_ebooks.module';
     }),
     UsersModule,
     EbooksModule,
-    CommentsModule,
     CategoriesModule,
     AuthModule,
     SearchModule,
     UserEbooksModule,
+    EbookCommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
