@@ -18,9 +18,11 @@
     width: 100%;
     margin-top: 20px;
     margin-bottom: 20px;
+    text-align: center;
 }
 #input-comment mat-form-field{
-    width: 100%;
+  width: 95%;
+  border-radius: 10px;
 }
 #btn-comment{
     width: 100%;
