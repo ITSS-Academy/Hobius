@@ -46,14 +46,52 @@
 }
 
 #dropdownBox {
+  display: flex;
   margin: 0;
-  top: 80px; // height of #search-header
+  top: 88px; /* height of #search-header */
   position: absolute;
   width: 500px;
   height: 300px;
-  //background-color: red;
   background-color: var(--surfaceContainerLow);
-  z-index: 1; // ensure it is not overlapped by other elements
+  z-index: 1; /* ensure it is not overlapped by other elements */
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
+  align-items: center;
+  flex-direction: column;
+  text-overflow: ellipsis;
+  overflow: visible; /* Ensure overflow is visible */
+}
+
+.textIn {
+  display: flex;
+  height: 100px;
+  width: 100%;
+  align-items: center;
+  font-size: 18px;
+}
+
+.textIn > p {
+  margin: 0;
+  padding: 0;
+  display: block; /* Change to block to ensure width is respected */
+  align-items: center;
+  color: var(--primary);
+  padding-left: 16px; /* Adjust padding to match the input field */
+  width: calc(100% - 24px); /* Adjust width to ensure space for ellipsis */
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Apply ellipsis to overflow text */
+}
+
+.textIn:hover {
+  background-color: lightgray; /* Change to desired highlight color */
+  cursor: pointer;
+}
+
+.book-icon {
+  width: 10%; /* Adjust size as needed */
+  height: 100%; /* Adjust size as needed */
+  margin-right: 8px; /* Adjust margin to match the previous icon */
+  vertical-align: middle; /* Align with text */
+  border-radius: 4px;
 }
