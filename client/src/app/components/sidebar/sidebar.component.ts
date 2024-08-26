@@ -72,9 +72,11 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
       this.links[index].routeLink === '/admin' ||
       this.links[index].routeLink === '/profile'
     ) {
-      this.jwtTokenService.checkTokenExpired();
-      if (this.jwtTokenService.isTokenExpired()) {
-        return;
+      if (this.jwtTokenService.jwtToken != '') {
+        this.jwtTokenService.checkTokenExpired();
+        if (this.jwtTokenService.isTokenExpired()) {
+          return;
+        }
       }
     }
     this.router.navigate([this.links[index].routeLink]).then(() => {});

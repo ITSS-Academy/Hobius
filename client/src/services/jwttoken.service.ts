@@ -15,13 +15,11 @@ export class JWTTokenService {
   constructor(private store: Store) {}
 
   setToken(token: string) {
-    if (token) {
-      this.jwtToken = token;
-    }
+    this.jwtToken = token;
   }
 
   decodeToken() {
-    if (this.jwtToken) {
+    if (this.jwtToken != '') {
       this.decodedToken = jwtDecode<JwtPayload>(this.jwtToken);
     }
   }

@@ -1,7 +1,6 @@
 import { Column, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Ebook } from '../../ebooks/entities/ebook.entity';
-import { IsInt, Max, Min } from 'class-validator';
 
 export class Comment {
   @PrimaryColumn({ name: 'userId' })
