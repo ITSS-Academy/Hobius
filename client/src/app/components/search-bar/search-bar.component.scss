@@ -124,14 +124,55 @@
     }
   }
   #dropdownBox {
-    top: 100px; /* Adjust top position for tablets */
-    left: 60%; /* Center the element horizontally */
-    width: 450px; /* Set a fixed width */
-    transform: translateX(-50%); /* Center the element horizontally */
-    border-top-left-radius: 10px;
+    display: flex;
+    margin: 0;
+    top: 100px; /* height of #search-header */
+    position: absolute;
+    width: 250px;
+    height: calc(400px + 10px);
+    background-color: var(--surfaceContainerLow);
+    z-index: 1; /* ensure it is not overlapped by other elements */
+    border-radius: 12px;
+    align-items: center;
+    flex-direction: column;
+    text-overflow: ellipsis;
+    overflow: hidden; /* Ensure overflow is hidden */
+  }
+
+  .textIn {
+    display: flex;
+    height: 100px;
+    width: 100%;
+    align-items: center;
+    font-size: 0.875rem; /* Reduce font size */
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Apply ellipsis to overflow text */
+  }
+
+  .bookInfor {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Ensure it takes the full width of the parent */
+  }
+
+  .bookInfor > p {
+    margin: 0;
+    padding: 0;
+    display: block; /* Ensure width is respected */
+    color: var(--primary);
+    width: 150px; /* Ensure it takes the full width of the parent */
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Apply ellipsis to overflow text */
+  }
+
+  .textIn:hover {
+    background-color: lightgray; /* Change to desired highlight color */
+    cursor: pointer;
   }
   .book-icon {
-    width: 10%; /* Adjust size as needed */
+    width: 30%; /* Adjust size as needed */
     height: 90%; /* Adjust size as needed */
   }
 }
@@ -155,5 +196,9 @@
     left: 50%;
     transform: translateX(-50%);
     width: 100%; /* Adjust width for mobile devices */
+  }
+  .book-icon {
+    width: 20%; /* Adjust size as needed */
+    height: 90%; /* Adjust size as needed */
   }
 }
