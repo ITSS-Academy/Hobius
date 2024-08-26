@@ -48,7 +48,7 @@
 #dropdownBox {
   display: flex;
   margin: 0;
-  top: 88px; /* height of #search-header */
+  top: 100px; /* height of #search-header */
   position: absolute;
   width: 500px;
   height: calc(400px + 10px);
@@ -103,4 +103,55 @@
 
 .author {
   font-size: 14px;
+}
+
+/* Medium screens (tablets) */
+@media (max-width: 1000px) {
+  #search-container {
+    #search-header {
+      font-size: 1.5rem;
+      height: 80px;
+      width: 100%;
+
+      #search-header-search {
+        height: max-content;
+        min-width: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+  #dropdownBox {
+    top: 100px; /* Adjust top position for tablets */
+    left: 0; /* Align to the left edge */
+    width: 100%; /* Extend to the full width of the screen */
+    transform: none; /* Remove centering transform */
+  }
+  .book-icon {
+    width: 10%; /* Adjust size as needed */
+    height: 90%; /* Adjust size as needed */
+  }
+}
+
+/* Small screens (mobile devices) */
+@media (max-width: 600px) {
+  #search-container {
+    width: 145px;
+
+    #search-header {
+      font-size: 1.5rem;
+      height: 60px;
+      width: 100%;
+
+      #search-header-search {
+      }
+    }
+  }
+  #dropdownBox {
+    top: 80px; /* Adjust top position for mobile devices */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%; /* Adjust width for mobile devices */
+  }
 }
