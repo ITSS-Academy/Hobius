@@ -16,16 +16,19 @@
     text-align: center;
   }
   #img-book-info img{
-    height: 100%;
-    width: auto;
+    width: 216px;
+    height: auto;
   }
   #book-info{
     width: 100%;
   }
+  #ebook-info-container{
+    height: 100%;
+  }
   #book-info #description {
     max-width: 100%;
     font-size: 12px;
-    margin-right: 20px;
+    margin-right: 10px;
   }
   #book-info #author {
     font-size: 16px;
@@ -75,15 +78,14 @@
   #book-info-card{
     width: 100%;
     flex-direction: row;
-    align-items: center;
     margin: 14px 14px;
   }
   #img-book-info{
     margin-right: 10px;
   }
   #img-book-info img{
-    height: 100%;
-    width: auto;
+    width: 216px;
+    height: auto;
   }
   #book-info{
     width: 100%;
@@ -141,7 +143,6 @@
   #book-info-card{
     width: 100%;
     flex-direction: row;
-    align-items: center;
     margin: 10px 14px;
   }
   #img-book-info{
@@ -207,15 +208,14 @@
   #book-info-card{
     width: 100%;
     flex-direction: row;
-    align-items: center;
     margin: 10px 14px;
   }
   #img-book-info{
     margin-right: 10px;
   }
   #img-book-info img{
-    height: 100%;
-    width: auto;
+    width: 216px;
+    height: auto;
   }
   #book-info{
     width: 100%;
@@ -273,15 +273,14 @@
   #book-info-card{
     width: 100%;
     flex-direction: row;
-    align-items: center;
     margin: 10px 14px;
   }
   #img-book-info{
     margin-right: 10px;
   }
   #img-book-info img{
-    height: 100%;
-    width: auto;
+    width: 216px;
+    height: auto;
   }
   #book-info{
     width: 100%;
@@ -354,7 +353,11 @@
 }
 #book-info-card {
   display: flex;
-
+}
+#ebook-info-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 #img-book-info img {
   border-radius: 28px;
@@ -363,6 +366,7 @@
   flex-wrap: wrap;
   height: 100%;
   text-align: justify;
+  margin-top: 10px;
 }
 #book-info #author {
   margin-bottom: 10px;
@@ -382,6 +386,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 10px;
 }
 #favorite-btn-container{
  margin-left: 10px;
@@ -390,7 +395,8 @@
 #doc-btn-container{
 }
 #favorite.active {
-  color: #ff5449;
+  color: white;
+  background-color: #ff897d;
 }
 #favorite:hover {
   color: #ff897d ;
@@ -516,7 +522,6 @@
 #comment-box::-webkit-scrollbar {
   width: 10px;
 }
-
 .comment-content {
   display: flex;
   flex-direction: row;
@@ -529,7 +534,7 @@
   white-space: normal;
 }
 .comment-content:hover {
-  background-color: var(--secondaryFixedDim);
+  background-color: var(--secondaryContainer);
   cursor: pointer;
 }
 .user-comment {
@@ -544,10 +549,10 @@
 .comment-input {
   max-width: 100%;
   height: auto;
-  margin-left: 4px;
+  margin-left: 8px;
 }
 .comment-input .comment-name {
-  margin: 10px 0px 4px 4px;
+  margin: 10px 0px 4px 0px;
 }
 .comment-input .comment-text {
   line-height: 33px;
@@ -555,4 +560,7 @@
 }
 .more-vert {
   margin-right: 8px;
+}
+.expand-btn{
+  margin-bottom: 8px;
 }

@@ -55,15 +55,23 @@
       align-items: center;
 
       #avatar {
-        width: 250px;
+        width: 90%;
         height: fit-content;
-        text-align: center;
-        border: 1px dashed #415e91;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border: 2px dashed #415e91;
         border-radius: 28px;
         font-size: 14px;
-        padding: 20px;
+        padding: 20px 0 20px 0;
         margin-bottom: 10px;
         cursor: pointer;
+
+        mat-icon {
+          width: 18px;
+          height: 18px;
+        }
       }
 
       #avatar:hover {
@@ -71,15 +79,23 @@
       }
 
       #background {
-        width: 250px;
+        width: 90%;
         height: fit-content;
-        text-align: center;
-        border: 1px dashed #415e91;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border: 2px dashed #415e91;
         border-radius: 28px;
         font-size: 14px;
-        padding: 20px;
+        padding: 20px 0 20px 0;
         cursor: pointer;
         margin-bottom: 10px;
+
+        mat-icon {
+          width: 18px;
+          height: 18px;
+        }
       }
 
       #background:hover {
@@ -185,15 +201,23 @@
       align-items: center;
 
       #avatar {
-        width: 250px;
+        width: 90%;
         height: fit-content;
-        text-align: center;
-        border: 1px dashed #415e91;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border: 2px dashed #415e91;
         border-radius: 28px;
         font-size: 14px;
-        padding: 20px;
+        padding: 20px 0 20px 0;
         margin-bottom: 10px;
         cursor: pointer;
+
+        mat-icon {
+          width: 18px;
+          height: 18px;
+        }
       }
 
       #avatar:hover {
@@ -201,15 +225,23 @@
       }
 
       #background {
-        width: 250px;
+        width: 90%;
         height: fit-content;
-        text-align: center;
-        border: 1px dashed #415e91;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border: 2px dashed #415e91;
         border-radius: 28px;
         font-size: 14px;
-        padding: 20px;
+        padding: 20px 0 20px 0;
         cursor: pointer;
         margin-bottom: 10px;
+
+        mat-icon {
+          width: 18px;
+          height: 18px;
+        }
       }
 
       #background:hover {
@@ -313,16 +345,32 @@
       justify-content: center;
       align-items: center;
 
+      mat-form-field {
+        cursor: pointer;
+      }
+
+      mat-label {
+        cursor: pointer;
+      }
+
       #avatar {
-        width: 200px;
+        width: 90%;
         height: fit-content;
-        text-align: center;
-        border: 1px dashed #415e91;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border: 2px dashed #415e91;
         border-radius: 28px;
         font-size: 12px;
-        padding: 10px;
+        padding: 10px 0 10px 0;
         margin-bottom: 10px;
         cursor: pointer;
+
+        mat-icon {
+          width: 16px;
+          height: 16px;
+        }
       }
 
       #avatar:hover {
@@ -330,15 +378,23 @@
       }
 
       #background {
-        width: 200px;
+        width: 90%;
         height: fit-content;
-        text-align: center;
-        border: 1px dashed #415e91;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border: 2px dashed #415e91;
         border-radius: 28px;
         font-size: 12px;
-        padding: 10px;
+        padding: 10px 0 10px 0;
         cursor: pointer;
         margin-bottom: 10px;
+
+        mat-icon {
+          width: 16px;
+          height: 16px;
+        }
       }
 
       #background:hover {
