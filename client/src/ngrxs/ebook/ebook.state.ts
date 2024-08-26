@@ -28,4 +28,16 @@ export interface EbookState {
   ratingEbooks: EbookModel[];
   isLoadingRatingEbooks: boolean;
   isLoadingRatingEbooksError: any;
+
+  isLikingEbook: boolean;
+  isLikingEbookSuccess: boolean;
+  isLikingEbookError: any;
+
+  isUnlikingEbook: boolean;
+  isUnlikingEbookSuccess: boolean;
+  isUnlikingEbookError: any;
+
+  isViewingEbook: boolean;
+  isViewingEbookSuccess: boolean;
+  isViewingEbookError: any;
 }

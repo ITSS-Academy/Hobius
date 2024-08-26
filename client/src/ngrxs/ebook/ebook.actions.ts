@@ -85,4 +85,25 @@ export const updateError = createAction(
   props<{ error: any }>(),
 );
 
+export const like = createAction('[Ebook] Like', props<{ id: string }>());
+export const likeSuccess = createAction('[Ebook] Like Success');
+export const likeError = createAction(
+  '[Ebook] Like Error',
+  props<{ error: any }>(),
+);
+
+export const unlike = createAction('[Ebook] Unlike', props<{ id: string }>());
+export const unlikeSuccess = createAction('[Ebook] Unlike Success');
+export const unlikeError = createAction(
+  '[Ebook] Unlike Error',
+  props<{ error: any }>(),
+);
+
+export const view = createAction('[Ebook] View', props<{ id: string }>());
+export const viewSuccess = createAction('[Ebook] View Success');
+export const viewError = createAction(
+  '[Ebook] View Error',
+  props<{ error: any }>(),
+);
+
 export const reset = createAction('[Ebook] Reset');

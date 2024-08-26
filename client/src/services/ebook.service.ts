@@ -35,4 +35,16 @@ export class EbookService {
   update(id: string, ebook: EbookModel) {
     return this.http.patch(`ebooks/${id}`, ebook);
   }
+
+  like(id: string) {
+    return this.http.patch(`ebooks/like/${id}`, {});
+  }
+
+  unlike(id: string) {
+    return this.http.patch(`ebooks/unlike/${id}`, {});
+  }
+
+  view(id: string) {
+    return this.http.patch(`ebooks/view/${id}`, {});
+  }
 }

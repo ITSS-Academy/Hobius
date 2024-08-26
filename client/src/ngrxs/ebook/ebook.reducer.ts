@@ -30,6 +30,18 @@ const initialState: EbookState = {
   ratingEbooks: [],
   isLoadingRatingEbooks: false,
   isLoadingRatingEbooksError: null,
+
+  isLikingEbook: false,
+  isLikingEbookSuccess: false,
+  isLikingEbookError: null,
+
+  isUnlikingEbook: false,
+  isUnlikingEbookSuccess: false,
+  isUnlikingEbookError: null,
+
+  isViewingEbook: false,
+  isViewingEbookSuccess: false,
+  isViewingEbookError: null,
 };
 
 export const ebookReducer = createReducer(
@@ -206,6 +218,81 @@ export const ebookReducer = createReducer(
       isUpdatingEbookError: action.error,
     };
   }),
+  on(EbookActions.like, (state) => {
+    console.log(EbookActions.like.type);
+    return <EbookState>{
+      ...state,
+      isLikingEbook: true,
+      isLikingEbookSuccess: false,
+      isLikingEbookError: null,
+    };
+  }),
+  on(EbookActions.likeSuccess, (state) => {
+    console.log(EbookActions.likeSuccess.type);
+    return <EbookState>{
+      ...state,
+      isLikingEbook: false,
+      isLikingEbookSuccess: true,
+    };
+  }),
+  on(EbookActions.likeError, (state, action) => {
+    console.log(action.type);
+    return <EbookState>{
+      ...state,
+      isLikingEbook: false,
+      isLikingEbookError: action.error,
+    };
+  }),
+  on(EbookActions.unlike, (state) => {
+    console.log(EbookActions.unlike.type);
+    return <EbookState>{
+      ...state,
+      isUnlikingEbook: true,
+      isUnlikingEbookSuccess: false,
+      isUnlikingEbookError: null,
+    };
+  }),
+  on(EbookActions.unlikeSuccess, (state) => {
+    console.log(EbookActions.unlikeSuccess.type);
+    return <EbookState>{
+      ...state,
+      isUnlikingEbook: false,
+      isUnlikingEbookSuccess: true,
+    };
+  }),
+  on(EbookActions.unlikeError, (state, action) => {
+    console.log(action.type);
+    return <EbookState>{
+      ...state,
+      isUnlikingEbook: false,
+      isUnlikingEbookError: action.error,
+    };
+  }),
+  on(EbookActions.view, (state) => {
+    console.log(EbookActions.view.type);
+    return <EbookState>{
+      ...state,
+      isViewingEbook: true,
+      isViewingEbookSuccess: false,
+      isViewingEbookError: null,
+    };
+  }),
+  on(EbookActions.viewSuccess, (state) => {
+    console.log(EbookActions.viewSuccess.type);
+    return <EbookState>{
+      ...state,
+      isViewingEbook: false,
+      isViewingEbookSuccess: true,
+    };
+  }),
+  on(EbookActions.viewError, (state, action) => {
+    console.log(action.type);
+    return <EbookState>{
+      ...state,
+      isViewingEbook: false,
+      isViewingEbookError: action.error,
+    };
+  }),
   on(EbookActions.reset, (state) => {
     console.log(EbookActions.reset.type);
     return <EbookState>{
@@ -223,7 +310,7 @@ export const ebookReducer = createReducer(
       isLoadingTrendingEbooksError: null,
 
       isLoadingRecommendEbooksError: null,
-      
+
       isLoadingRatingEbooksError: null,
     };
   }),

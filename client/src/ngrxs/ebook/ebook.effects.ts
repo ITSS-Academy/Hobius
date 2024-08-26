@@ -119,6 +119,54 @@ export class EbookEffects {
     ),
   );
 
+  like$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(EbookActions.like),
+      exhaustMap((action) => {
+        return this.ebookService.like(action.id).pipe(
+          map(() => {
+            return EbookActions.likeSuccess();
+          }),
+          catchError((error) => {
+            return of(EbookActions.likeError({ error: error }));
+          }),
+        );
+      }),
+    ),
+  );
+
+  unlike$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(EbookActions.unlike),
+      exhaustMap((action) => {
+        return this.ebookService.unlike(action.id).pipe(
+          map(() => {
+            return EbookActions.unlikeSuccess();
+          }),
+          catchError((error) => {
+            return of(EbookActions.unlikeError({ error: error }));
+          }),
+        );
+      }),
+    ),
+  );
+
+  view$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(EbookActions.view),
+      exhaustMap((action) => {
+        return this.ebookService.view(action.id).pipe(
+          map(() => {
+            return EbookActions.viewSuccess();
+          }),
+          catchError((error) => {
+            return of(EbookActions.viewError({ error: error }));
+          }),
+        );
+      }),
+    ),
+  );
+
   constructor(
     private actions$: Actions,
     private ebookService: EbookService,
