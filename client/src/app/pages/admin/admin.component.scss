@@ -89,8 +89,8 @@
 
         .categories-cell {
           max-height: calc(
-            3 * 24px
-          ); /* 3 items with each item height of 48px */
+            5 * 24px
+          ); /* 5 items with each item height of 24px */
           overflow-y: auto;
         }
       }

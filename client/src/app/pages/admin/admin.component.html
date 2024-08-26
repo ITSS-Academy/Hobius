@@ -106,8 +106,11 @@
           <!-- Genre Column -->
           <ng-container matColumnDef="categories">
             <th mat-header-cell *matHeaderCellDef>Thể loại</th>
-            <td mat-cell *matCellDef="let row" class="categories-cell">
-              <mat-chip-set aria-label="Categories Chip">
+            <td mat-cell *matCellDef="let row">
+              <mat-chip-set
+                aria-label="Categories Chip"
+                class="categories-cell"
+              >
                 @for (category of row.categories; track $index) {
                   <mat-chip>{{ category.name }}</mat-chip>
                 }

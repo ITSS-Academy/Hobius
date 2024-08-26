@@ -49,10 +49,14 @@ export class SearchService {
   }
 
   async deleteEbook(ebookId: string) {
-    await this.esClient.delete({
-      index: 'hobius_ebooks',
-      id: ebookId,
-    });
+    try {
+      await this.esClient.delete({
+        index: 'hobius_ebooks',
+        id: ebookId,
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async searchAny(indexName: string, query: string) {
