@@ -19,27 +19,23 @@
   </div>
 
   <div id="img">
-    <mat-form-field>
-      <mat-label>
-        <div>
-          <mat-icon>upload</mat-icon>
-        </div>
-        <div>Đăng tải ảnh đại diện</div>
-      </mat-label>
-      <input matInput />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>
-        <div>
-          <mat-icon>upload</mat-icon>
-        </div>
-        <div>Đăng tải ảnh nền</div>
-      </mat-label>
-      <input matInput />
-    </mat-form-field>
+    <div id="avatar" (click)="fileUpload.click()">
+      Đăng tải ảnh đại diện < 5 MB
+    </div>
+    <div>
+      <input #fileUpload type="file" accept="*image" />
+    </div>
+
+    <div id="background" (click)="fileUpload.click()">
+      Đăng tải ảnh nền < 5 MB
+    </div>
+    <div>
+      <input #fileUpload type="file" accept="*image" />
+    </div>
   </div>
+
   <div id="button">
-    <button id="btn1" mat-raised-button (click)="alertSuccess()">Lưu</button>
     <button id="btn2" mat-raised-button (click)="onNoClick()">Đóng</button>
+    <button id="btn1" mat-raised-button (click)="alertSuccess()">Lưu</button>
   </div>
 </div>
