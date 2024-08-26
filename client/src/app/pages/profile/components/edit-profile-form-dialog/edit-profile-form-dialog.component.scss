@@ -55,13 +55,13 @@
       align-items: center;
 
       #avatar {
-        width: 250px;
+        width: 90%;
         height: fit-content;
         text-align: center;
         border: 1px dashed #415e91;
         border-radius: 28px;
         font-size: 14px;
-        padding: 20px;
+        padding: 20px 0 20px 0;
         margin-bottom: 10px;
         cursor: pointer;
       }
@@ -71,13 +71,13 @@
       }
 
       #background {
-        width: 250px;
+        width: 90%;
         height: fit-content;
         text-align: center;
         border: 1px dashed #415e91;
         border-radius: 28px;
         font-size: 14px;
-        padding: 20px;
+        padding: 20px 0 20px 0;
         cursor: pointer;
         margin-bottom: 10px;
       }
@@ -185,13 +185,13 @@
       align-items: center;
 
       #avatar {
-        width: 250px;
+        width: 90%;
         height: fit-content;
         text-align: center;
         border: 1px dashed #415e91;
         border-radius: 28px;
         font-size: 14px;
-        padding: 20px;
+        padding: 20px 0 20px 0;
         margin-bottom: 10px;
         cursor: pointer;
       }
@@ -201,13 +201,13 @@
       }
 
       #background {
-        width: 250px;
+        width: 90%;
         height: fit-content;
         text-align: center;
         border: 1px dashed #415e91;
         border-radius: 28px;
         font-size: 14px;
-        padding: 20px;
+        padding: 20px 0 20px 0;
         cursor: pointer;
         margin-bottom: 10px;
       }
@@ -313,14 +313,22 @@
       justify-content: center;
       align-items: center;
 
+      mat-form-field {
+        cursor: pointer;
+      }
+
+      mat-label {
+        cursor: pointer;
+      }
+
       #avatar {
-        width: 200px;
+        width: 90%;
         height: fit-content;
         text-align: center;
         border: 1px dashed #415e91;
         border-radius: 28px;
         font-size: 12px;
-        padding: 10px;
+        padding: 10px 0 10px 0;
         margin-bottom: 10px;
         cursor: pointer;
       }
@@ -330,13 +338,13 @@
       }
 
       #background {
-        width: 200px;
+        width: 90%;
         height: fit-content;
         text-align: center;
         border: 1px dashed #415e91;
         border-radius: 28px;
         font-size: 12px;
-        padding: 10px;
+        padding: 10px 0 10px 0;
         cursor: pointer;
         margin-bottom: 10px;
       }

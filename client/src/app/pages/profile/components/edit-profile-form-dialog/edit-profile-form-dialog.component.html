@@ -19,6 +19,11 @@
   </div>
 
   <div id="img">
+    <mat-form-field>
+      <mat-label>URL Ảnh đại diện</mat-label>
+      <input matInput type="url" />
+      <mat-hint>Chưa tệp nào được chọn</mat-hint>
+    </mat-form-field>
     <div id="avatar" (click)="fileUpload.click()">
       Đăng tải ảnh đại diện < 5 MB
     </div>
@@ -26,6 +31,11 @@
       <input #fileUpload type="file" accept="*image" />
     </div>
 
+    <mat-form-field>
+      <mat-label>URL Ảnh nền</mat-label>
+      <input matInput type="url" />
+      <mat-hint>Chưa tệp nào được chọn</mat-hint>
+    </mat-form-field>
     <div id="background" (click)="fileUpload.click()">
       Đăng tải ảnh nền < 5 MB
     </div>
