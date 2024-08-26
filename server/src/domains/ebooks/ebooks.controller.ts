@@ -82,12 +82,12 @@ export class EbooksController {
 
   @Patch('like/:id')
   async like(@Param('id') id: string, @Request() req: any) {
-    return await this.ebooksService.like(id, req.user.id);
+    return await this.ebooksService.like(id, req.user.id || req.user.uid);
   }
 
   @Patch('unlike/:id')
   async unlike(@Param('id') id: string, @Request() req: any) {
-    return await this.ebooksService.unlike(id, req.user.id);
+    return await this.ebooksService.unlike(id, req.user.id || req.user.uid);
   }
 
   @Public()

@@ -32,10 +32,11 @@ export class EbookCommentsService {
     }
   }
 
-  async create(createCommentDto: CreateEbookCommentDto) {
+  async create(userId: string, createCommentDto: CreateEbookCommentDto) {
     try {
       let cmt = this.ebookCommentsRepository.create(createCommentDto);
       cmt.commentDate = new Date().toISOString();
+      cmt.user = userId as any;
 
       await this.validate(cmt);
 

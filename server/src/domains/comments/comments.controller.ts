@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Query,
+  Request,
 } from '@nestjs/common';
 import { Public } from '../../utils/custom_decorators';
 import { CreateEbookCommentDto } from './dto/create-comment.dto';
@@ -18,8 +19,14 @@ export class EbookCommentsController {
   constructor(private readonly ebookCommentsService: EbookCommentsService) {}
 
   @Post()
-  async create(@Body() createCommentDto: CreateEbookCommentDto) {
-    return await this.ebookCommentsService.create(createCommentDto);
+  async create(
+    @Body() createCommentDto: CreateEbookCommentDto,
+    @Request() req: any,
+  ) {
+    return await this.ebookCommentsService.create(
+      req.user.id || req.user.uid,
+      createCommentDto,
+    );
   }
 
   @Public()
@@ -28,40 +35,42 @@ export class EbookCommentsController {
     return await this.ebookCommentsService.findAllByEbookId(ebookId);
   }
 
-  @Get('all/user/:id')
-  async findAllByUserId(@Param('id') userId: string) {
-    return await this.ebookCommentsService.findAllByUserId(userId);
+  @Get('all/user')
+  async findAllByUserId(@Request() req: any) {
+    return await this.ebookCommentsService.findAllByUserId(
+      req.user.id || req.user.uid,
+    );
   }
 
   @Get('one')
   async findOneByEbookIdAndUserId(
-    @Query('userId') userId: string,
+    @Request() req: any,
     @Query('ebookId') ebookId: string,
   ) {
     return await this.ebookCommentsService.findOneByEbookIdAndUserId(
       ebookId,
-      userId,
+      req.user.id || req.user.uid,
     );
   }
 
   @Patch()
   async update(
-    @Query('userId') userId: string,
+    @Request() req: any,
     @Query('ebookId') ebookId: string,
     @Body() updateCommentDto: UpdateEbookCommentDto,
   ) {
     return await this.ebookCommentsService.update(
       ebookId,
-      userId,
+      req.user.id || req.user.uid,
       updateCommentDto,
     );
   }
 
   @Delete()
-  async remove(
-    @Query('userId') userId: string,
-    @Query('ebookId') ebookId: string,
-  ) {
-    return await this.ebookCommentsService.remove(ebookId, userId);
+  async remove(@Request() req: any, @Query('ebookId') ebookId: string) {
+    return await this.ebookCommentsService.remove(
+      ebookId,
+      req.user.id || req.user.uid,
+    );
   }
 }
