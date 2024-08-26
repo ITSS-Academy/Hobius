@@ -22,13 +22,15 @@
     </div>
   </div>
 
-  <div id="background-img">
+  <div
+    id="background-img"
+    style="background-image: url('{{ user.wallPaperURL }}')">
     <div id="avatar">
-      <img src="../public/assets/profile_pictures/img_7.png" alt="" />
+      <img src="{{ user.avatarURL }}" alt="" />
     </div>
     <div id="detail-profile">
-      <div id="name">Đặng Hoàng Gia Huy</div>
-      <div id="birth">29/09/2002</div>
+      <div id="name">{{ user.userName }}</div>
+      <div id="birth">Ngày tham gia: {{ user.joinedDate }}</div>
       <div id="note">
         <div>
           <mat-icon class="icon">star</mat-icon>
@@ -69,11 +71,7 @@
                   </div>
                 </div>
               </div>
-              <div
-                class="right-card"
-                (click)="openSnackBar()"
-                (click)="removeBookCard($index)"
-              >
+              <div class="right-card" (click)="removeBookCard($index)">
                 <mat-icon>favorite</mat-icon>
               </div>
             </div>

@@ -217,6 +217,7 @@ export class EbooksService {
       ebook.categories = categories;
 
       await this.ebooksRepository.save(ebook);
+      await this.searchService.updateEbook(ebook);
       return;
     } catch (e) {
       throw new HttpException(e, HttpStatus.BAD_REQUEST);

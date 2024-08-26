@@ -43,15 +43,15 @@ export class SearchService {
 
   async updateEbook(ebook: Ebook) {
     // delete first
-    await this.deletePost(ebook.id);
+    await this.deleteEbook(ebook.id);
     // index
     await this.indexEbook(ebook);
   }
 
-  async deletePost(postId: string) {
+  async deleteEbook(ebookId: string) {
     await this.esClient.delete({
       index: 'hobius_ebooks',
-      id: postId,
+      id: ebookId,
     });
   }
 
