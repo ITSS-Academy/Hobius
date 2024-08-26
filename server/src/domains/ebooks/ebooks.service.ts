@@ -197,12 +197,11 @@ export class EbooksService {
   }
 
   async update(id: string, updateEbookDto: UpdateEbookDto) {
+    const ebook = await this.ebooksRepository.findOneBy({ id });
+    if (!ebook) {
+      throw new HttpException('Ebook not found', HttpStatus.BAD_REQUEST);
+    }
     try {
-      const ebook = await this.ebooksRepository.findOneBy({ id });
-      if (!ebook) {
-        throw new HttpException('Ebook not found', HttpStatus.BAD_REQUEST);
-      }
-
       // Fetch categories from the database
       const categories = await this.categoriesRepository.findBy({
         id: In(updateEbookDto.categories.map((category) => category.id)),
@@ -217,11 +216,11 @@ export class EbooksService {
       ebook.categories = categories;
 
       await this.ebooksRepository.save(ebook);
-      await this.searchService.updateEbook(ebook);
-      return;
     } catch (e) {
       throw new HttpException(e, HttpStatus.BAD_REQUEST);
     }
+    await this.searchService.updateEbook(ebook);
+    return;
   }
 
   async remove(id: string) {
