@@ -63,16 +63,14 @@ export class EbookFormDialogComponent implements OnInit, OnDestroy {
   ) {
     this.ebookFormGroup = new FormGroup({
       id: new FormControl(this.tempId, [Validators.required]),
-      title: new FormControl(this.title),
-      author: new FormControl(this.author),
-      detail: new FormControl(this.detail),
-      image: new FormControl(this.image),
-      pdf: new FormControl(this.pdf),
-      categories: new FormControl(this.categories),
+      title: new FormControl('', [Validators.required]),
+      author: new FormControl('', [Validators.required]),
+      detail: new FormControl('', [Validators.required]),
+      image: new FormControl('', [Validators.required]),
+      pdf: new FormControl('', [Validators.required]),
+      categories: new FormControl([], [Validators.required]),
     });
-    this.ebookFormGroup.controls['categories'].valueChanges.subscribe((val) => {
-      console.log(val);
-    });
+
     merge(this.title.statusChanges, this.title.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateTitleErrorMessage());

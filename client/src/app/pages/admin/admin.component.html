@@ -19,7 +19,11 @@
         <button mat-icon-button (click)="reload()">
           <mat-icon>refresh</mat-icon>
         </button>
-        <button mat-icon-button (click)="openCreateEbookDialog()">
+        <button
+          mat-icon-button
+          (click)="openCreateEbookDialog()"
+          [disabled]="selection.selected[0]"
+        >
           <mat-icon>add_circle</mat-icon>
         </button>
         <button
