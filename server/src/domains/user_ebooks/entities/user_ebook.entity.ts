@@ -57,9 +57,6 @@ export class UserEbook {
   @Column({ nullable: true, default: 0 })
   currentPage: number;
 
-  @DeleteDateColumn()
-  deletedAt: string;
-
   @Column({ default: false })
   isLiked: boolean;
 }

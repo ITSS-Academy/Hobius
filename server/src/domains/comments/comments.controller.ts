@@ -44,7 +44,7 @@ export class EbookCommentsController {
     );
   }
 
-  @Patch(':id')
+  @Patch()
   async update(
     @Query('userId') userId: string,
     @Query('ebookId') ebookId: string,
@@ -57,7 +57,7 @@ export class EbookCommentsController {
     );
   }
 
-  @Delete(':id')
+  @Delete()
   async remove(
     @Query('userId') userId: string,
     @Query('ebookId') ebookId: string,
