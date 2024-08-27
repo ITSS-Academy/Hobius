@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
-import { SessionStorageService } from './session-storage.service';
 import { Store } from '@ngrx/store';
 import * as AuthActions from '../ngrxs/auth/auth.actions';
-import { Auth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
