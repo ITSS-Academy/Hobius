@@ -8,8 +8,6 @@ import { SearchService } from '../search/search.service';
 import { UserEbook } from '../user_ebooks/entities/user_ebook.entity';
 import { UserEbooksService } from '../user_ebooks/user_ebooks.service';
 import { Category } from '../categories/entities/category.entity';
-import { User } from '../users/entities/user.entity';
-import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class EbooksService {
@@ -204,11 +202,12 @@ export class EbooksService {
   }
 
   async update(id: string, updateEbookDto: UpdateEbookDto) {
-    const ebook = await this.ebooksRepository.findOneBy({ id });
-    if (!ebook) {
-      throw new HttpException('Ebook not found', HttpStatus.BAD_REQUEST);
-    }
+    let ebook = new Ebook();
     try {
+      ebook = await this.ebooksRepository.findOneBy({ id });
+      if (!ebook) {
+        throw new HttpException('Ebook not found', HttpStatus.BAD_REQUEST);
+      }
       // Fetch categories from the database
       const categories = await this.categoriesRepository.findBy({
         id: In(updateEbookDto.categories.map((category) => category.id)),
@@ -236,6 +235,7 @@ export class EbooksService {
       if (deleteResult.affected === 0) {
         throw new HttpException('Ebook not found', HttpStatus.BAD_REQUEST);
       }
+      await this.searchService.deleteEbook(id);
       return;
     } catch (e) {
       throw new HttpException(e, HttpStatus.BAD_REQUEST);
