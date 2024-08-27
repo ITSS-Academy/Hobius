@@ -14,7 +14,7 @@ export class SearchEffects {
         return this.searchService.searchEbooks(action.q).pipe(
           map((response) =>
             SearchActions.searchSuccess({
-              searchResults: response,
+              searchResults: response.ebooks,
             }),
           ),
           catchError((error) => {
