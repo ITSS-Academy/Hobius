@@ -82,19 +82,23 @@
   <!--  >-->
   <div id="home-content">
     <!--    <cdk-virtual-scroll-viewport itemSize="50" id="main-viewport">-->
-    <div class="boxContener">
-      <div class="titleName">
-        <p>LỊCH SỬ</p>
-        <button mat-icon-button [routerLink]="['/categories/history']">
-          <mat-icon>arrow_forward</mat-icon>
-        </button>
+
+    @if (idToken !== "" && lichSuCards.length > 0) {
+      <div class="boxContener">
+        <div class="titleName">
+          <p>LỊCH SỬ</p>
+          <button mat-icon-button [routerLink]="['/categories/history']">
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+        <div class="cardBox" #viewport>
+          @for (card of lichSuCards; track card) {
+            <app-card [ebook]="card"></app-card>
+          }
+        </div>
       </div>
-      <div class="cardBox" #viewport>
-        @for (card of lichSuCards; track card) {
-          <app-card [ebook]="card"></app-card>
-        }
-      </div>
-    </div>
+    }
+
     <div class="boxContener">
       <div class="titleName">
         <p>THỊNH HÀNH</p>
