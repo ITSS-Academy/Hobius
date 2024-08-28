@@ -36,7 +36,7 @@ export class EditProfileFormDialogComponent {
   }
 
   sendForm() {
-    // console.log(this.ebookFormGroup.value);
+    // console.log(this.profileFormGroup.value);
     return this.profileFormGroup.value;
   }
 }
