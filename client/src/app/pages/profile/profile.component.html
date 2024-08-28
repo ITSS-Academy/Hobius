@@ -1,0 +1,125 @@
+<div id="profile-container">
+  <div id="header-bar">
+    <div id="left">
+      <div>
+        <button
+          mat-icon-button
+          aria-label="Example icon button with a vertical three dot icon"
+          [routerLink]="'/home'"
+        >
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
+      <div id="page-name">TRANG CÁ NHÂN</div>
+    </div>
+    <div id="right">
+      <button
+        (click)="openDialog()"
+        mat-icon-button
+        aria-label="Example icon button with a vertical three dot icon"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div id="profile-info">
+    <div id="wallpaper"></div>
+    <div id="wallpaper-img">
+      @if ((user$ | async)?.wallPaperURL === "") {
+        <img src="../public/assets/error-samples/wallpaper.png" alt="" />
+      } @else {
+        <img src="{{ (user$ | async)?.wallPaperURL }}" alt="" />
+      }
+    </div>
+    <div id="background-img">
+      <div id="avatar">
+        @if ((user$ | async)?.avatarURL === "") {
+          <img src="../public/assets/error-samples/avatar.jpg" alt="" />
+        } @else {
+          <img src="{{ (user$ | async)?.avatarURL }}" alt="" />
+        }
+      </div>
+      <div id="detail-profile">
+        <div id="name">{{ (user$ | async)?.userName }}</div>
+        <div id="birth">
+          Ngày tham gia: {{ (user$ | async)?.joinedDate | date: "dd/MM/yyyy" }}
+        </div>
+        <div id="note">
+          <div>
+            <mat-icon class="icon">star</mat-icon>
+            Yêu thích 1000 cuốn sách
+          </div>
+          <div>
+            <mat-icon class="icon">directions_walk</mat-icon>
+            Đã đọc 1000 cuốn sách
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="profile-content">
+    <mat-tab-group
+      mat-stretch-tabs="false"
+      mat-align-tabs="center"
+      color="accent"
+    >
+      <mat-tab label="Yêu thích">
+        <ng-template mat-tab-label>
+          <span class="my-custom-class">Yêu thích</span>
+        </ng-template>
+        <div class="content">
+          @for (item of bookCard; track $index) {
+            <div class="book-card">
+              <div class="left-card">
+                <div class="img">
+                  <img src="{{ item.img }}" alt="" />
+                </div>
+              </div>
+              <div class="middle">
+                <div class="title">{{ item.title }}</div>
+                <div class="info">
+                  <div>{{ item.author }} - {{ item.year }}</div>
+                  <div class="sum">
+                    {{ item.summary }}
+                  </div>
+                </div>
+              </div>
+              <div class="right-card" (click)="removeBookCard($index)">
+                <mat-icon>favorite</mat-icon>
+              </div>
+            </div>
+          }
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Bình luận">
+        <ng-template mat-tab-label>
+          <span class="my-custom-class1">Đánh giá</span>
+        </ng-template>
+        <div class="content">
+          @for (item of cmtCard; track $index) {
+            <div class="book-card">
+              <div class="left-card">
+                <div class="img">
+                  <img src="{{ item.img }}" alt="" />
+                </div>
+              </div>
+              <div class="middle">
+                <div class="title">{{ item.title }}</div>
+                <div class="info">
+                  <div>{{ item.time }}</div>
+                  <div class="cmt">{{ item.content }}</div>
+                </div>
+              </div>
+              <div class="right-card">
+                <mat-icon [routerLink]="'/ebook-info'">open_in_new</mat-icon>
+              </div>
+            </div>
+          }
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

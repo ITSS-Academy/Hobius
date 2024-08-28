@@ -1,0 +1,31 @@
+<div id="categories-container">
+  <div id="categories-header">
+    <div id="categories-header-title">
+      <button mat-icon-button [routerLink]="['/']">
+        <mat-icon>arrow_backward</mat-icon>
+      </button>
+    </div>
+    <div id="searchBox">
+      <app-search-bar></app-search-bar>
+    </div>
+  </div>
+  <div id="categories-content">
+    <div id="topBox">
+      <div id="thinhHanhBox">
+        <p>{{ headerName }}</p>
+      </div>
+    </div>
+    <div class="cardBox">
+      <div id="theLoaiBox" #viewport>
+        <div *ngFor="let loai of theLoai" class="theLoai" #theLoai>
+          {{ loai.name }}
+        </div>
+      </div>
+    </div>
+    <cdk-virtual-scroll-viewport itemSize="50" id="bot-viewport">
+      <div id="cardBox">
+        <app-card *ngFor="let card of cardsBar" [ebook]="card"></app-card>
+      </div>
+    </cdk-virtual-scroll-viewport>
+  </div>
+</div>

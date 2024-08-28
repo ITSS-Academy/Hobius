@@ -1,0 +1,83 @@
+<div id="login-container">
+  @if (isLoadingSignIn) {
+    <div class="loading-spinner-overlay">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+  }
+  <div id="login-card">
+    <div id="title">
+      <img
+        [src]="'public/assets/logos/logo.png'"
+        width="100px"
+        height="100px"
+        alt="Blue-Book"
+      />
+      <h6>Đăng nhập</h6>
+      <p>Sử dụng <b>tài khoản Google</b></p>
+      <p>hoặc đăng nhập bằng</p>
+      <b> Email & Password</b>
+    </div>
+    <form [formGroup]="loginForm" id="form">
+      <div class="form-login">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            placeholder="Email"
+            autocomplete="username"
+          />
+          @if (loginForm.get("email")?.invalid) {
+            <mat-error>Email không hợp lệ</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Mật khẩu</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            placeholder="Mật khẩu"
+            type="password"
+            autocomplete="current-password"
+          />
+          @if (loginForm.get("password")?.invalid) {
+            <mat-error>Mật khẩu không hợp lệ</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div class="btn-grp">
+        <button
+          type="button"
+          class="btn-submit"
+          mat-stroked-button
+          (click)="signInWithGoogle()"
+        >
+          <img
+            [src]="'public/assets/logos/google_logo.png'"
+            width="16"
+            height="16"
+            alt="google logo"
+          />
+          Đăng nhập bằng Google
+        </button>
+        <button
+          type="submit"
+          class="btn-submit"
+          mat-flat-button
+          [disabled]="loginForm.invalid"
+          (click)="signInWithStaticUser()"
+        >
+          Đăng nhập
+        </button>
+        <button
+          type="button"
+          class="btn-home"
+          mat-icon-button
+          [routerLink]="['/']"
+        >
+          <mat-icon>home</mat-icon>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

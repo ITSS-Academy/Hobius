@@ -1,0 +1,38 @@
+<div id="search-container">
+  <div id="search-header">
+    <mat-form-field appearance="fill" id="search-header-search">
+      <mat-icon matPrefix>search</mat-icon>
+      <input
+        matInput
+        placeholder="Tìm kiếm sách..."
+        [formControl]="searchControl"
+        (input)="onInputChange($event)"
+      />
+    </mat-form-field>
+    <!--    <div id="dropdown">-->
+    @if (showDropdown == true) {
+      <div id="dropdownBox">
+        <div *ngIf="loading$ | async"></div>
+        <div *ngIf="(searchResults$ | async)?.length == 0">
+          <div class="textIn">Không tìm thấy kết quả</div>
+        </div>
+        <div *ngIf="searchResults$ | async as searchResults">
+          <div *ngFor="let result of searchResults">
+            <div class="textIn" (click)="onResultClick(result)">
+              <img
+                matPrefix
+                [src]="getImageUrl(result.image)"
+                alt="Book Image"
+                class="book-icon"
+              />
+              <div class="bookInfor">
+                <p class="title">{{ result.title }}</p>
+                <p class="author">By {{ result.author }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

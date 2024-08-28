@@ -1,0 +1,13 @@
+@if (isLoading) {
+  <app-skeleton-card></app-skeleton-card>
+} @else {
+  <div id="container">
+    <div id="bookImg">
+      <img [src]="ebook.image" alt="{{ ebook.title }}" />
+    </div>
+    <div id="text">
+      <p id="title">{{ ebook.title }}</p>
+      <p id="author">{{ ebook.author }}</p>
+    </div>
+  </div>
+}

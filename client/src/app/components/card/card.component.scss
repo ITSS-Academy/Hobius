@@ -1,0 +1,61 @@
+#container {
+  user-select: none;
+  width: 166px;
+  height: 282px;
+  background: var(--surfaceContainerHigh);
+  border-radius: 12px;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+}
+
+#bookImg {
+  display: flex;
+  justify-content: center;
+}
+
+#text {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin-top: 0;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#bookImg > img {
+  width: 150px;
+  height: 225px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  pointer-events: none;
+}
+
+#title {
+  font-size: 14px;
+  margin: 0;
+  color: var(--onSurface);
+}
+
+#author {
+  font-size: 12px;
+  margin: 0;
+  color: var(--onSurfaceVariant);
+}
+
+#title,
+#author {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+#container:hover {
+  background-color: var(--surfaceContainerLow);
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}

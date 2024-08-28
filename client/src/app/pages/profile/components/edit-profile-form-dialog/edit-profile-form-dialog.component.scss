@@ -1,0 +1,406 @@
+//For Desktop
+@media (min-width: 991px) {
+  #edit-profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 800px;
+    min-width: 500px;
+
+    h2 {
+      font-size: 20px;
+      cursor: context-menu;
+    }
+
+    #info {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      mat-form-field {
+        width: 90%;
+        font-size: 14px;
+      }
+
+      mat-label {
+        font-size: 14px;
+      }
+    }
+
+    #img {
+      width: 450px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      #avatar {
+        width: 90%;
+        height: fit-content;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border: 2px dashed #415e91;
+        border-radius: 28px;
+        font-size: 14px;
+        padding: 10px 0 10px 0;
+        margin-bottom: 10px;
+        cursor: pointer;
+
+        mat-icon {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      #avatar:hover {
+        color: #415e91;
+      }
+
+      #background {
+        width: 90%;
+        height: fit-content;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border: 2px dashed #415e91;
+        border-radius: 28px;
+        font-size: 14px;
+        padding: 10px 0 10px 0;
+        cursor: pointer;
+        margin-bottom: 10px;
+
+        mat-icon {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      #background:hover {
+        color: #415e91;
+      }
+
+      mat-form-field {
+        width: 90%;
+        padding: 0;
+      }
+
+      mat-label {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+      }
+
+      mat-icon {
+        font-size: 18px;
+      }
+    }
+
+    #button {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      width: 90%;
+      padding-bottom: 20px;
+
+      .btn1 {
+        background-color: #415e91;
+        color: white;
+        margin-left: 10px;
+      }
+
+      #btn2 {
+        color: #415e91;
+      }
+    }
+
+    #button > button {
+      font-size: 14px;
+    }
+  }
+}
+
+//For Tablet
+@media (min-width: 768px) and (max-width: 991px) {
+  #edit-profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 700px;
+    min-width: 500px;
+
+    h2 {
+      font-size: 20px;
+      cursor: context-menu;
+    }
+
+    #info {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      mat-form-field {
+        width: 90%;
+        font-size: 14px;
+      }
+
+      mat-label {
+        font-size: 14px;
+      }
+    }
+
+    #img {
+      width: 450px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      #avatar {
+        width: 90%;
+        height: fit-content;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border: 2px dashed #415e91;
+        border-radius: 28px;
+        font-size: 14px;
+        padding: 10px 0 10px 0;
+        margin-bottom: 10px;
+        cursor: pointer;
+
+        mat-icon {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      #avatar:hover {
+        color: #415e91;
+      }
+
+      #background {
+        width: 90%;
+        height: fit-content;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border: 2px dashed #415e91;
+        border-radius: 28px;
+        font-size: 14px;
+        padding: 10px 0 10px 0;
+        cursor: pointer;
+        margin-bottom: 10px;
+
+        mat-icon {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      #background:hover {
+        color: #415e91;
+      }
+
+      mat-form-field {
+        width: 90%;
+        padding: 0;
+      }
+
+      mat-label {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+      }
+
+      mat-icon {
+        font-size: 18px;
+      }
+    }
+
+    #button {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      width: 90%;
+      padding-bottom: 20px;
+
+      .btn1 {
+        background-color: #415e91;
+        color: white;
+        margin-left: 10px;
+      }
+
+      #btn2 {
+        color: #415e91;
+      }
+    }
+
+    #button > button {
+      font-size: 14px;
+    }
+  }
+}
+
+//For Mobile
+@media (max-width: 600px) {
+  #edit-profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 500px;
+
+    h2 {
+      font-size: 16px;
+      cursor: context-menu;
+    }
+
+    #info {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      mat-form-field {
+        width: 90%;
+        font-size: 12px;
+      }
+
+      mat-label {
+        font-size: 12px;
+      }
+    }
+
+    #img {
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      mat-form-field {
+        cursor: pointer;
+      }
+
+      mat-label {
+        cursor: pointer;
+      }
+
+      #avatar {
+        width: 90%;
+        height: fit-content;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border: 2px dashed #415e91;
+        border-radius: 28px;
+        font-size: 12px;
+        padding: 5px 0 5px 0;
+        margin-bottom: 10px;
+        cursor: pointer;
+
+        mat-icon {
+          width: 16px;
+          height: 16px;
+        }
+      }
+
+      #avatar:hover {
+        color: #415e91;
+      }
+
+      #background {
+        width: 90%;
+        height: fit-content;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border: 2px dashed #415e91;
+        border-radius: 28px;
+        font-size: 12px;
+        padding: 5px 0 5px 0;
+        cursor: pointer;
+        margin-bottom: 10px;
+
+        mat-icon {
+          width: 16px;
+          height: 16px;
+        }
+      }
+
+      #background:hover {
+        color: #415e91;
+      }
+
+      mat-form-field {
+        width: 90%;
+        padding: 0;
+      }
+
+      mat-label {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-size: 12px;
+      }
+
+      mat-icon {
+        font-size: 18px;
+      }
+    }
+
+    #button {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      width: 90%;
+      padding-bottom: 20px;
+
+      .btn1 {
+        background-color: #415e91;
+        color: white;
+        margin-left: 5px;
+      }
+
+      #btn2 {
+        color: #415e91;
+      }
+    }
+
+    #button > button {
+      font-size: 12px;
+    }
+  }
+}
+
+mat-hint {
+  color: red;
+}
+
+.btn1:hover {
+  filter: brightness(0.85);
+  color: #37b7c3;
+}
+
+input[type="file"] {
+  display: none;
+}

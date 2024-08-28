@@ -1,0 +1,89 @@
+<div id="edit-profile-container">
+  <h2 mat-dialog-title>Chỉnh sửa thông tin cá nhân</h2>
+
+  <form [formGroup]="profileFormGroup">
+    <div id="info">
+      <mat-form-field appearance="fill">
+        <mat-label>Họ tên</mat-label>
+        <input
+          matInput
+          formControlName="userName"
+          placeholder="Họ tên..."
+          required
+        />
+        @if (profileFormGroup.get("userName")?.invalid) {
+          <mat-error>Vui lòng nhập tên!!</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          required
+          placeholder="Email..."
+          autocomplete="username"
+        />
+        @if (profileFormGroup.get("email")?.invalid) {
+          <mat-error>Email không hợp lệ</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div id="img">
+      <mat-form-field appearance="fill">
+        <mat-label>URL Ảnh đại diện</mat-label>
+        <input
+          matInput
+          type="url"
+          formControlName="avatarURL"
+          required
+          readonly
+        />
+        @if (profileFormGroup.get("avatarURL")?.invalid) {
+          <mat-error>Chưa tệp nào được chọn</mat-error>
+        }
+      </mat-form-field>
+      <div id="avatar" (click)="fileUpload.click()">
+        <mat-icon>upload</mat-icon>
+        Đăng tải ảnh đại diện < 5 MB
+      </div>
+      <div>
+        <input #fileUpload type="file" accept="*image" />
+      </div>
+
+      <mat-form-field appearance="fill">
+        <mat-label>URL Ảnh nền</mat-label>
+        <input
+          matInput
+          type="url"
+          formControlName="wallPaperURL"
+          required
+          readonly
+        />
+        @if (profileFormGroup.get("wallPaperURL")?.invalid) {
+          <mat-error>Chưa tệp nào được chọn</mat-error>
+        }
+      </mat-form-field>
+      <div id="background" (click)="fileUpload.click()">
+        <mat-icon>upload</mat-icon>
+        Đăng tải ảnh nền < 5 MB
+      </div>
+      <div>
+        <input #fileUpload type="file" accept="*image" />
+      </div>
+    </div>
+
+    <div id="button">
+      <button id="btn2" mat-button mat-dialog-close>Hủy</button>
+      <button
+        mat-flat-button
+        [disabled]="profileFormGroup.invalid"
+        [mat-dialog-close]="sendForm()"
+      >
+        Cập nhật
+      </button>
+    </div>
+  </form>
+</div>

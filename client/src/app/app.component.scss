@@ -1,0 +1,38 @@
+#root-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  #sidebar-container {
+    height: 95%;
+    width: 87px;
+  }
+
+  #main-container {
+    height: 95%;
+    width: calc(100% - 87px - 15px);
+    margin-right: 15px;
+    background: var(--surfaceContainerLowest);
+    border-radius: var(--container-border-radius);
+  }
+
+  .login-scaffold {
+    width: 100% !important;
+    margin: 0 !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #root-container {
+    #sidebar-container {
+      display: none;
+    }
+
+    #main-container {
+      width: 100%;
+      margin: 0;
+    }
+  }
+}

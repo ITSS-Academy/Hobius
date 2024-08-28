@@ -1,0 +1,161 @@
+<div id="home-container">
+  <div id="home-header">
+    <div id="home-header-title">
+      <h1>Hobius</h1>
+    </div>
+
+    <app-search-bar></app-search-bar>
+
+    @if (idToken != "") {
+      <div id="home-header-avatar">
+        @if (isStaticUser) {
+          <mat-icon [matMenuTriggerFor]="avaMenu">account_circle</mat-icon>
+        } @else {
+          <div id="avatar">
+            <img
+              [src]="(user$ | async)?.avatarURL"
+              [alt]="(user$ | async)?.userName"
+              [matMenuTriggerFor]="avaMenu"
+            />
+          </div>
+        }
+        <mat-menu #avaMenu="matMenu">
+          <button mat-menu-item (click)="openConfirmLogoutDialog()">
+            <mat-icon>logout</mat-icon>
+            Đăng xuất
+          </button>
+          <button mat-menu-item [routerLink]="'/home'" class="home-option-btn">
+            <mat-icon>home</mat-icon>
+            Trang chủ
+          </button>
+          <button
+            mat-menu-item
+            [routerLink]="'/profile'"
+            class="profile-option-btn"
+          >
+            <mat-icon>person</mat-icon>
+            Hồ sơ
+          </button>
+        </mat-menu>
+      </div>
+    } @else {
+      <div id="home-header-button">
+        <button mat-flat-button [routerLink]="'/login'" id="txt-btn">
+          Đăng nhập
+        </button>
+        <button mat-icon-button [matMenuTriggerFor]="optionMenu" id="icon-btn">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #optionMenu="matMenu">
+          @if (idToken != "") {
+            <button mat-menu-item (click)="openConfirmLogoutDialog()">
+              <mat-icon>logout</mat-icon>
+              Đăng xuất
+            </button>
+          } @else {
+            <button mat-menu-item [routerLink]="'/login'">
+              <mat-icon>login</mat-icon>
+              Đăng nhập
+            </button>
+          }
+          <button mat-menu-item [routerLink]="'/home'" class="home-option-btn">
+            <mat-icon>home</mat-icon>
+            Trang chủ
+          </button>
+          <button
+            mat-menu-item
+            [routerLink]="'/profile'"
+            class="profile-option-btn"
+          >
+            <mat-icon>person</mat-icon>
+            Hồ sơ
+          </button>
+        </mat-menu>
+      </div>
+    }
+  </div>
+  <!--  </cdk-virtual-scroll-viewport>-->
+  <!--  <cdk-virtual-scroll-viewport-->
+  <!--    itemSize="50"-->
+  <!--    id="main-viewport"-->
+  <!--    orientation="horizontal"-->
+  <!--  >-->
+  <div id="home-content">
+    <!--    <cdk-virtual-scroll-viewport itemSize="50" id="main-viewport">-->
+
+    @if (idToken !== "" && lichSuCards.length > 0) {
+      <div class="boxContener">
+        <div class="titleName">
+          <p>LỊCH SỬ</p>
+          <button mat-icon-button [routerLink]="['/categories/history']">
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+        <div class="cardBox" #viewport>
+          @for (card of lichSuCards; track card) {
+            <app-card [ebook]="card"></app-card>
+          }
+        </div>
+      </div>
+    }
+
+    <div class="boxContener">
+      <div class="titleName">
+        <p>THỊNH HÀNH</p>
+        <button mat-icon-button [routerLink]="['/categories/trends']">
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+      <div class="cardBox" #viewport>
+        @if(isLoadingTrendingEbooks$|async){
+          <div class="loading">
+            <mat-spinner diameter="50"></mat-spinner>
+          </div>
+        }
+        @for (card of thinhHanhCards; track card) {
+          <app-card [ebook]="card"></app-card>
+        }
+        <!--        <div class="end-of-scroll" #endOfScrollIndicator>End of List</div>-->
+      </div>
+    </div>
+    <div class="boxContener">
+      <div class="titleName">
+        <p>ĐỀ CỬ</p>
+        <button mat-icon-button [routerLink]="['/categories/recommend']">
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+      <div class="cardBox" #viewport>
+        @if(isLoadingRecommendEbooks$|async){
+          <div class="loading">
+            <mat-spinner diameter="50"></mat-spinner>
+          </div>
+        }
+        @for (card of deCuCards; track card) {
+          <app-card [ebook]="card"></app-card>
+        }
+      </div>
+    </div>
+    <div class="boxContener">
+      <div class="titleName">
+        <p>BẢNG XẾP HẠNG</p>
+        <button mat-icon-button [routerLink]="['/categories/rank']">
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+      <div class="cardBox" #viewport>
+        @if(isLoadingRatingEbooks$|async){
+        <div class="loading">
+          <mat-spinner diameter="50"></mat-spinner>
+        </div>
+        }
+        @for (card of bangXepHangCards; track card) {
+          <app-card [ebook]="card"></app-card>
+        }
+        <!--        <div class="end-of-scroll" #endOfScrollIndicator>End of List</div>-->
+      </div>
+      <div id="free-space"></div>
+    </div>
+  </div>
+  <!--  </cdk-virtual-scroll-viewport>-->
+</div>

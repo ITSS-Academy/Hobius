@@ -1,0 +1,181 @@
+#categories-container {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+
+  #categories-header {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    border-top-left-radius: var(--container-border-radius);
+    border-top-right-radius: var(--container-border-radius);
+    height: 100px;
+    width: 100%;
+    color: var(--primary);
+
+    #searchBox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    #categories-header-title button {
+      display: flex;
+      justify-content: start;
+      margin-left: 10px;
+    }
+
+    #categories-header-search {
+      width: 50%;
+      min-width: 360px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #categories-header-search > mdc-text-field {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  #categories-content {
+    height: calc(100% - 100px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    #thinhHanhBox {
+      display: flex;
+      justify-content: start;
+      margin-left: 10px;
+      text-transform: uppercase;
+    }
+
+    #thinhHanhBox > p {
+      font-size: 24px;
+      color: var(--primary);
+      margin-top: 10px;
+      margin-bottom: 0;
+    }
+
+    .cardBox {
+      height: 130px;
+      width: 100%;
+      margin: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      cursor: grab;
+
+      #categories-header {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        position: relative;
+
+        #categories-header-title {
+          position: absolute;
+          left: 0;
+          margin-left: 20px;
+          flex-direction: row;
+        }
+      }
+
+      &.active {
+        cursor: grabbing;
+        transition: transform 0.5s ease-out;
+      }
+
+      #theLoaiBox {
+        display: flex;
+        flex-direction: row;
+        overflow-x: hidden;
+        width: 100%;
+        margin-top: 40px;
+      }
+
+      .theLoai.selected {
+        background-color: var(--primary);
+        color: var(--onPrimary);
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .theLoai {
+        margin: 10px;
+        padding: 20px;
+        border: 1px solid var(--outline);
+        border-radius: 8px;
+        width: 100px;
+        height: 5px;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+      }
+
+      .theLoai:hover {
+        background-color: var(--surfaceContainer);
+        color: var(--onSurface);
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+      }
+    }
+
+    #bot-viewport {
+      height: calc(100% - 200px);
+      width: 100%;
+      margin-left: 10px;
+
+      #cardBox {
+        margin-top: 10px;
+        width: 100%;
+        height: max-content;
+        display: flex;
+        flex-direction: row;
+        gap: 24px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+    }
+  }
+}
+
+:host {
+  ::ng-deep .mat-mdc-form-field-subscript-wrapper,
+  .mat-mdc-form-field-bottom-align {
+    display: none;
+  }
+
+  ::ng-deep .mat-mdc-text-field-wrapper,
+  .mdc-text-field,
+  .mdc-text-field--filled {
+    border-radius: 16px;
+    border: none;
+
+    .mdc-line-ripple {
+      display: none;
+    }
+  }
+
+  ::ng-deep .mat-mdc-form-field-flex,
+  .mat-mdc-form-field-infix {
+    height: 100%;
+  }
+
+  ::ng-deep .mdc-text-field--no-label .mat-mdc-form-field-infix {
+    padding: 14px 0;
+  }
+
+  ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background: var(--background);
+  }
+}
