@@ -76,7 +76,7 @@
               <button
                 mat-icon-button
                 (click)="openCommentDialog()"
-                matTooltip="Đánh giá"
+                matTooltip="Viết đánh giá"
               >
                 <mat-icon>add_comment</mat-icon>
               </button>
@@ -92,37 +92,33 @@
           </div>
         </div>
         <div id="comment-box">
+          @if (comments.length == 0) {
+            <p id="no-comment">Chưa có đánh giá nào</p>
+          }
           @for (comment of comments; track $index) {
             <div class="comment-content">
-              <div class="user-comment">
-                <img [src]="comment.user.avatarURL" class="avatar-comment" />
-                <div class="comment-input">
-                  <p class="comment-name">{{ comment.user.userName }}</p>
-                  <p
-                    #commentText
-                    class="comment-text"
-                    [class.expanded]="comment.isExpanded"
+              <img [src]="comment.user.avatarURL" class="avatar-comment" />
+              <div class="comment-input">
+                <p class="comment-name">{{ comment.user.userName }}</p>
+                <p
+                  #commentText
+                  class="comment-text"
+                  [class.expanded]="comment.isExpanded"
+                >
+                  {{ comment.content }}
+                </p>
+                @if (comment.isOverflowing) {
+                  <button
+                    mat-icon-button
+                    (click)="toggleComment($index)"
+                    class="expand-btn"
                   >
-                    {{ comment.content }}
-                  </p>
-                  @if (comment.isOverflowing) {
-                    <button
-                      mat-icon-button
-                      (click)="toggleComment($index)"
-                      class="expand-btn"
-                    >
-                      <mat-icon
-                        >{{
-                          comment.isExpanded ? "expand_less" : "expand_more"
-                        }}
-                      </mat-icon>
-                    </button>
-                  }
-                </div>
+                    <mat-icon
+                      >{{ comment.isExpanded ? "expand_less" : "expand_more" }}
+                    </mat-icon>
+                  </button>
+                }
               </div>
-              <button mat-icon-button class="more-vert">
-                <mat-icon>more_vert</mat-icon>
-              </button>
             </div>
           }
         </div>

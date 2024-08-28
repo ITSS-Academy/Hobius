@@ -131,9 +131,13 @@ export class EbookInfoComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   resetExpandedStatus(): void {
-    let resetComments = [...this.comments];
-    resetComments.forEach((comment) => (comment.isExpanded = false));
-    this.comments = resetComments;
+    // Reset all comments to be collapsed
+    this.comments = this.comments.map((comment) => {
+      return {
+        ...comment,
+        isExpanded: false,
+      };
+    });
   }
 
   toggleCommentInput(): void {
@@ -162,6 +166,7 @@ export class EbookInfoComponent implements AfterViewInit, OnInit, OnDestroy {
             ...result,
             ebook: this.ebookId,
           };
+          console.log(newComment);
           if (this.isAlreadyCommented) {
             this.store.dispatch(CommentActions.update({ comment: newComment }));
           } else {
@@ -193,6 +198,8 @@ export class EbookInfoComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   read() {
-    this.router.navigate(['/reading', this.ebookId]).then(() => {});
+    this.router.navigate(['/reading', this.ebookId]).then(() => {
+      this.store.dispatch(EbookActions.view({ id: this.ebookId }));
+    });
   }
 }

@@ -25,9 +25,6 @@ export class CommentService {
   }
 
   update(comment: CommentModel) {
-    return this.http.patch(
-      `ebook-comments?ebookId=${comment.ebook.id}`,
-      comment,
-    );
+    return this.http.patch(`ebook-comments?ebookId=${comment.ebook}`, comment);
   }
 }

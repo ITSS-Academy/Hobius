@@ -6,7 +6,7 @@
     font-size: 20px;
   }
   #book-info-card {
-    width: 100%;
+    width: calc(100% - 28px);
     flex-direction: column;
     align-items: center;
     margin: 14px 14px;
@@ -40,8 +40,7 @@
     font-size: 14px;
   }
   #comment {
-    width: 100%;
-    margin-left: 10px;
+    width: calc(100% - 28px);
   }
   #header-comment {
     width: 100%;
@@ -71,13 +70,13 @@
 
 @media (min-width: 600px) and (max-width: 1023px) {
   #book-title {
-    margin: 0 10px;
+    margin: 0 14px;
   }
   #book-title #title {
     font-size: 20px;
   }
   #book-info-card {
-    width: 100%;
+    width: calc(100% - 28px);
     flex-direction: row;
     margin: 14px 14px;
   }
@@ -93,7 +92,6 @@
   }
   #book-info #description {
     max-width: 100%;
-    margin-right: 10px;
     font-size: 12px;
   }
   #book-info #author {
@@ -106,7 +104,7 @@
     font-size: 14px;
   }
   #comment {
-    width: 100%;
+    width: calc(100% - 28px);
     margin-left: 10px;
   }
   #header-comment {
@@ -114,7 +112,8 @@
     font-size: 20px;
   }
   .comment-content {
-    margin: 0 10px 10px 0;
+    margin-bottom: 10px;
+    width: 100%;
   }
   .comment-content .avatar-comment {
     height: 50px;
@@ -125,7 +124,7 @@
   }
   .comment-text {
     font-size: 12px;
-    max-width: calc(100vh - 20px);
+    max-width: calc(100% - 20px);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -143,7 +142,7 @@
     font-size: 24px;
   }
   #book-info-card {
-    width: 100%;
+    width: calc(100% - 28px);
     flex-direction: row;
     margin: 10px 14px;
   }
@@ -162,7 +161,6 @@
   #book-info #description {
     max-width: 100%;
     font-size: 14px;
-    margin-right: 20px;
   }
 
   #book-info #author {
@@ -178,7 +176,7 @@
   }
 
   #comment {
-    width: 100%;
+    width: calc(100% - 28px);
   }
 
   #header-comment {
@@ -188,7 +186,7 @@
 
   .comment-content {
     max-width: 100%;
-    margin: 0 20px 10px 0;
+    margin: 0 0 10px 0;
   }
 
   .comment-content .avatar-comment {
@@ -221,7 +219,7 @@
     font-size: 24px;
   }
   #book-info-card {
-    width: 100%;
+    width: calc(100% - 28px);
     flex-direction: row;
     margin: 10px 14px;
   }
@@ -238,7 +236,6 @@
   #book-info #description {
     max-width: 100%;
     font-size: 14px;
-    margin-right: 20px;
   }
   #book-info #author {
     font-size: 18px;
@@ -250,7 +247,7 @@
     font-size: 16px;
   }
   #comment {
-    width: 100%;
+    width: calc(100% - 28px);
   }
   #header-comment {
     width: 100%;
@@ -258,7 +255,7 @@
   }
   .comment-content {
     max-width: 100%;
-    margin: 0 20px 10px 0;
+    margin: 0 0 10px 0;
   }
   .comment-content .avatar-comment {
     height: 55px;
@@ -287,7 +284,7 @@
     font-size: 24px;
   }
   #book-info-card {
-    width: 100%;
+    width: calc(100% - 28px);
     flex-direction: row;
     margin: 10px 14px;
   }
@@ -346,9 +343,11 @@
 }
 
 #info-container {
+  overflow-y: auto;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  //justify-content: space-around;
 
   .loading-spinner-overlay {
     position: absolute;
@@ -480,10 +479,7 @@
 }
 
 #header-comment {
-  width: 100%;
   display: flex;
-  margin-left: 5px;
-  margin-right: 5px;
   flex-direction: column;
 }
 
@@ -585,21 +581,14 @@
   cursor: pointer;
 }
 
-.user-comment {
-  display: flex;
-  flex-direction: row;
-}
-
 .comment-content .avatar-comment {
-  margin-left: 10px;
-  margin-top: 10px;
   border-radius: 15px;
+  margin: 0 8px;
 }
 
 .comment-input {
-  max-width: 100%;
+  width: calc(100% - 16px - 50px);
   height: auto;
-  margin-left: 8px;
 }
 
 .comment-input .comment-name {
@@ -617,4 +606,12 @@
 
 .expand-btn {
   margin-bottom: 8px;
+}
+
+#no-comment {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
