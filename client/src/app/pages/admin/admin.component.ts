@@ -24,7 +24,6 @@ import * as EbookActions from '../../../ngrxs/ebook/ebook.actions';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { JWTTokenService } from '../../../services/jwttoken.service';
 import { Router } from '@angular/router';
-import { CategoryState } from '../../../ngrxs/category/category.state';
 
 @Injectable()
 export class MyCustomPaginatorIntl implements MatPaginatorIntl {
@@ -114,6 +113,8 @@ export class AdminComponent implements OnInit, OnDestroy {
       this.store.select('ebook', 'ebooks').subscribe((val) => {
         this.ebooks = val;
         this.initTable();
+        //clear checkbox state
+        this.selection.clear();
       }),
       this.store.select('ebook', 'isLoadingEbooksError').subscribe((val) => {
         if (val != null) {
