@@ -1,6 +1,8 @@
 <div id="reading-container">
-  <app-example-pdf-viewer
-    [page]="page"
-    [pdfSrc]="this.pdfUrl"
-  ></app-example-pdf-viewer>
+  @if (pdfUrl != "") {
+    <app-example-pdf-viewer
+      [page]="page"
+      [pdfSrc]="this.pdfUrl"
+    ></app-example-pdf-viewer>
+  }
 </div>

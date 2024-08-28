@@ -15,8 +15,8 @@ export class FileUploadEffects {
   uploadEbookCoverFile$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UploadActions.uploadEbookCoverFile),
-      mergeMap(({ file, path }) =>
-        this.cloudStorageService.uploadFile(file, path).pipe(
+      mergeMap(({ file, path, isPdf }) =>
+        this.cloudStorageService.uploadFile(file, path, isPdf).pipe(
           map((result) => {
             if (typeof result === 'number') {
               return UploadActions.uploadFileProgress({ progress: result });
@@ -37,8 +37,8 @@ export class FileUploadEffects {
   uploadEbookPdfFile$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UploadActions.uploadEbookPdfFile),
-      mergeMap(({ file, path }) =>
-        this.cloudStorageService.uploadFile(file, path).pipe(
+      mergeMap(({ file, path, isPdf }) =>
+        this.cloudStorageService.uploadFile(file, path, isPdf).pipe(
           map((result) => {
             if (typeof result === 'number') {
               return UploadActions.uploadFileProgress({ progress: result });

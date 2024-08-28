@@ -53,6 +53,7 @@ export class ExamplePdfViewerComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('ExamplePdfViewerComponent initialized');
+    console.log(this.pdfSrc);
   }
 
   public onAnnotationLayerRendered(event: AnnotationLayerRenderedEvent): void {

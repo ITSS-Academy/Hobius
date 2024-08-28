@@ -66,6 +66,7 @@ export class ReadingComponent implements OnInit, OnDestroy {
               }),
             );
             this.pdfUrl = ebook.pdf;
+            console.log(this.pdfUrl);
           } else {
             if (!ebook) {
               this.store.dispatch(EbookActions.findOne({ id }));
