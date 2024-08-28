@@ -4,7 +4,7 @@
       <button mat-icon-button (click)="navigateBack()">
         <mat-icon>arrow_back</mat-icon>
       </button>
-      <!--      <p id="title">{{  }}</p>-->
+      <p id="title">{{ (selectedEbook$ | async)?.title }}</p>
     </div>
   </div>
   <div id="book-info-card">
