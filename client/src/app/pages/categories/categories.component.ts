@@ -20,6 +20,10 @@ import { Store } from '@ngrx/store';
 import { CategoryState } from '../../../ngrxs/category/category.state';
 import { Subscription } from 'rxjs';
 import { CategoryModel } from '../../../models/category.model';
+import * as EbookActions from '../../../ngrxs/ebook/ebook.actions';
+import { EbookState } from '../../../ngrxs/ebook/ebook.state';
+import { AuthState } from '../../../ngrxs/auth/auth.state';
+import { UserState } from '../../../ngrxs/user/user.state';
 
 @Component({
   selector: 'app-categories',
@@ -38,14 +42,19 @@ export class CategoriesComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChildren('viewport') viewports!: QueryList<ElementRef>;
   @ViewChildren('theLoai') theLoaiElements!: QueryList<ElementRef>;
   theLoai: CategoryModel[] = [];
-  thinhHanhCards: EbookModel[] = [];
+  cardsBar: EbookModel[] = [];
   headerName: string = '';
   subscriptions: Subscription[] = [];
 
   constructor(
     private cardService: CardService,
     private activatedRoute: ActivatedRoute,
-    private store: Store<{ category: CategoryState }>,
+    private store: Store<{
+      category: CategoryState;
+      auth: AuthState;
+      user: UserState;
+      ebook: EbookState;
+    }>,
     private renderer: Renderer2,
   ) {}
 
@@ -54,7 +63,6 @@ export class CategoriesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.thinhHanhCards = this.cardService.cards;
     this.subscriptions.push(
       this.activatedRoute.paramMap.subscribe((params) => {
         const type = params.get('type');
@@ -62,15 +70,36 @@ export class CategoriesComponent implements OnInit, OnDestroy, AfterViewInit {
           switch (type) {
             case 'history':
               this.headerName = 'Lịch sử';
+              this.cardsBar = this.cardService.cards;
               break;
             case 'trends':
               this.headerName = 'Thịnh hành';
+              this.subscriptions.push(
+                this.store
+                  .select('ebook', 'trendingEbooks')
+                  .subscribe((ebooks) => {
+                    this.cardsBar = ebooks;
+                  }),
+              );
               break;
             case 'recommend':
               this.headerName = 'Đề cử';
+              this.subscriptions.push(
+                this.store
+                  .select('ebook', 'recommendEbooks')
+                  .subscribe((ebooks) => {
+                    this.cardsBar = ebooks;
+                  }),
+              );
               break;
             case 'rank':
-              this.headerName = 'Bảng xếp hạng';
+              this.subscriptions.push(
+                this.store
+                  .select('ebook', 'ratingEbooks')
+                  .subscribe((ebooks) => {
+                    this.cardsBar = ebooks;
+                  }),
+              );
               break;
           }
         }
@@ -81,6 +110,9 @@ export class CategoriesComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }),
     );
+    this.store.dispatch(EbookActions.listByTrend({ limit: 100 }));
+    this.store.dispatch(EbookActions.listByRecommend({ limit: 100 }));
+    this.store.dispatch(EbookActions.listByRating({ limit: 100 }));
   }
 
   ngAfterViewInit() {
