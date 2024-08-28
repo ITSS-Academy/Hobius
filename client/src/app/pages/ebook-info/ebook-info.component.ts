@@ -24,6 +24,7 @@ import * as CommentActions from '../../../ngrxs/comment/comment.actions';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { JWTTokenService } from '../../../services/jwttoken.service';
 import { CommentDetailComponent } from './components/comment-detail/comment-detail.component';
+import * as UserEbookActions from '../../../ngrxs/user-ebook/user-ebook.actions';
 
 @Component({
   selector: 'app-ebook-info',
@@ -37,6 +38,7 @@ export class EbookInfoComponent implements OnInit, OnDestroy {
   comments: CommentModel[] = [];
   userComment: CommentModel | null = null;
   isAlreadyCommented: boolean = false;
+  isLogin: boolean = false;
 
   isFavorite: boolean = false;
   isHovering: boolean = false;
@@ -79,6 +81,12 @@ export class EbookInfoComponent implements OnInit, OnDestroy {
       this.store.select('auth', 'idToken').subscribe((idToken) => {
         if (idToken != '') {
           this.store.dispatch(CommentActions.findOne({ ebookId: id }));
+          this.store.dispatch(
+            UserEbookActions.findOneByEbookIdAndUserId({ ebookId: id }),
+          );
+          this.isLogin = true;
+        } else {
+          this.isLogin = false;
         }
       }),
       this.store.select('comment', 'ebookCommentList').subscribe((comments) => {
@@ -134,6 +142,49 @@ export class EbookInfoComponent implements OnInit, OnDestroy {
           this.userComment = comment;
         }
       }),
+      this.store.select('user_ebook', 'currentReading').subscribe((val) => {
+        if (val) {
+          this.isFavorite = val.isLiked;
+        }
+      }),
+      this.store.select('ebook', 'isLikingEbookSuccess').subscribe((val) => {
+        if (val) {
+          this._snackBar.open('Đã thêm vào yêu thích', 'Đóng', {
+            duration: 2000,
+          });
+          this.store.dispatch(
+            UserEbookActions.findOneByEbookIdAndUserId({
+              ebookId: this.ebookId,
+            }),
+          );
+        }
+      }),
+      this.store.select('ebook', 'isLikingEbookError').subscribe((val) => {
+        if (val) {
+          this._snackBar.open('Thêm vào yêu thích thất bại', 'Đóng', {
+            duration: 2000,
+          });
+        }
+      }),
+      this.store.select('ebook', 'isUnlikingEbookSuccess').subscribe((val) => {
+        if (val) {
+          this._snackBar.open('Đã xóa khỏi yêu thích', 'Đóng', {
+            duration: 2000,
+          });
+          this.store.dispatch(
+            UserEbookActions.findOneByEbookIdAndUserId({
+              ebookId: this.ebookId,
+            }),
+          );
+        }
+      }),
+      this.store.select('ebook', 'isUnlikingEbookError').subscribe((val) => {
+        if (val) {
+          this._snackBar.open('Xóa khỏi yêu thích thất bại', 'Đóng', {
+            duration: 2000,
+          });
+        }
+      }),
     );
   }
 
@@ -171,12 +222,15 @@ export class EbookInfoComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(CommentDetailComponent, {
       data: comment,
     });
-
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe(() => {});
   }
 
   toggleFavorite(): void {
-    this.isFavorite = !this.isFavorite;
+    if (this.isFavorite) {
+      this.store.dispatch(EbookActions.unlike({ id: this.ebookId }));
+    } else {
+      this.store.dispatch(EbookActions.like({ id: this.ebookId }));
+    }
   }
 
   onMouseEnter(): void {

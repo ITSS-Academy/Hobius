@@ -49,14 +49,11 @@
               (click)="toggleFavorite()"
               (mouseenter)="onMouseEnter()"
               (mouseleave)="onMouseLeave()"
+              [disabled]="!isLogin"
             >
               <mat-icon>favorite</mat-icon>
               <span>{{
-                isFavorite
-                  ? isHovering
-                    ? "Bỏ Thích"
-                    : "Đã Thích"
-                  : "Thêm thích"
+                isFavorite ? (isHovering ? "Bỏ Thích" : "Đã Thích") : "Thích"
               }}</span>
             </button>
           </div>
