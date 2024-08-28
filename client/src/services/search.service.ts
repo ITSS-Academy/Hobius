@@ -8,6 +8,6 @@ export class SearchService {
   constructor(private http: HttpClientAuth) {}
 
   searchEbooks(searchTerm: string) {
-    return this.http.get(`search/any?q=${searchTerm}`);
+    return this.http.get(`search/ebooks?q=${searchTerm}`);
   }
 }

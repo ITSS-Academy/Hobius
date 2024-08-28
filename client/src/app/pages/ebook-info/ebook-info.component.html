@@ -4,25 +4,26 @@
       <button mat-icon-button (click)="navigateBack()">
         <mat-icon>arrow_back</mat-icon>
       </button>
-      <p id="title">{{ ebookInfo.title }}</p>
+      <!--      <p id="title">{{  }}</p>-->
     </div>
   </div>
   <div id="book-info-card">
     <div id="img-book-info">
       <img
-        src="{{ ebookInfo.image }}"
-        alt="Trang Bìa {{ ebookInfo.title }} "
+        [src]="(selectedEbook$ | async)?.image"
+        [alt]="(selectedEbook$ | async)?.title"
         id="cover"
       />
     </div>
     <div id="ebook-info-container">
       <div id="book-info">
-        <p id="author">Tác giả: {{ ebookInfo.author }}</p>
+        <p id="author">Tác giả: {{ (selectedEbook$ | async)?.author }}</p>
         <p id="date">
-          Đăng ngày: {{ ebookInfo.publishedDate | date: "dd/MM/yyyy" }}
+          Đăng ngày:
+          {{ (selectedEbook$ | async)?.publishedDate | date: "dd/MM/yyyy" }}
         </p>
         <p id="description">
-          {{ ebookInfo.detail }}
+          {{ (selectedEbook$ | async)?.detail }}
         </p>
       </div>
       <div id="btn">
@@ -50,11 +51,11 @@
   <div id="comment">
     <div id="header-comment">
       <div id="comment-title-header">
-        <p id="comment-title">Bình luận</p>
+        <p id="comment-title">Đánh giá</p>
         <button mat-icon-button (click)="toggleCommentInput()">
           <mat-icon id="add_comment" (click)="addComment()"
-            >add_comment</mat-icon
-          >
+            >add_comment
+          </mat-icon>
         </button>
       </div>
     </div>
@@ -81,9 +82,9 @@
                   (click)="toggleComment($index)"
                   class="expand-btn"
                 >
-                  <mat-icon>{{
-                    comment.isExpanded ? "expand_less" : "expand_more"
-                  }}</mat-icon>
+                  <mat-icon
+                    >{{ comment.isExpanded ? "expand_less" : "expand_more" }}
+                  </mat-icon>
                 </button>
               }
             </div>

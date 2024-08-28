@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Query } from '@nestjs/common';
+import {
+  Request,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Query,
+  HttpException,
+} from '@nestjs/common';
 import { SearchService } from './search.service';
 import { Public } from '../../utils/custom_decorators';
 
@@ -8,8 +16,11 @@ export class SearchController {
 
   @Public()
   @Get('ebooks')
-  async searchEbooks(@Body() request: any) {
-    return this.searchService.searchEbooks(request.query);
+  async searchEbooks(@Query('q') request: string) {
+    let ebooks = await this.searchService.searchEbooks(request);
+    return {
+      ebooks: ebooks,
+    };
   }
 
   @Public()
@@ -19,5 +30,13 @@ export class SearchController {
     return {
       ebooks: ebooks,
     };
+  }
+
+  @Delete('ebooks/:id')
+  async deleteEbooks(@Param('id') id: string, @Request() req: any) {
+    if (!req.user.role) {
+      throw new HttpException('Permission denied', 403);
+    }
+    return this.searchService.deleteEbook(id);
   }
 }
