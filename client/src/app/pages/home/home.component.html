@@ -92,8 +92,10 @@
           </button>
         </div>
         <div class="cardBox" #viewport>
-          @for (card of lichSuCards; track card) {
-            <app-card [ebook]="card"></app-card>
+          @for (card of lichSuCards; track $index) {
+            @if ($index < 10) {
+              <app-card [ebook]="card"></app-card>
+            }
           }
         </div>
       </div>
@@ -107,7 +109,7 @@
         </button>
       </div>
       <div class="cardBox" #viewport>
-        @if(isLoadingTrendingEbooks$|async){
+        @if (isLoadingTrendingEbooks$ | async) {
           <div class="loading">
             <mat-spinner diameter="50"></mat-spinner>
           </div>
@@ -126,7 +128,7 @@
         </button>
       </div>
       <div class="cardBox" #viewport>
-        @if(isLoadingRecommendEbooks$|async){
+        @if (isLoadingRecommendEbooks$ | async) {
           <div class="loading">
             <mat-spinner diameter="50"></mat-spinner>
           </div>
@@ -144,10 +146,10 @@
         </button>
       </div>
       <div class="cardBox" #viewport>
-        @if(isLoadingRatingEbooks$|async){
-        <div class="loading">
-          <mat-spinner diameter="50"></mat-spinner>
-        </div>
+        @if (isLoadingRatingEbooks$ | async) {
+          <div class="loading">
+            <mat-spinner diameter="50"></mat-spinner>
+          </div>
         }
         @for (card of bangXepHangCards; track card) {
           <app-card [ebook]="card"></app-card>

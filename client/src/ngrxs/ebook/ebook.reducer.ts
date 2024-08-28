@@ -316,6 +316,12 @@ export const ebookReducer = createReducer(
 
       isLoadingRatingEbooksError: null,
       ratingEbooks: [],
+
+      isUnlikingEbookError: null,
+      isUnlikingEbookSuccess: false,
+
+      isLikingEbookError: null,
+      isLikingEbookSuccess: false,
     };
   }),
 );

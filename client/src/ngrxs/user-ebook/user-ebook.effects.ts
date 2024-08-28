@@ -40,7 +40,7 @@ export class UserEbookEffects {
             const favoriteEbookList = response.filter(
               (item: UserEbookModel) => item.isLiked,
             );
-            console.log(favoriteEbookList);
+            // console.log(favoriteEbookList);
 
             return UserEbookActions.findAllByUserIdSuccess({
               userEbooks: response,

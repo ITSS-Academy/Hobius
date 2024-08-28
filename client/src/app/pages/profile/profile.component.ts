@@ -26,6 +26,9 @@ import { UserEbookState } from '../../../ngrxs/user-ebook/user-ebook.state';
 import { UserEbookModel } from '../../../models/user-ebook.model';
 import * as CommentActions from '../../../ngrxs/comment/comment.actions';
 import { CommentState } from '../../../ngrxs/comment/comment.state';
+import * as EbookActions from '../../../ngrxs/ebook/ebook.actions';
+import { EbookState } from '../../../ngrxs/ebook/ebook.state';
+import * as UserEbookActions from '../../../ngrxs/user-ebook/user-ebook.actions';
 
 @Component({
   selector: 'app-profile',
@@ -47,6 +50,7 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('myBackground') background?: ElementRef;
 
   bookCard: UserEbookModel[] = [];
+  tempIndex = 0;
 
   cmtCard: CommentModel[] = [];
 
@@ -60,6 +64,7 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
       user: UserState;
       user_ebook: UserEbookState;
       comment: CommentState;
+      ebook: EbookState;
     }>,
     private jwtTokenService: JWTTokenService,
     private router: Router,
@@ -77,6 +82,7 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
           this.store.dispatch(
             CommentActions.findAllByUserId({ userId: value.id }),
           );
+          this.store.dispatch(UserEbookActions.findAllByUserId());
         }
         this.user = value;
       }),
@@ -111,10 +117,27 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
       this.store
         .select('user_ebook', 'favoriteEbookList')
         .subscribe((value) => {
-          this.bookCard = value;
+          this.bookCard = [...value];
         }),
       this.store.select('comment', 'userCommentList').subscribe((value) => {
-        this.cmtCard = value;
+        this.cmtCard = [...value];
+      }),
+      this.store
+        .select('ebook', 'isUnlikingEbookSuccess')
+        .subscribe((value) => {
+          if (value) {
+            this.bookCard.splice(this.tempIndex, 1);
+            this._snackBar.open('Đã bỏ theo dõi', 'Đóng', {
+              duration: 2000,
+            });
+          }
+        }),
+      this.store.select('ebook', 'isUnlikingEbookError').subscribe((value) => {
+        if (value) {
+          this._snackBar.open('Bỏ theo dõi thất bại', 'Đóng', {
+            duration: 2000,
+          });
+        }
       }),
     );
   }
@@ -133,11 +156,10 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   removeBookCard(index: number) {
-    const [removed] = this.bookCard.splice(index, 1);
-    this._snackBar.open('Đã bỏ theo dõi', 'Đóng', {
-      duration: 1000,
-      panelClass: ['snackbar'],
-    });
+    this.tempIndex = index;
+    this.store.dispatch(
+      EbookActions.unlike({ id: this.bookCard[index].ebook.id }),
+    );
   }
 
   readonly dialog = inject(MatDialog);
