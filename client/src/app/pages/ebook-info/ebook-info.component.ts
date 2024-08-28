@@ -15,6 +15,12 @@ import { SharedModule } from '../../../shared/modules/shared.module';
 import { EbookModel } from '../../../models/ebook.model';
 import { CardService } from '../../../services/card.service';
 import { CommentModel } from '../../../models/comment.model';
+import * as EbookActions from '../../../ngrxs/ebook/ebook.actions';
+import { EbookState } from '../../../ngrxs/ebook/ebook.state';
+import { Store } from '@ngrx/store';
+import { AuthState } from '../../../ngrxs/auth/auth.state';
+import { UserState } from '../../../ngrxs/user/user.state';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-ebook-info',
@@ -25,10 +31,9 @@ import { CommentModel } from '../../../models/comment.model';
 })
 export class EbookInfoComponent implements AfterViewInit, OnInit {
   @ViewChildren('commentText') commentTextElements!: QueryList<ElementRef>;
-  // @Input() ebook!: EbookModel;
-  ebookInfo!: EbookModel;
   isCommentInputVisible: boolean = false;
   newCommentText: string = '';
+  idToken: string = '';
   comments: CommentModel[] = [
     {
       user: {
@@ -90,21 +95,28 @@ export class EbookInfoComponent implements AfterViewInit, OnInit {
   ];
   isFavorite: boolean = false;
   isHovering: boolean = false;
+  subscriptions: Subscription[] = [];
+
+  selectedEbook$ = this.store.select('ebook', 'selectedEbook');
 
   constructor(
     private router: Router,
     private dialog: MatDialog,
     private cd: ChangeDetectorRef,
-    public ebookDetail: CardService,
     private activatedRoute: ActivatedRoute,
-  ) {
-    const { id } = this.activatedRoute.snapshot.params;
-    this.ebookInfo = this.ebookDetail.cards.find(
-      (ebook) => ebook.id == id,
-    ) as EbookModel;
-  }
+    private store: Store<{
+      auth: AuthState;
+      user: UserState;
+      ebook: EbookState;
+    }>,
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const { id } = this.activatedRoute.snapshot.params;
+    this.store.dispatch(EbookActions.findOne({ id }));
+    console.log('id: ', id);
+    this.subscriptions.push();
+  }
 
   ngAfterViewInit(): void {
     this.checkTextOverflow();

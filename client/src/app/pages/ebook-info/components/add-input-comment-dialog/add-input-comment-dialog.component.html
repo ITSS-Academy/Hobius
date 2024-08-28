@@ -1,6 +1,6 @@
 <div id="comment-container">
   <div id="add_comment">
-    <p mat-dialog-title>Thêm bình luận mới</p>
+    <p mat-dialog-title>Thêm đánh giá mới</p>
   </div>
   <div mat-dialog-content id="input-comment">
     <mat-form-field id="input-comment-box">
@@ -9,7 +9,15 @@
     </mat-form-field>
   </div>
   <div mat-dialog-actions id="btn-comment">
-    <button mat-flat-button id="btn-comment-cancel" (click)="onNoClick()">Huỷ</button>
-    <button  mat-flat-button id="btn-comment-add" [mat-dialog-close]="data.newCommentText">Thêm</button>
+    <button mat-flat-button id="btn-comment-cancel" (click)="onNoClick()">
+      Huỷ
+    </button>
+    <button
+      mat-flat-button
+      id="btn-comment-add"
+      [mat-dialog-close]="data.newCommentText"
+    >
+      Thêm
+    </button>
   </div>
 </div>
