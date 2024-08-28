@@ -3,33 +3,21 @@ import * as CommentActions from './comment.actions';
 import { createReducer, on } from '@ngrx/store';
 
 const initialState: CommentState = {
-  comments: [],
-  isLoadingComments: false,
-  isLoadingCommentsError: null,
-
   selectedComment: null,
   isLoadingSelectedComment: false,
-  isLoadingSelectedCommentError: null,
-
+  isLoadingSelectedCommentError: undefined,
   isCreatingComment: false,
   isCreatingCommentSuccess: false,
-  isCreatingCommentError: null,
-
+  isCreatingCommentError: undefined,
   isUpdatingComment: false,
   isUpdatingCommentSuccess: false,
-  isUpdatingCommentError: null,
-
-  findingAllEbookId: false,
-  findingAllEbookIdSuccess: false,
-  findingAllEbookIdError: null,
-
-  findingAllUserId: false,
-  findingAllUserIdSuccess: false,
-  findingAllUserIdError: null,
-
-  findingOne: false,
-  findingOneSuccess: false,
-  findingOneError: null,
+  isUpdatingCommentError: undefined,
+  ebookCommentList: [],
+  isFindingAllByEbookId: false,
+  findingAllByEbookIdError: undefined,
+  userCommentList: [],
+  isFindingAllByUserId: false,
+  findingAllByUserIdError: undefined,
 };
 
 export const commentReducer = createReducer(
@@ -59,7 +47,8 @@ export const commentReducer = createReducer(
       isCreatingCommentError: action.error,
     };
   }),
-  on(CommentActions.updateComment, (state, action) => {
+
+  on(CommentActions.update, (state, action) => {
     console.log(action.type);
     return <CommentState>{
       ...state,
@@ -68,15 +57,15 @@ export const commentReducer = createReducer(
       isUpdatingCommentError: null,
     };
   }),
-  on(CommentActions.updateCommentSuccess, (state) => {
-    console.log(CommentActions.updateCommentSuccess.type);
+  on(CommentActions.updateSuccess, (state, action) => {
+    console.log(action.type);
     return <CommentState>{
       ...state,
       isUpdatingComment: false,
       isUpdatingCommentSuccess: true,
     };
   }),
-  on(CommentActions.updateCommentError, (state, action) => {
+  on(CommentActions.updateError, (state, action) => {
     console.log(action.type);
     return <CommentState>{
       ...state,
@@ -84,94 +73,73 @@ export const commentReducer = createReducer(
       isUpdatingCommentError: action.error,
     };
   }),
-  on(CommentActions.loadAll, (state) => {
-    console.log(CommentActions.loadAll.type);
-    return <CommentState>{
-      ...state,
-      isLoadingComments: true,
-      isLoadingCommentsError: null,
-    };
-  }),
-  on(CommentActions.loadAllSuccess, (state, action) => {
-    console.log(CommentActions.loadAllSuccess.type);
-    return <CommentState>{
-      ...state,
-      isLoadingComments: false,
-      comments: action.comments,
-    };
-  }),
-  on(CommentActions.loadAllError, (state, action) => {
+
+  on(CommentActions.findAllByEbookId, (state, action) => {
     console.log(action.type);
     return <CommentState>{
       ...state,
-      isLoadingComments: false,
-      isLoadingCommentsError: action.error,
+      ebookCommentList: [],
+      isFindingAllByEbookId: true,
+      findingAllByEbookIdError: null,
     };
   }),
-  on(CommentActions.findAllEbookId, (state) => {
-    console.log(CommentActions.findAllEbookId.type);
-    return <CommentState>{
-      ...state,
-      findingAllEbookId: true,
-      findingAllEbookIdSuccess: false,
-      findingAllEbookIdError: null,
-    };
-  }),
-  on(CommentActions.findAllEbookIdSuccess, (state, action) => {
-    console.log(CommentActions.findAllEbookIdSuccess.type);
-    return <CommentState>{
-      ...state,
-      findingAllEbookId: false,
-      comments: action.comments,
-    };
-  }),
-  on(CommentActions.findAllEbookIdError, (state, action) => {
+  on(CommentActions.findAllByEbookIdSuccess, (state, action) => {
     console.log(action.type);
     return <CommentState>{
       ...state,
-      findingAllEbookId: false,
-      findingAllEbookIdError: action.error,
+      isFindingAllByEbookId: false,
+      ebookCommentList: action.comments,
     };
   }),
-  on(CommentActions.findAllUserId, (state) => {
-    console.log(CommentActions.findAllUserId.type);
-    return <CommentState>{
-      ...state,
-      findingAllUserId: true,
-      findingAllUserIdSuccess: false,
-      findingAllUserIdError: null,
-    };
-  }),
-  on(CommentActions.findAllUserIdSuccess, (state, action) => {
-    console.log(CommentActions.findAllUserIdSuccess.type);
-    return <CommentState>{
-      ...state,
-      findingAllUserId: false,
-      comments: action.comments,
-    };
-  }),
-  on(CommentActions.findAllUserIdError, (state, action) => {
+  on(CommentActions.findAllByEbookIdError, (state, action) => {
     console.log(action.type);
     return <CommentState>{
       ...state,
-      findingAllUserId: false,
-      findingAllUserIdError: action.error,
+      isFindingAllByEbookId: false,
+      findingAllByEbookIdError: action.error,
     };
   }),
-  on(CommentActions.findOne, (state) => {
-    console.log(CommentActions.findOne.type);
+
+  on(CommentActions.findAllByUserId, (state, action) => {
+    console.log(action.type);
     return <CommentState>{
       ...state,
-      findingOne: true,
-      findingOneSuccess: false,
-      findingOneError: null,
+      userCommentList: [],
+      isFindingAllByUserId: true,
+      findingAllByUserIdError: null,
+    };
+  }),
+  on(CommentActions.findAllByUserIdSuccess, (state, action) => {
+    console.log(action.type);
+    return <CommentState>{
+      ...state,
+      isFindingAllByUserId: false,
+      userCommentList: action.comments,
+    };
+  }),
+  on(CommentActions.findAllByUserIdError, (state, action) => {
+    console.log(action.type);
+    return <CommentState>{
+      ...state,
+      isFindingAllByUserId: false,
+      findingAllByUserIdError: action.error,
+    };
+  }),
+
+  on(CommentActions.findOne, (state, action) => {
+    console.log(action.type);
+    return <CommentState>{
+      ...state,
+      isLoadingSelectedComment: true,
+      selectedComment: null,
+      isLoadingSelectedCommentError: null,
     };
   }),
   on(CommentActions.findOneSuccess, (state, action) => {
     console.log(CommentActions.findOneSuccess.type);
     return <CommentState>{
       ...state,
-      findingOne: false,
+      isLoadingSelectedComment: false,
       selectedComment: action.comment,
     };
   }),
@@ -179,8 +147,8 @@ export const commentReducer = createReducer(
     console.log(action.type);
     return <CommentState>{
       ...state,
-      findingOne: false,
-      findingOneError: action.error,
+      isLoadingSelectedComment: false,
+      isLoadingSelectedCommentError: action.error,
     };
   }),
 );
