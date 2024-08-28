@@ -17,13 +17,14 @@ import { CardService } from '../../../services/card.service';
 import { NgForOf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
-import { Auth, onAuthStateChanged, User } from '@angular/fire/auth';
 import { AuthState } from '../../../ngrxs/auth/auth.state';
 import { Store } from '@ngrx/store';
 import * as AuthActions from '../../../ngrxs/auth/auth.actions';
 import { Subscription } from 'rxjs';
 import { SearchBarComponent } from '../../components/search-bar/search-bar.component';
 import { UserState } from '../../../ngrxs/user/user.state';
+import * as EbookActions from '../../../ngrxs/ebook/ebook.actions';
+import { EbookState } from '../../../ngrxs/ebook/ebook.state';
 
 @Component({
   selector: 'app-home',
@@ -55,14 +56,15 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
 
   constructor(
     private cardService: CardService,
-    private store: Store<{ auth: AuthState; user: UserState }>,
+    private store: Store<{
+      auth: AuthState;
+      user: UserState;
+      ebook: EbookState;
+    }>,
   ) {}
 
   ngOnInit(): void {
-    this.lichSuCards = this.cardService.cards;
-    this.thinhHanhCards = this.cardService.cards;
-    this.deCuCards = this.cardService.cards;
-    this.bangXepHangCards = this.cardService.cards;
+    // Select trendingEbooks, recommendEbooks, and ratingEbooks from the store
     this.subscriptions.push(
       this.store.select('auth', 'idToken').subscribe((value) => {
         console.log('idToken: ', value);
@@ -71,7 +73,22 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
       this.store.select('auth', 'isStaticUser').subscribe((value) => {
         this.isStaticUser = value;
       }),
+      this.store.select('ebook', 'trendingEbooks').subscribe((ebooks) => {
+        console.log('trendingEbooks: ', ebooks);
+        this.thinhHanhCards = ebooks;
+      }),
+      this.store.select('ebook', 'recommendEbooks').subscribe((ebooks) => {
+        this.deCuCards = ebooks;
+      }),
+      this.store.select('ebook', 'ratingEbooks').subscribe((ebooks) => {
+        this.bangXepHangCards = ebooks;
+      }),
     );
+
+    // Dispatch actions to load the ebooks
+    this.store.dispatch(EbookActions.listByTrend({ limit: 10 }));
+    this.store.dispatch(EbookActions.listByRecommend({ limit: 10 }));
+    this.store.dispatch(EbookActions.listByRating({ limit: 10 }));
   }
 
   ngOnDestroy() {
