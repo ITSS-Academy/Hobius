@@ -12,8 +12,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AddInputCommentDialogComponent } from './components/add-input-comment-dialog/add-input-comment-dialog.component';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
-import { EbookModel } from '../../../models/ebook.model';
-import { CardService } from '../../../services/card.service';
 import { CommentModel } from '../../../models/comment.model';
 import * as EbookActions from '../../../ngrxs/ebook/ebook.actions';
 import { EbookState } from '../../../ngrxs/ebook/ebook.state';
@@ -23,6 +21,7 @@ import { UserState } from '../../../ngrxs/user/user.state';
 import { Subscription } from 'rxjs';
 import { UserEbookState } from '../../../ngrxs/user-ebook/user-ebook.state';
 import { CommentState } from '../../../ngrxs/comment/comment.state';
+import * as UserEbookActions from '../../../ngrxs/user-ebook/user-ebook.actions';
 
 @Component({
   selector: 'app-ebook-info',

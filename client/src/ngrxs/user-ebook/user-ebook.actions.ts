@@ -3,7 +3,7 @@ import { UserEbookModel } from '../../models/user-ebook.model';
 
 export const create = createAction(
   '[User Ebook] Create',
-  props<{ userEbook: UserEbookModel }>(),
+  props<{ userEbook: any }>(),
 );
 export const createSuccess = createAction('[User Ebook] Create Success');
 export const createError = createAction(
