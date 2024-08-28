@@ -53,10 +53,12 @@ export class UserEbooksService {
         .select([
           'userEbook.readingStatus',
           'userEbook.purchaseDate',
+          'userEbook.isLiked',
           'ebook.id',
           'ebook.title',
           'ebook.author',
           'ebook.image',
+          'ebook.publishedDate',
         ])
         .where('userEbook.userId = :userId', { userId })
         .getMany();

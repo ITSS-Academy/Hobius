@@ -16,6 +16,9 @@ export const findAllByUserIdSuccess = createAction(
   '[User Ebook] Find All By User Id Success',
   props<{
     userEbooks: UserEbookModel[];
+    favoriteEbookList: UserEbookModel[];
+    viewQuantity: number;
+    likeQuantity: number;
   }>(),
 );
 export const findAllByUserIdError = createAction(

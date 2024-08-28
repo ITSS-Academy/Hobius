@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 import { map, exhaustMap, catchError } from 'rxjs/operators';
 import * as UserEbookActions from './user-ebook.actions';
 import { UserEbookService } from '../../services/user-ebook.service';
+import { UserEbookModel } from '../../models/user-ebook.model';
 
 @Injectable()
 export class UserEbookEffects {
@@ -29,8 +30,23 @@ export class UserEbookEffects {
       exhaustMap(() => {
         return this.userEbookService.findAllByUserId().pipe(
           map((response) => {
+            //count the number of likes and views
+
+            //count the likeQuantity base on the isLiked field
+            const likeQuantity = response.filter(
+              (item: UserEbookModel) => item.isLiked,
+            ).length;
+
+            const favoriteEbookList = response.filter(
+              (item: UserEbookModel) => item.isLiked,
+            );
+            console.log(favoriteEbookList);
+
             return UserEbookActions.findAllByUserIdSuccess({
               userEbooks: response,
+              favoriteEbookList: favoriteEbookList,
+              viewQuantity: response.length,
+              likeQuantity: likeQuantity,
             });
           }),
           catchError((error) => {

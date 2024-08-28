@@ -22,6 +22,11 @@ import * as UserActions from '../../../ngrxs/user/user.actions';
 import { MatTableDataSource } from '@angular/material/table';
 import { JWTTokenService } from '../../../services/jwttoken.service';
 import { Router } from '@angular/router';
+import { EbookModel } from '../../../models/ebook.model';
+import { CommentModel } from '../../../models/comment.model';
+import { EbookState } from '../../../ngrxs/ebook/ebook.state';
+import { UserEbookState } from '../../../ngrxs/user-ebook/user-ebook.state';
+import { UserEbookModel } from '../../../models/user-ebook.model';
 
 @Component({
   selector: 'app-profile',
@@ -34,134 +39,23 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
   user$ = this.store.select('user', 'user');
   user: UserModel | null = null;
 
+  likeQuantity = 0;
+  viewQuantity = 0;
+
   isUpdating$ = this.store.select('user', 'isUpdating');
   isGetting$ = this.store.select('user', 'isGetting');
 
   @ViewChild('myBackground') background?: ElementRef;
 
-  bookCard: any[] = [
-    {
-      id: 1,
-      title: 'Đợi Tới Khi Ve Xanh Rụng',
-      img: '../public/assets/profile_pictures/img.png',
-      author: 'Đinh Mặc',
-      year: 'N/A',
-      summary:
-        'Bảy năm trước vào một đêm khuya, cảnh sát hình sự Lý Cẩn Thành mất tích bí ẩn tại làng đô thị...',
-    },
-    {
-      id: 2,
-      title: 'Lên Nhầm Kiệu Hoa',
-      img: '../public/assets/profile_pictures/img_1.png',
-      author: 'Lục Dược',
-      year: 'N/A',
-      summary:
-        'Hết làm cha rồi đến làm mẹ, làm xong sư phụ rồi lại đến làm trượng phu...',
-    },
-    {
-      id: 3,
-      title: 'Anh Trai Nhân Vật Chính',
-      img: '../public/assets/profile_pictures/img_2.png',
-      author: 'Tiên Sắc Xám',
-      year: 'N/A',
-      summary:
-        'Ở kiếp này, Khan là anh trai nhân vật chính nhưng số mệnh của hắn lại không may mắn hưởng ké được miếng hào quang nào của cậu ta.' +
-        ' Khan lấy lại được ký ức tiền kiếp mình trong hoàn cảnh hoàn toàn bất lợi. Hắn nhận ra mình chỉ là một nhân vật phụ, một nhân vật phản diện bé nhỏ trong bộ tiểu thuyết dài kỳ được viết bởi nhỏ em gái của mình ở kiếp trước viết ra...',
-    },
-    {
-      id: 4,
-      title: 'Bắc Phái Đạo Mộ Bút Ký',
-      img: '../public/assets/profile_pictures/img_3.png',
-      author: 'Vân Phong',
-      year: 'N/A',
-      summary:
-        'Tôi là một đứa trẻ nghèo đến từ một ngôi làng miền núi ở Đông Bắc Trung Quốc, vào đầu thế kỷ 20, ...',
-    },
-    {
-      id: 5,
-      title: 'Chí Tôn Kiếm Đế',
-      img: '../public/assets/profile_pictures/img_4.png',
-      author: 'Lâm Nhất',
-      year: 'N/A',
-      summary: 'Diệp Thanh là thế tử Diệp gia, vừa có tài, lại có thân phận...',
-    },
-    {
-      id: 6,
-      title: 'Tướng Quân Tại Thượng',
-      img: '../public/assets/profile_pictures/img_5.png',
-      author: 'Trúc Lâm Thâm Xứ',
-      year: 'N/A',
-      summary:
-        'Một giấc tỉnh dậy, ta thấy mình nằm trên giường của kẻ thù. Hắn áo quần xộc xệch, đầy dấu vết đỏ, khoé mắt và chân mày đều mang vẻ mờ ám...',
-    },
-    {
-      id: 7,
-      title: '430 Triệu Năm Của Cô Ấy',
-      img: '../public/assets/profile_pictures/img_6.png',
-      author: 'Quân Tử Dĩ Trạch',
-      year: 'N/A',
-      summary:
-        'Vào sinh nhật 18 tuổi, Lê Tử được cha mình nói: “Thực ra mẹ con có gen không phải người…”...',
-    },
-  ];
+  bookCard: UserEbookModel[] = [];
 
-  cmtCard: any[] = [
-    {
-      id: 1,
-      title: 'Đợi Tới Khi Ve Xanh Rụng',
-      img: '../public/assets/profile_pictures/img.png',
-      time: '1 giờ trước',
-      content: 'Truyện hay, nhưng kết thúc hơi vội',
-    },
-    {
-      id: 2,
-      title: 'Lên Nhầm Kiệu Hoa',
-      img: '../public/assets/profile_pictures/img_1.png',
-      time: '2 giờ trước',
-      content: 'Truyện rất hay, ra nhanh di',
-    },
-    {
-      id: 3,
-      title: 'Anh Trai Nhân Vật Chính',
-      img: '../public/assets/profile_pictures/img_2.png',
-      time: '3 giờ trước',
-      content: 'Truyện rất giả tưởng, nhưng rất hay',
-    },
-    {
-      id: 4,
-      title: 'Bắc Phái Đạo Mộ Bút Ký',
-      img: '../public/assets/profile_pictures/img_3.png',
-      time: '4 giờ trước',
-      content: 'Truyện rất thú vị, nhưng hơi dài',
-    },
-    {
-      id: 5,
-      title: 'Chí Tôn Kiếm Đế',
-      img: '../public/assets/profile_pictures/img_4.png',
-      time: '5 giờ trước',
-      content: 'Truyện rất hai`, nhưng kết thúc hơi tệ',
-    },
-    {
-      id: 6,
-      title: 'Tướng Quân Tại Thượng',
-      img: '../public/assets/profile_pictures/img_5.png',
-      time: '6 giờ trước',
-      content: 'Truyện ra nhanh lắm, nhưng hơi ngắn',
-    },
-    {
-      id: 7,
-      title: '430 Triệu Năm Của Cô Ấy',
-      img: '../public/assets/profile_pictures/img_6.png',
-      time: '7 giờ trước',
-      content: 'Truyện rất mơ mộng, nhưng hơi tiêu cực',
-    },
-  ];
+  cmtCard: CommentModel[] = [];
 
   subscription: Subscription[] = [];
 
   constructor(
     private _snackBar: MatSnackBar,
-    private store: Store<{ user: UserState }>,
+    private store: Store<{ user: UserState; user_ebook: UserEbookState }>,
     private jwtTokenService: JWTTokenService,
     private router: Router,
   ) {}
@@ -239,6 +133,17 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
           });
         }
       }),
+      this.store.select('user_ebook', 'likeQuantity').subscribe((value) => {
+        this.likeQuantity = value;
+      }),
+      this.store.select('user_ebook', 'viewQuantity').subscribe((value) => {
+        this.viewQuantity = value;
+      }),
+      this.store
+        .select('user_ebook', 'favoriteEbookList')
+        .subscribe((value) => {
+          this.bookCard = value;
+        }),
     );
   }
 }

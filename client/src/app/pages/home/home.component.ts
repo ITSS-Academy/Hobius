@@ -92,7 +92,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
         this.isStaticUser = value;
       }),
       this.store.select('ebook', 'trendingEbooks').subscribe((ebooks) => {
-        console.log('trendingEbooks: ', ebooks);
+        // console.log('trendingEbooks: ', ebooks);
         this.thinhHanhCards = ebooks;
       }),
       this.store.select('ebook', 'recommendEbooks').subscribe((ebooks) => {

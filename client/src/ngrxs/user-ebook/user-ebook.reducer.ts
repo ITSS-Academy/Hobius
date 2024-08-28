@@ -15,6 +15,9 @@ const initialState: UserEbookState = {
   isUpdating: false,
   isUpdatingSuccess: false,
   errorUpdating: undefined,
+  viewQuantity: 0,
+  likeQuantity: 0,
+  favoriteEbookList: [],
 };
 
 export const userEbookReducer = createReducer(
@@ -57,7 +60,10 @@ export const userEbookReducer = createReducer(
     return <UserEbookState>{
       ...state,
       readingHistoryList: action.userEbooks,
+      favoriteEbookList: action.favoriteEbookList,
       isLoadingReadingHistoryList: false,
+      viewQuantity: action.viewQuantity,
+      likeQuantity: action.likeQuantity,
     };
   }),
   on(UserEbookActions.findAllByUserIdError, (state, action) => {
@@ -159,5 +165,5 @@ export const userEbookReducer = createReducer(
       isUpdatingSuccess: false,
       errorUpdating: undefined,
     };
-  })
+  }),
 );

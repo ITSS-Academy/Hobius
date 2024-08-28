@@ -53,11 +53,11 @@
         <div id="note">
           <div>
             <mat-icon class="icon">star</mat-icon>
-            Yêu thích 1000 cuốn sách
+            Yêu thích {{ this.likeQuantity }} cuốn sách
           </div>
           <div>
             <mat-icon class="icon">directions_walk</mat-icon>
-            Đã đọc 1000 cuốn sách
+            Đã đọc {{ this.viewQuantity }} cuốn sách
           </div>
         </div>
       </div>
@@ -79,15 +79,18 @@
             <div class="book-card">
               <div class="left-card">
                 <div class="img">
-                  <img src="{{ item.img }}" alt="" />
+                  <img src="{{ item.ebook.image }}" alt="" />
                 </div>
               </div>
               <div class="middle">
-                <div class="title">{{ item.title }}</div>
+                <div class="title">{{ item.ebook.title }}</div>
                 <div class="info">
-                  <div>{{ item.author }} - {{ item.year }}</div>
+                  <div>
+                    {{ item.ebook.author }} -
+                    {{ item.ebook.publishedDate | date: "dd/MM/yyyy" }}
+                  </div>
                   <div class="sum">
-                    {{ item.summary }}
+                    {{ item.ebook.detail }}
                   </div>
                 </div>
               </div>
@@ -95,6 +98,9 @@
                 <mat-icon>favorite</mat-icon>
               </div>
             </div>
+          }
+          @if (bookCard.length == 0) {
+            <div class="empty">Chưa có sách yêu thích</div>
           }
         </div>
       </mat-tab>
@@ -108,20 +114,25 @@
             <div class="book-card">
               <div class="left-card">
                 <div class="img">
-                  <img src="{{ item.img }}" alt="" />
+                  <img src="{{ item.ebook.image }}" alt="" />
                 </div>
               </div>
               <div class="middle">
-                <div class="title">{{ item.title }}</div>
+                <div class="title">{{ item.ebook.title }}</div>
                 <div class="info">
-                  <div>{{ item.time }}</div>
+                  <div>{{ item.commentDate | date: "dd/MM/yyyy" }}</div>
                   <div class="cmt">{{ item.content }}</div>
                 </div>
               </div>
               <div class="right-card">
-                <mat-icon [routerLink]="'/ebook-info'">open_in_new</mat-icon>
+                <mat-icon [routerLink]="['/ebook-info', item.ebook.id]"
+                  >open_in_new
+                </mat-icon>
               </div>
             </div>
+          }
+          @if (cmtCard.length == 0) {
+            <div class="empty">Chưa có đánh giá nào</div>
           }
         </div>
       </mat-tab>
