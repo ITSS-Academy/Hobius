@@ -3,7 +3,7 @@ import { UserEbookModel } from '../../models/user-ebook.model';
 
 export const create = createAction(
   '[User Ebook] Create',
-  props<{ userEbook: UserEbookModel }>(),
+  props<{ userEbook: any }>(),
 );
 export const createSuccess = createAction('[User Ebook] Create Success');
 export const createError = createAction(
@@ -69,3 +69,5 @@ export const finishReadingError = createAction(
   '[User Ebook] Finish Reading Error',
   props<{ error: any }>(),
 );
+
+export const reset = createAction('[User Ebook] Reset');

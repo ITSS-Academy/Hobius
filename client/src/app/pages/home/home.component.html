@@ -107,6 +107,11 @@
         </button>
       </div>
       <div class="cardBox" #viewport>
+        @if(isLoadingTrendingEbooks$|async){
+          <div class="loading">
+            <mat-spinner diameter="50"></mat-spinner>
+          </div>
+        }
         @for (card of thinhHanhCards; track card) {
           <app-card [ebook]="card"></app-card>
         }
@@ -121,6 +126,11 @@
         </button>
       </div>
       <div class="cardBox" #viewport>
+        @if(isLoadingRecommendEbooks$|async){
+          <div class="loading">
+            <mat-spinner diameter="50"></mat-spinner>
+          </div>
+        }
         @for (card of deCuCards; track card) {
           <app-card [ebook]="card"></app-card>
         }
@@ -134,6 +144,11 @@
         </button>
       </div>
       <div class="cardBox" #viewport>
+        @if(isLoadingRatingEbooks$|async){
+        <div class="loading">
+          <mat-spinner diameter="50"></mat-spinner>
+        </div>
+        }
         @for (card of bangXepHangCards; track card) {
           <app-card [ebook]="card"></app-card>
         }

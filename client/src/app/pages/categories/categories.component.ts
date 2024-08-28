@@ -74,35 +74,29 @@ export class CategoriesComponent implements OnInit, OnDestroy, AfterViewInit {
               break;
             case 'trends':
               this.headerName = 'Thịnh hành';
-              this.subscriptions.push(
-                this.store
-                  .select('ebook', 'trendingEbooks')
-                  .subscribe((ebooks) => {
-                    this.cardsBar = ebooks;
-                  }),
-              );
+              this.store.dispatch(EbookActions.listByTrend({ limit: 100 }));
               break;
             case 'recommend':
               this.headerName = 'Đề cử';
-              this.subscriptions.push(
-                this.store
-                  .select('ebook', 'recommendEbooks')
-                  .subscribe((ebooks) => {
-                    this.cardsBar = ebooks;
-                  }),
-              );
+              this.store.dispatch(EbookActions.listByRecommend({ limit: 100 }));
+              this.store
+                .select('ebook', 'recommendEbooks')
+                .subscribe((ebooks) => {
+                  this.cardsBar = ebooks;
+                });
               break;
             case 'rank':
-              this.subscriptions.push(
-                this.store
-                  .select('ebook', 'ratingEbooks')
-                  .subscribe((ebooks) => {
-                    this.cardsBar = ebooks;
-                  }),
-              );
+              this.headerName = 'Bảng xếp hạng';
+              this.store.dispatch(EbookActions.listByRating({ limit: 100 }));
               break;
           }
         }
+      }),
+      this.store.select('ebook', 'trendingEbooks').subscribe((ebooks) => {
+        this.cardsBar = ebooks;
+      }),
+      this.store.select('ebook', 'ratingEbooks').subscribe((ebooks) => {
+        this.cardsBar = ebooks;
       }),
       this.store.select('category', 'categories').subscribe((categories) => {
         if (categories.length > 0) {
@@ -110,9 +104,6 @@ export class CategoriesComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }),
     );
-    this.store.dispatch(EbookActions.listByTrend({ limit: 100 }));
-    this.store.dispatch(EbookActions.listByRecommend({ limit: 100 }));
-    this.store.dispatch(EbookActions.listByRating({ limit: 100 }));
   }
 
   ngAfterViewInit() {

@@ -23,6 +23,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamplePdfViewerComponent implements OnInit {
+  @Input('pdfSrc') pdfSrc = '';
   @Input('page') page = 1;
   @Input('pageLabel') pageLabel = '1';
   fileInfo!: PdfDocumentInfo;
@@ -52,6 +53,7 @@ export class ExamplePdfViewerComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('ExamplePdfViewerComponent initialized');
+    console.log(this.pdfSrc);
   }
 
   public onAnnotationLayerRendered(event: AnnotationLayerRenderedEvent): void {

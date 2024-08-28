@@ -43,7 +43,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'reading',
+    path: 'reading/:id',
     loadChildren: () =>
       import('./pages/reading/reading.route').then((m) => m.READING_ROUTES),
   },

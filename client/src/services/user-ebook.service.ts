@@ -8,7 +8,7 @@ import { UserEbookModel } from '../models/user-ebook.model';
 export class UserEbookService {
   constructor(private http: HttpClientAuth) {}
 
-  create(userEbook: UserEbookModel) {
+  create(userEbook: any) {
     return this.http.post('user-ebooks', userEbook);
   }
 

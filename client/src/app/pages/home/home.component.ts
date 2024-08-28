@@ -13,7 +13,6 @@ import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { CardComponent } from '../../components/card/card.component';
 import { EbookModel } from '../../../models/ebook.model';
-import { CardService } from '../../../services/card.service';
 import { NgForOf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
@@ -25,6 +24,8 @@ import { SearchBarComponent } from '../../components/search-bar/search-bar.compo
 import { UserState } from '../../../ngrxs/user/user.state';
 import * as EbookActions from '../../../ngrxs/ebook/ebook.actions';
 import { EbookState } from '../../../ngrxs/ebook/ebook.state';
+import * as UserEbookActions from '../../../ngrxs/user-ebook/user-ebook.actions';
+import { UserEbookState } from '../../../ngrxs/user-ebook/user-ebook.state';
 
 @Component({
   selector: 'app-home',
@@ -54,12 +55,26 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   idToken: string = '';
   user$ = this.store.select('user', 'user');
 
+  isLoadingReadingHistoryList$ = this.store.select(
+    'user_ebook',
+    'isLoadingReadingHistoryList',
+  );
+  isLoadingTrendingEbooks$ = this.store.select(
+    'ebook',
+    'isLoadingTrendingEbooks',
+  );
+  isLoadingRecommendEbooks$ = this.store.select(
+    'ebook',
+    'isLoadingRecommendEbooks',
+  );
+  isLoadingRatingEbooks$ = this.store.select('ebook', 'isLoadingRatingEbooks');
+
   constructor(
-    private cardService: CardService,
     private store: Store<{
       auth: AuthState;
       user: UserState;
       ebook: EbookState;
+      user_ebook: UserEbookState;
     }>,
   ) {}
 
@@ -69,6 +84,9 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
       this.store.select('auth', 'idToken').subscribe((value) => {
         console.log('idToken: ', value);
         this.idToken = value;
+        if (this.idToken != '') {
+          this.store.dispatch(UserEbookActions.findAllByUserId());
+        }
       }),
       this.store.select('auth', 'isStaticUser').subscribe((value) => {
         this.isStaticUser = value;
@@ -83,6 +101,15 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
       this.store.select('ebook', 'ratingEbooks').subscribe((ebooks) => {
         this.bangXepHangCards = ebooks;
       }),
+      this.store
+        .select('user_ebook', 'readingHistoryList')
+        .subscribe((ebooks) => {
+          if (ebooks && ebooks.length > 0) {
+            this.lichSuCards = ebooks.map((ebook) => ebook.ebook);
+          } else {
+            this.lichSuCards = [];
+          }
+        }),
     );
 
     // Dispatch actions to load the ebooks
@@ -93,6 +120,8 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
+    this.store.dispatch(UserEbookActions.reset());
+    this.store.dispatch(EbookActions.reset());
   }
 
   ngAfterViewInit() {

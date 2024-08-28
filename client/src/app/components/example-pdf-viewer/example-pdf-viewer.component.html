@@ -18,7 +18,9 @@
   <ngx-extended-pdf-viewer
     (pageChange)="onPageChanges($event)"
     [src]="
-      '../../../public/assets/pdfs/Bootstrap-vs-Material-Design-vs-Prime-vs-Tailwind.pdf'
+      this.pdfSrc == ''
+        ? '../../../public/assets/pdfs/Bootstrap-vs-Material-Design-vs-Prime-vs-Tailwind.pdf'
+        : this.pdfSrc
     "
     backgroundColor="#d7e3ff"
     [ignoreKeyboard]="true"

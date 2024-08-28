@@ -64,7 +64,7 @@
 
         img {
           max-width: 100%;
-          max-height: 100%;
+          //max-height: 100%;
         }
 
         img::after {
@@ -119,6 +119,14 @@
       height: max-content;
       scrollbar-width: none; /* Hide scrollbar for Firefox */
       -ms-overflow-style: none;
+
+      .loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+      }
     }
 
     .titleName {

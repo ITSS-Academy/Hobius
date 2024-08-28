@@ -90,7 +90,7 @@ export class EbookFormDialogComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
-    this.store.dispatch(UploadActions.reset());
+    this.store.dispatch(UploadActions.resetEbookUploadState());
   }
 
   ngOnInit(): void {
@@ -171,6 +171,7 @@ export class EbookFormDialogComponent implements OnInit, OnDestroy {
       UploadActions.uploadEbookCoverFile({
         file: file!,
         path: `ebooks/${this.tempId}/cover`,
+        isPdf: false,
       }),
     );
   }
@@ -182,6 +183,7 @@ export class EbookFormDialogComponent implements OnInit, OnDestroy {
       UploadActions.uploadEbookPdfFile({
         file: file!,
         path: `ebooks/${this.tempId}/pdf`,
+        isPdf: true,
       }),
     );
   }

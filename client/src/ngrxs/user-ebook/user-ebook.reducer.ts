@@ -142,4 +142,22 @@ export const userEbookReducer = createReducer(
       errorUpdating: action.error,
     };
   }),
+  on(UserEbookActions.reset, (state, action) => {
+    console.log(action.type);
+    return <UserEbookState>{
+      ...state,
+      readingHistoryList: [],
+      isLoadingReadingHistoryList: false,
+      errorReadingHistoryList: undefined,
+      currentReading: null,
+      isLoadingCurrentReading: false,
+      errorCurrentReading: undefined,
+      isCreating: false,
+      isCreatingSuccess: false,
+      errorCreating: undefined,
+      isUpdating: false,
+      isUpdatingSuccess: false,
+      errorUpdating: undefined,
+    };
+  })
 );

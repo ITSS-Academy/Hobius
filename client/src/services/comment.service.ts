@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClientAuth } from '../utils/http-client-auth';
-import { updateComment } from '../ngrxs/comment/comment.actions';
 import { CommentModel } from '../models/comment.model';
 
 @Injectable({
@@ -9,25 +8,25 @@ import { CommentModel } from '../models/comment.model';
 export class CommentService {
   constructor(private http: HttpClientAuth) {}
 
-  createComment(comment: CommentModel) {
+  create(comment: CommentModel) {
     return this.http.post('ebook-comments', comment);
   }
 
-  findAllEbookId(ebookId: string) {
-    return this.http.get(`ebook-comments/ebook/${ebookId}`);
+  findAllByEbookId(ebookId: string) {
+    return this.http.get(`ebook-comments/all/ebook/${ebookId}`);
   }
 
-  findAllUserId(userId: string) {
-    return this.http.get(`ebook-comments/user/${userId}`);
+  findAllByUserId() {
+    return this.http.get(`ebook-comments/all/user`);
   }
 
-  findOneComment(userId: string, ebookId: string) {
-    return this.http.get(`ebook-comments/${userId}/${ebookId}`);
+  findOne(ebookId: string) {
+    return this.http.get(`ebook-comments/one?ebookId=${ebookId}`);
   }
 
-  updateComment(comment: any) {
+  update(comment: CommentModel) {
     return this.http.patch(
-      `ebook-comments/${comment.userId}/${comment.ebookId}`,
+      `ebook-comments?ebookId=${comment.ebook.id}`,
       comment,
     );
   }

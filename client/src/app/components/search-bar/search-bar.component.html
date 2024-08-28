@@ -5,6 +5,7 @@
       <input
         matInput
         placeholder="Tìm kiếm sách..."
+        [formControl]="searchControl"
         (input)="onInputChange($event)"
       />
     </mat-form-field>
@@ -12,7 +13,9 @@
     @if (showDropdown == true) {
       <div id="dropdownBox">
         <div *ngIf="loading$ | async"></div>
-        <div *ngIf="error$ | async as error">Lỗi: {{ error }}</div>
+        <div *ngIf="(searchResults$ | async)?.length == 0">
+          <div class="textIn">Không tìm thấy kết quả</div>
+        </div>
         <div *ngIf="searchResults$ | async as searchResults">
           <div *ngFor="let result of searchResults">
             <div class="textIn" (click)="onResultClick(result)">
