@@ -29,7 +29,7 @@ export class EbookService {
   }
 
   findOne(id: string) {
-    return this.http.get(`ebooks/${id}`);
+    return this.http.get(`ebooks/one/${id}`);
   }
 
   update(id: string, ebook: EbookModel) {
