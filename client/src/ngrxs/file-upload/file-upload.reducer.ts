@@ -63,4 +63,13 @@ export const fileUploadReducer = createReducer(
       isLoading: false,
     };
   }),
+  on(UploadActions.reset, (state) => {
+    return <FileUploadState>{
+      ...state,
+      downloadCoverURL: null,
+      downloadPdfURL: null,
+      error: null,
+      isLoading: false,
+    };
+  }),
 );

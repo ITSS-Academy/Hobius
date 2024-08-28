@@ -68,7 +68,6 @@ export const ebookReducer = createReducer(
     return <EbookState>{
       ...state,
       isCreatingEbook: false,
-      isCreatingEbookSuccess: false,
       isCreatingEbookError: action.error,
     };
   }),

@@ -27,3 +27,5 @@ export const updateFailure = createAction(
   '[User] Update Failure',
   props<{ error: any }>(),
 );
+
+export const reset = createAction('[User] Reset');
