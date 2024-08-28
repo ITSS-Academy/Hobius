@@ -23,22 +23,28 @@ export class SearchService {
         author: ebook.author,
         detail: ebook.detail,
         categories: ebook.categories.map((category) => category.name),
+        image: ebook.image,
       },
     });
   }
 
   async searchEbooks(query: string) {
     // search for profiles by username or email or uid
-    const response = await this.esClient.search({
-      index: 'hobius_ebooks',
-      query: {
-        multi_match: {
-          query: query,
-          fields: ['username', 'email', 'uid'],
+    try {
+      const response = await this.esClient.search({
+        index: 'hobius_ebooks',
+        query: {
+          multi_match: {
+            query: query,
+            fields: ['id', 'title', 'author', 'detail', 'categories'],
+          },
         },
-      },
-    });
-    return response.hits.hits;
+      });
+      return response.hits.hits;
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
   }
 
   async updateEbook(ebook: Ebook) {
