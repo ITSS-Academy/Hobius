@@ -19,14 +19,13 @@ import { Store } from '@ngrx/store';
 import { UserState } from '../../../ngrxs/user/user.state';
 import { Subscription } from 'rxjs';
 import * as UserActions from '../../../ngrxs/user/user.actions';
-import { MatTableDataSource } from '@angular/material/table';
 import { JWTTokenService } from '../../../services/jwttoken.service';
 import { Router } from '@angular/router';
-import { EbookModel } from '../../../models/ebook.model';
 import { CommentModel } from '../../../models/comment.model';
-import { EbookState } from '../../../ngrxs/ebook/ebook.state';
 import { UserEbookState } from '../../../ngrxs/user-ebook/user-ebook.state';
 import { UserEbookModel } from '../../../models/user-ebook.model';
+import * as CommentActions from '../../../ngrxs/comment/comment.actions';
+import { CommentState } from '../../../ngrxs/comment/comment.state';
 
 @Component({
   selector: 'app-profile',
@@ -53,12 +52,72 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
 
   subscription: Subscription[] = [];
 
+  findAllByUserId$ = this.store.select('comment', 'isFindingAllByUserId');
+
   constructor(
     private _snackBar: MatSnackBar,
-    private store: Store<{ user: UserState; user_ebook: UserEbookState }>,
+    private store: Store<{
+      user: UserState;
+      user_ebook: UserEbookState;
+      comment: CommentState;
+    }>,
     private jwtTokenService: JWTTokenService,
     private router: Router,
   ) {}
+
+  ngOnDestroy(): void {
+    this.subscription.forEach((sub) => sub.unsubscribe());
+    this.store.dispatch(UserActions.reset());
+  }
+
+  ngOnInit(): void {
+    this.subscription.push(
+      this.store.select('user', 'user').subscribe((value) => {
+        if (value) {
+          this.store.dispatch(
+            CommentActions.findAllByUserId({ userId: value.id }),
+          );
+        }
+        this.user = value;
+      }),
+      this.store.select('user', 'isUpdatingSuccess').subscribe((value) => {
+        if (value) {
+          this._snackBar.open('Cập nhật hồ sơ thành công', 'Đóng', {
+            duration: 2000,
+          });
+          this.store.dispatch(UserActions.getById());
+        }
+      }),
+      this.store.select('user', 'isUpdatingError').subscribe((value) => {
+        if (value) {
+          this._snackBar.open('Cập nhật hồ sơ thất bại', 'Đóng', {
+            duration: 2000,
+          });
+        }
+      }),
+      this.store.select('user', 'isGettingError').subscribe((value) => {
+        if (value) {
+          this._snackBar.open('Không thể lấy thông tin người dùng', 'Đóng', {
+            duration: 2000,
+          });
+        }
+      }),
+      this.store.select('user_ebook', 'likeQuantity').subscribe((value) => {
+        this.likeQuantity = value;
+      }),
+      this.store.select('user_ebook', 'viewQuantity').subscribe((value) => {
+        this.viewQuantity = value;
+      }),
+      this.store
+        .select('user_ebook', 'favoriteEbookList')
+        .subscribe((value) => {
+          this.bookCard = value;
+        }),
+      this.store.select('comment', 'userCommentList').subscribe((value) => {
+        this.cmtCard = value;
+      }),
+    );
+  }
 
   ngAfterViewInit() {
     this.subscription.push(
@@ -99,51 +158,5 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
         this.store.dispatch(UserActions.update({ user: result }));
       }
     });
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.forEach((sub) => sub.unsubscribe());
-    this.store.dispatch(UserActions.reset());
-  }
-
-  ngOnInit(): void {
-    this.subscription.push(
-      this.store.select('user', 'user').subscribe((value) => {
-        this.user = value;
-      }),
-      this.store.select('user', 'isUpdatingSuccess').subscribe((value) => {
-        if (value) {
-          this._snackBar.open('Cập nhật hồ sơ thành công', 'Đóng', {
-            duration: 2000,
-          });
-          this.store.dispatch(UserActions.getById());
-        }
-      }),
-      this.store.select('user', 'isUpdatingError').subscribe((value) => {
-        if (value) {
-          this._snackBar.open('Cập nhật hồ sơ thất bại', 'Đóng', {
-            duration: 2000,
-          });
-        }
-      }),
-      this.store.select('user', 'isGettingError').subscribe((value) => {
-        if (value) {
-          this._snackBar.open('Không thể lấy thông tin người dùng', 'Đóng', {
-            duration: 2000,
-          });
-        }
-      }),
-      this.store.select('user_ebook', 'likeQuantity').subscribe((value) => {
-        this.likeQuantity = value;
-      }),
-      this.store.select('user_ebook', 'viewQuantity').subscribe((value) => {
-        this.viewQuantity = value;
-      }),
-      this.store
-        .select('user_ebook', 'favoriteEbookList')
-        .subscribe((value) => {
-          this.bookCard = value;
-        }),
-    );
   }
 }
