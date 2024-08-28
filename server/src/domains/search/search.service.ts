@@ -40,7 +40,7 @@ export class SearchService {
           },
         },
       });
-      return response.hits.hits;
+      return response.hits.hits.map((hit) => hit['_source']);
     } catch (e) {
       console.log(e);
       return [];
