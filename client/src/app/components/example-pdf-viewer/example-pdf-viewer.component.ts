@@ -23,6 +23,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExamplePdfViewerComponent implements OnInit {
+  @Input('pdfSrc') pdfSrc = '';
   @Input('page') page = 1;
   @Input('pageLabel') pageLabel = '1';
   fileInfo!: PdfDocumentInfo;

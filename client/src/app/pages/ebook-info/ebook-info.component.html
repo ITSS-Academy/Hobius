@@ -1,4 +1,9 @@
 <div id="info-container">
+  @if (isLoadingSelectedEbook$ | async) {
+    <div class="loading-spinner-overlay">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+  }
   <div id="book-title">
     <div id="header-title">
       <button mat-icon-button (click)="navigateBack()">
@@ -28,7 +33,9 @@
       </div>
       <div id="btn">
         <div id="doc-btn-container">
-          <button id="doc-btn" mat-flat-button><span>Đọc</span></button>
+          <button id="doc-btn" mat-flat-button (click)="read()">
+            <span>Đọc</span>
+          </button>
         </div>
         <div id="favorite-btn-container">
           <button
