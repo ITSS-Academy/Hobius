@@ -47,7 +47,7 @@ export const findAllByUserIdError = createAction(
 );
 export const findOne = createAction(
   '[Comment] Find One',
-  props<{ useId: string; ebookId: string }>(),
+  props<{ ebookId: string }>(),
 );
 export const findOneSuccess = createAction(
   '[Comment] Find One Success',

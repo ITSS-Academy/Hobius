@@ -3,108 +3,130 @@
     <div class="loading-spinner-overlay">
       <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
     </div>
-  }
-  <div id="book-title">
-    <div id="header-title">
-      <button mat-icon-button (click)="navigateBack()">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-      <p id="title">{{ (selectedEbook$ | async)?.title }}</p>
-    </div>
-  </div>
-  <div id="book-info-card">
-    <div id="img-book-info">
-      @if (isLoadingSelectedEbook$ | async) {
-        <div class="img-book-info-skeleton"></div>
-      } @else {
-        <img
-          [src]="(selectedEbook$ | async)?.image"
-          [alt]="(selectedEbook$ | async)?.title"
-          id="cover"
-        />
-      }
-    </div>
-    <div id="ebook-info-container">
-      <div id="book-info">
-        <p id="author">Tác giả: {{ (selectedEbook$ | async)?.author }}</p>
-        <p id="date">
-          Đăng ngày:
-          {{ (selectedEbook$ | async)?.publishedDate | date: "dd/MM/yyyy" }}
-        </p>
-        <p id="description">
-          {{ (selectedEbook$ | async)?.detail }}
-        </p>
-      </div>
-      <div id="btn">
-        <div id="doc-btn-container">
-          <button id="doc-btn" mat-flat-button (click)="read()">
-            <span>Đọc</span>
-          </button>
-        </div>
-        <div id="favorite-btn-container">
-          <button
-            mat-flat-button
-            id="favorite"
-            [class.active]="isFavorite"
-            (click)="toggleFavorite()"
-            (mouseenter)="onMouseEnter()"
-            (mouseleave)="onMouseLeave()"
-          >
-            <mat-icon>favorite</mat-icon>
-            <span>{{
-              isFavorite ? (isHovering ? "Bỏ Thích" : "Đã Thích") : "Thêm thích"
-            }}</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="comment">
-    <div id="header-comment">
-      <div id="comment-title-header">
-        <p id="comment-title">Đánh giá</p>
-        <button mat-icon-button (click)="toggleCommentInput()">
-          <mat-icon id="add_comment" (click)="addComment()"
-            >add_comment
-          </mat-icon>
+  } @else {
+    <div id="book-title">
+      <div id="header-title">
+        <button mat-icon-button (click)="navigateBack()">
+          <mat-icon>arrow_back</mat-icon>
         </button>
+        <p id="title">{{ (selectedEbook$ | async)?.title }}</p>
       </div>
     </div>
-    <div id="comment-box">
-      @for (comment of comments; track $index) {
-        <div class="comment-content">
-          <div class="user-comment">
-            <img
-              src="../public/assets/logos/temp_logo.jpg"
-              class="avatar-comment"
-            />
-            <div class="comment-input">
-              <p class="comment-name">{{ comment.user.userName }}</p>
-              <p
-                #commentText
-                class="comment-text"
-                [class.expanded]="comment.isExpanded"
-              >
-                {{ comment.content }}
-              </p>
-              @if (comment.isOverflowing) {
-                <button
-                  mat-icon-button
-                  (click)="toggleComment($index)"
-                  class="expand-btn"
-                >
-                  <mat-icon
-                    >{{ comment.isExpanded ? "expand_less" : "expand_more" }}
-                  </mat-icon>
-                </button>
-              }
-            </div>
+    <div id="book-info-card">
+      <div id="img-book-info">
+        @if (isLoadingSelectedEbook$ | async) {
+          <div class="img-book-info-skeleton"></div>
+        } @else {
+          <img
+            [src]="(selectedEbook$ | async)?.image"
+            [alt]="(selectedEbook$ | async)?.title"
+            id="cover"
+          />
+        }
+      </div>
+      <div id="ebook-info-container">
+        <div id="book-info">
+          <p id="author">Tác giả: {{ (selectedEbook$ | async)?.author }}</p>
+          <p id="date">
+            Đăng ngày:
+            {{ (selectedEbook$ | async)?.publishedDate | date: "dd/MM/yyyy" }}
+          </p>
+          <p id="description">
+            {{ (selectedEbook$ | async)?.detail }}
+          </p>
+        </div>
+        <div id="btn">
+          <div id="doc-btn-container">
+            <button id="doc-btn" mat-flat-button (click)="read()">
+              <span>Đọc</span>
+            </button>
           </div>
-          <button mat-icon-button class="more-vert">
-            <mat-icon>more_vert</mat-icon>
-          </button>
+          <div id="favorite-btn-container">
+            <button
+              mat-flat-button
+              id="favorite"
+              [class.active]="isFavorite"
+              (click)="toggleFavorite()"
+              (mouseenter)="onMouseEnter()"
+              (mouseleave)="onMouseLeave()"
+            >
+              <mat-icon>favorite</mat-icon>
+              <span>{{
+                isFavorite
+                  ? isHovering
+                    ? "Bỏ Thích"
+                    : "Đã Thích"
+                  : "Thêm thích"
+              }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="comment">
+      @if (isFindingAllByEbookId$ | async) {
+        <div class="loading-spinner-overlay">
+          <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+        </div>
+      } @else {
+        <div id="header-comment">
+          <div id="comment-title-header">
+            <p id="comment-title">Đánh giá</p>
+            @if (!isAlreadyCommented) {
+              <button
+                mat-icon-button
+                (click)="openCommentDialog()"
+                matTooltip="Đánh giá"
+              >
+                <mat-icon>add_comment</mat-icon>
+              </button>
+            } @else {
+              <button
+                mat-icon-button
+                (click)="openCommentDialog()"
+                matTooltip="Chỉnh sửa đánh giá"
+              >
+                <mat-icon>edit_comment</mat-icon>
+              </button>
+            }
+          </div>
+        </div>
+        <div id="comment-box">
+          @for (comment of comments; track $index) {
+            <div class="comment-content">
+              <div class="user-comment">
+                <img [src]="comment.user.avatarURL" class="avatar-comment" />
+                <div class="comment-input">
+                  <p class="comment-name">{{ comment.user.userName }}</p>
+                  <p
+                    #commentText
+                    class="comment-text"
+                    [class.expanded]="comment.isExpanded"
+                  >
+                    {{ comment.content }}
+                  </p>
+                  @if (comment.isOverflowing) {
+                    <button
+                      mat-icon-button
+                      (click)="toggleComment($index)"
+                      class="expand-btn"
+                    >
+                      <mat-icon
+                        >{{
+                          comment.isExpanded ? "expand_less" : "expand_more"
+                        }}
+                      </mat-icon>
+                    </button>
+                  }
+                </div>
+              </div>
+              <button mat-icon-button class="more-vert">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+            </div>
+          }
         </div>
       }
     </div>
-  </div>
+  }
 </div>

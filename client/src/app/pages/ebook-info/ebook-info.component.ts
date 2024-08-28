@@ -22,7 +22,8 @@ import { UserState } from '../../../ngrxs/user/user.state';
 import { Subscription } from 'rxjs';
 import { UserEbookState } from '../../../ngrxs/user-ebook/user-ebook.state';
 import { CommentState } from '../../../ngrxs/comment/comment.state';
-import * as UserEbookActions from '../../../ngrxs/user-ebook/user-ebook.actions';
+import * as CommentActions from '../../../ngrxs/comment/comment.actions';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-ebook-info',
@@ -35,11 +36,10 @@ export class EbookInfoComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChildren('commentText') commentTextElements!: QueryList<ElementRef>;
   isCommentInputVisible: boolean = false;
 
-  idToken: string = '';
-
   ebookId = '';
   comments: CommentModel[] = [];
-  newCommentText: string = '';
+  userComment: CommentModel | null = null;
+  isAlreadyCommented: boolean = false;
 
   isFavorite: boolean = false;
   isHovering: boolean = false;
@@ -52,7 +52,13 @@ export class EbookInfoComponent implements AfterViewInit, OnInit, OnDestroy {
     'isLoadingSelectedEbook',
   );
 
+  isFindingAllByEbookId$ = this.store.select(
+    'comment',
+    'isFindingAllByEbookId',
+  );
+
   constructor(
+    private _snackBar: MatSnackBar,
     private router: Router,
     private dialog: MatDialog,
     private cd: ChangeDetectorRef,
@@ -70,9 +76,46 @@ export class EbookInfoComponent implements AfterViewInit, OnInit, OnDestroy {
     const { id } = this.activatedRoute.snapshot.params;
     this.ebookId = id;
     this.store.dispatch(EbookActions.findOne({ id }));
+    this.store.dispatch(CommentActions.findAllByEbookId({ ebookId: id }));
+
     this.subscriptions.push(
-      this.selectedEbook$.subscribe((value) => {
-        console.log(value);
+      this.store.select('auth', 'idToken').subscribe((idToken) => {
+        if (idToken != '') {
+          this.store.dispatch(CommentActions.findOne({ ebookId: id }));
+        }
+      }),
+      this.store.select('comment', 'ebookCommentList').subscribe((comments) => {
+        if (comments.length > 0) {
+          this.comments = comments;
+          this.checkTextOverflow();
+        }
+      }),
+      this.store
+        .select('comment', 'isCreatingCommentSuccess')
+        .subscribe((val) => {
+          if (val) {
+            this._snackBar.open('Đánh giá thành công', 'Đóng', {
+              duration: 2000,
+            });
+            this.store.dispatch(
+              CommentActions.findAllByEbookId({ ebookId: this.ebookId }),
+            );
+          }
+        }),
+      this.store
+        .select('comment', 'isCreatingCommentError')
+        .subscribe((val) => {
+          if (val) {
+            this._snackBar.open('Đánh giá thất bại', 'Đóng', {
+              duration: 2000,
+            });
+          }
+        }),
+      this.store.select('comment', 'selectedComment').subscribe((comment) => {
+        if (comment) {
+          this.isAlreadyCommented = true;
+          this.userComment = comment;
+        }
       }),
     );
   }
@@ -88,7 +131,9 @@ export class EbookInfoComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   resetExpandedStatus(): void {
-    this.comments.forEach((comment) => (comment.isExpanded = false));
+    let resetComments = [...this.comments];
+    resetComments.forEach((comment) => (comment.isExpanded = false));
+    this.comments = resetComments;
   }
 
   toggleCommentInput(): void {
@@ -103,42 +148,26 @@ export class EbookInfoComponent implements AfterViewInit, OnInit, OnDestroy {
     });
   }
 
-  addComment(): void {
+  openCommentDialog(): void {
+    this.toggleCommentInput();
     const dialogRef = this.dialog.open(AddInputCommentDialogComponent, {
-      width: '1000px',
-      data: { newCommentText: this.newCommentText },
+      data: this.userComment,
     });
-
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.resetExpandedStatus();
-        setTimeout(() => this.checkTextOverflow(), 100);
-        this.comments.push({
-          ebook: {
-            id: '',
-            title: '',
-            author: '',
-            detail: '',
-            image: '',
-            publishedDate: '',
-            view: 0,
-            like: 0,
-            pdf: '',
-            categories: [],
-          },
-          user: {
-            id: '3',
-            userName: 'Nguyen Van D',
-            email: '',
-            avatarURL: '',
-            wallPaperURL: '',
-            joinedDate: '',
-          },
-          content: result as string,
-          isExpanded: false,
-          isOverflowing: false,
-          commentDate: new Date().toLocaleString(),
-        });
+        setTimeout(() => {
+          this.checkTextOverflow();
+          let newComment: CommentModel = {
+            ...result,
+            ebook: this.ebookId,
+          };
+          if (this.isAlreadyCommented) {
+            this.store.dispatch(CommentActions.update({ comment: newComment }));
+          } else {
+            this.store.dispatch(CommentActions.create({ comment: newComment }));
+          }
+        }, 100);
       }
     });
   }
