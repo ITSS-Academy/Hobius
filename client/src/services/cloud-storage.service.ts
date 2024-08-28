@@ -31,6 +31,7 @@ export class CloudStorageService {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           observer.next(progress);
+          console.log('Upload is ' + progress + '% done');
         },
         (error) => {
           observer.error(error);

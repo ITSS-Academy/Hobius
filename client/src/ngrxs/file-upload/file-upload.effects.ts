@@ -55,4 +55,48 @@ export class FileUploadEffects {
       ),
     ),
   );
+
+  uploadAvatarFile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UploadActions.uploadAvatarFile),
+      mergeMap(({ file, path, isPdf }) =>
+        this.cloudStorageService.uploadFile(file, path, isPdf).pipe(
+          map((result) => {
+            if (typeof result === 'number') {
+              return UploadActions.uploadFileProgress({ progress: result });
+            } else {
+              return UploadActions.uploadAvatarFileSuccess({
+                downloadURL: result,
+              });
+            }
+          }),
+          catchError((error) =>
+            of(UploadActions.uploadAvatarFileFailure({ error })),
+          ),
+        ),
+      ),
+    ),
+  );
+
+  uploadWallpaperFile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UploadActions.uploadWallpaperFile),
+      mergeMap(({ file, path, isPdf }) =>
+        this.cloudStorageService.uploadFile(file, path, isPdf).pipe(
+          map((result) => {
+            if (typeof result === 'number') {
+              return UploadActions.uploadFileProgress({ progress: result });
+            } else {
+              return UploadActions.uploadWallpaperFileSuccess({
+                downloadURL: result,
+              });
+            }
+          }),
+          catchError((error) =>
+            of(UploadActions.uploadWallpaperFileFailure({ error })),
+          ),
+        ),
+      ),
+    ),
+  );
 }

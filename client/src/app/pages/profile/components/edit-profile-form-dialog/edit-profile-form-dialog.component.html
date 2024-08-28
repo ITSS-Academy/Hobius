@@ -1,89 +1,113 @@
-<div id="edit-profile-container">
-  <h2 mat-dialog-title>Chỉnh sửa thông tin cá nhân</h2>
-
+@if (isLoading$ | async) {
+  <div class="loading-overlay">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+}
+<h2 mat-dialog-title>Cập nhật thông tin cá nhân</h2>
+<mat-dialog-content class="mat-typography">
   <form [formGroup]="profileFormGroup">
-    <div id="info">
-      <mat-form-field appearance="fill">
-        <mat-label>Họ tên</mat-label>
-        <input
-          matInput
-          formControlName="userName"
-          placeholder="Họ tên..."
-          required
-        />
-        @if (profileFormGroup.get("userName")?.invalid) {
-          <mat-error>Vui lòng nhập tên!!</mat-error>
-        }
-      </mat-form-field>
+    <!--   title form control   -->
+    <mat-form-field appearance="fill">
+      <mat-label>Tên</mat-label>
+      <input
+        matInput
+        placeholder="Tên..."
+        formControlName="userName"
+        required
+      />
+      @if (profileFormGroup.get("userName")?.valid) {
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      } @else {
+        <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>
+      }
+      @if (profileFormGroup.get("userName")?.invalid) {
+        <mat-error> Tên không được để trống!</mat-error>
+      }
+    </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input
-          matInput
-          formControlName="email"
-          required
-          placeholder="Email..."
-          autocomplete="username"
-        />
-        @if (profileFormGroup.get("email")?.invalid) {
-          <mat-error>Email không hợp lệ</mat-error>
-        }
-      </mat-form-field>
+    <!--   author form control   -->
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Email..." formControlName="email" required />
+      @if (profileFormGroup.get("email")?.valid) {
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      } @else {
+        <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>
+      }
+      @if (profileFormGroup.get("email")?.hasError("required")) {
+        <mat-error> Email không được để trống!</mat-error>
+      }
+      @if (profileFormGroup.get("email")?.hasError("email")) {
+        <mat-error> Email không hợp lệ</mat-error>
+      }
+    </mat-form-field>
+
+    <!--   image file form control   -->
+    <mat-form-field appearance="fill">
+      <mat-label>Url ảnh đại diện</mat-label>
+      <input
+        matInput
+        placeholder="Url ảnh đại diện..."
+        formControlName="avatarURL"
+        required
+        readonly
+      />
+      @if (profileFormGroup.get("avatarURL")?.valid) {
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      } @else {
+        <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>
+      }
+      @if (profileFormGroup.get("avatarURL")?.invalid) {
+        <mat-error> Ảnh đại diện không được để trống!</mat-error>
+      }
+    </mat-form-field>
+    <div class="mdc-text-field mdc-text-field--filled mdc-text-field--file">
+      <input
+        type="file"
+        class="mdc-text-field__input"
+        id="avatar-file-input"
+        (change)="onAvatarPicked($event)"
+      />
+      <label class="mdc-floating-label" for="avatar-file-input">File ảnh</label>
+      <div class="mdc-line-ripple"></div>
     </div>
+    <div class="mdc-text-field--error"></div>
 
-    <div id="img">
-      <mat-form-field appearance="fill">
-        <mat-label>URL Ảnh đại diện</mat-label>
-        <input
-          matInput
-          type="url"
-          formControlName="avatarURL"
-          required
-          readonly
-        />
-        @if (profileFormGroup.get("avatarURL")?.invalid) {
-          <mat-error>Chưa tệp nào được chọn</mat-error>
-        }
-      </mat-form-field>
-      <div id="avatar" (click)="fileUpload.click()">
-        <mat-icon>upload</mat-icon>
-        Đăng tải ảnh đại diện < 5 MB
-      </div>
-      <div>
-        <input #fileUpload type="file" accept="*image" />
-      </div>
-
-      <mat-form-field appearance="fill">
-        <mat-label>URL Ảnh nền</mat-label>
-        <input
-          matInput
-          type="url"
-          formControlName="wallPaperURL"
-          required
-          readonly
-        />
-        @if (profileFormGroup.get("wallPaperURL")?.invalid) {
-          <mat-error>Chưa tệp nào được chọn</mat-error>
-        }
-      </mat-form-field>
-      <div id="background" (click)="fileUpload.click()">
-        <mat-icon>upload</mat-icon>
-        Đăng tải ảnh nền < 5 MB
-      </div>
-      <div>
-        <input #fileUpload type="file" accept="*image" />
-      </div>
+    <!--   file form control   -->
+    <mat-form-field appearance="fill">
+      <mat-label>Url ảnh tường</mat-label>
+      <input
+        matInput
+        placeholder="Url ảnh tường..."
+        formControlName="wallPaperURL"
+        readonly
+      />
+      @if (profileFormGroup.get("wallPaperURL")?.valid) {
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      } @else {
+        <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>
+      }
+    </mat-form-field>
+    <div class="mdc-text-field mdc-text-field--filled mdc-text-field--file">
+      <input
+        type="file"
+        class="mdc-text-field__input"
+        id="wp-file-input"
+        (change)="onWallPaperPicked($event)"
+      />
+      <label class="mdc-floating-label" for="wp-file-input">File ảnh</label>
+      <div class="mdc-line-ripple"></div>
     </div>
-
-    <div id="button">
-      <button id="btn2" mat-button mat-dialog-close>Hủy</button>
-      <button
-        mat-flat-button
-        [disabled]="profileFormGroup.invalid"
-        [mat-dialog-close]="sendForm()"
-      >
-        Cập nhật
-      </button>
-    </div>
+    <div class="mdc-text-field--error"></div>
   </form>
-</div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Hủy</button>
+  <button
+    mat-flat-button
+    [mat-dialog-close]="sendForm()"
+    [disabled]="profileFormGroup.invalid"
+  >
+    Cập nhật
+  </button>
+</mat-dialog-actions>

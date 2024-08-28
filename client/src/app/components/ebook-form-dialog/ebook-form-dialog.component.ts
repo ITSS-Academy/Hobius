@@ -90,7 +90,7 @@ export class EbookFormDialogComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
-    this.store.dispatch(UploadActions.reset());
+    this.store.dispatch(UploadActions.resetEbookUploadState());
   }
 
   ngOnInit(): void {
