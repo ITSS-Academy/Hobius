@@ -55,9 +55,18 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   idToken: string = '';
   user$ = this.store.select('user', 'user');
 
-  isLoadingReadingHistoryList$ = this.store.select('user_ebook', 'isLoadingReadingHistoryList');
-  isLoadingTrendingEbooks$ = this.store.select('ebook', 'isLoadingTrendingEbooks');
-  isLoadingRecommendEbooks$ = this.store.select('ebook', 'isLoadingRecommendEbooks');
+  isLoadingReadingHistoryList$ = this.store.select(
+    'user_ebook',
+    'isLoadingReadingHistoryList',
+  );
+  isLoadingTrendingEbooks$ = this.store.select(
+    'ebook',
+    'isLoadingTrendingEbooks',
+  );
+  isLoadingRecommendEbooks$ = this.store.select(
+    'ebook',
+    'isLoadingRecommendEbooks',
+  );
   isLoadingRatingEbooks$ = this.store.select('ebook', 'isLoadingRatingEbooks');
 
   constructor(
@@ -112,6 +121,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
     this.store.dispatch(UserEbookActions.reset());
+    this.store.dispatch(EbookActions.reset());
   }
 
   ngAfterViewInit() {

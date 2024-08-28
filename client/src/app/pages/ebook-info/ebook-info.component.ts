@@ -6,6 +6,7 @@ import {
   QueryList,
   ViewChildren,
   ChangeDetectorRef,
+  OnDestroy,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -30,7 +31,7 @@ import * as UserEbookActions from '../../../ngrxs/user-ebook/user-ebook.actions'
   templateUrl: './ebook-info.component.html',
   styleUrls: ['./ebook-info.component.scss'],
 })
-export class EbookInfoComponent implements AfterViewInit, OnInit {
+export class EbookInfoComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChildren('commentText') commentTextElements!: QueryList<ElementRef>;
   isCommentInputVisible: boolean = false;
 
@@ -74,6 +75,11 @@ export class EbookInfoComponent implements AfterViewInit, OnInit {
         console.log(value);
       }),
     );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.store.dispatch(EbookActions.reset());
   }
 
   ngAfterViewInit(): void {
