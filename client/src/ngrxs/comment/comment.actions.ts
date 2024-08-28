@@ -10,47 +10,38 @@ export const createError = createAction(
   '[Comment] Create Error',
   props<{ error: any }>(),
 );
-export const updateComment = createAction(
+
+export const update = createAction(
   '[Comment] Update Comment',
   props<{ comment: CommentModel }>(),
 );
-export const updateCommentSuccess = createAction(
-  '[Comment] Update Comment Success',
-);
-export const updateCommentError = createAction(
+export const updateSuccess = createAction('[Comment] Update Comment Success');
+export const updateError = createAction(
   '[Comment] Update Comment Error',
   props<{ error: any }>(),
 );
-export const loadAll = createAction('[Comment] Load All');
-export const loadAllSuccess = createAction(
-  '[Comment] Load All Success',
-  props<{ comments: CommentModel[] }>(),
-);
-export const loadAllError = createAction(
-  '[Comment] Load All Error',
-  props<{ error: any }>(),
-);
-export const findAllEbookId = createAction(
-  '[Comment] Find All Ebook Id',
+
+export const findAllByEbookId = createAction(
+  '[Comment] Find All By Ebook Id',
   props<{ ebookId: string }>(),
 );
-export const findAllEbookIdSuccess = createAction(
-  '[Comment] Find All Ebook Id Success',
-  props<{ comments: any }>(),
+export const findAllByEbookIdSuccess = createAction(
+  '[Comment] Find All By Ebook Id Success',
+  props<{ comments: CommentModel[] }>(),
 );
-export const findAllEbookIdError = createAction(
-  '[Comment] Find All Ebook Id Error',
+export const findAllByEbookIdError = createAction(
+  '[Comment] Find All By Ebook Id Error',
   props<{ error: any }>(),
 );
-export const findAllUserId = createAction(
-  '[Comment] Find All User Id',
+export const findAllByUserId = createAction(
+  '[Comment] Find All By User Id',
   props<{ userId: string }>(),
 );
-export const findAllUserIdSuccess = createAction(
-  '[Comment] Find All User Id Success',
-  props<{ comments: any }>(),
+export const findAllByUserIdSuccess = createAction(
+  '[Comment] Find All By User Id Success',
+  props<{ comments: CommentModel[] }>(),
 );
-export const findAllUserIdError = createAction(
+export const findAllByUserIdError = createAction(
   '[Comment] Find All User Id Error',
   props<{ error: any }>(),
 );
@@ -60,7 +51,7 @@ export const findOne = createAction(
 );
 export const findOneSuccess = createAction(
   '[Comment] Find One Success',
-  props<{ comment: any }>(),
+  props<{ comment: CommentModel }>(),
 );
 export const findOneError = createAction(
   '[Comment] Find One Error',
