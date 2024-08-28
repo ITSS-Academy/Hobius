@@ -58,7 +58,9 @@ export class ReadingComponent implements OnInit, OnDestroy {
       combineLatest([this.selectedEbook$, this.idToken$]).subscribe(
         ([ebook, idToken]) => {
           if (ebook) {
-            this.pdfUrl = ebook.pdf;
+            this.pdfUrl =
+              'https://pdf-extracter.ext.akademy.dev/proxy?fileUrl=' +
+              encodeURIComponent(ebook.pdf);
           }
           if (ebook && idToken != '') {
             this.isLogin = true;
