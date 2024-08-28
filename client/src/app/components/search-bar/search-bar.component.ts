@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { EbookModel } from '../../../models/ebook.model';
 import { AsyncPipe, NgForOf, NgIf, NgOptimizedImage } from '@angular/common';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-bar',
@@ -32,7 +33,10 @@ export class SearchBarComponent {
   loading$: Observable<boolean>;
   error$: Observable<any>;
 
-  constructor(private store: Store<{ search: SearchState }>) {
+  constructor(
+    private router: Router,
+    private store: Store<{ search: SearchState }>,
+  ) {
     this.searchResults$ = this.store
       .select((state) => state.search.searchResults)
       .pipe(
@@ -54,5 +58,9 @@ export class SearchBarComponent {
   getImageUrl(imageUrl: string): string {
     console.log('Image URL:', imageUrl);
     return imageUrl;
+  }
+
+  onResultClick(result: EbookModel): void {
+    this.router.navigate(['/ebook-info', result.id]).then();
   }
 }
