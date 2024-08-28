@@ -75,7 +75,7 @@
             @if (!isAlreadyCommented) {
               <button
                 mat-icon-button
-                (click)="openCommentDialog()"
+                (click)="openCommentFormDialog()"
                 matTooltip="Viết đánh giá"
               >
                 <mat-icon>add_comment</mat-icon>
@@ -83,7 +83,7 @@
             } @else {
               <button
                 mat-icon-button
-                (click)="openCommentDialog()"
+                (click)="openCommentFormDialog()"
                 matTooltip="Chỉnh sửa đánh giá"
               >
                 <mat-icon>edit_comment</mat-icon>
@@ -104,26 +104,18 @@
               />
               <div class="comment-input">
                 <p class="comment-name">{{ comment.user.userName }}</p>
-                <p
-                  #commentText
-                  class="comment-text"
-                  [class.expanded]="comment.isExpanded"
-                >
+                <p style="margin: 0">
+                  {{ comment.commentDate | date: "dd/MM/yyyy" }}
+                </p>
+                <p class="comment-text">
                   {{ comment.content }}
                 </p>
-                @if (comment.isOverflowing) {
-                  <button
-                    mat-icon-button
-                    (click)="toggleComment($index)"
-                    class="expand-btn"
-                  >
-                    <mat-icon
-                      >{{ comment.isExpanded ? "expand_less" : "expand_more" }}
-                    </mat-icon>
-                  </button>
-                }
               </div>
-              <button mat-icon-button matTooltip="Chi tiết">
+              <button
+                mat-icon-button
+                matTooltip="Chi tiết"
+                (click)="openCommentDetailDialog(comment)"
+              >
                 <mat-icon>more_vert</mat-icon>
               </button>
             </div>

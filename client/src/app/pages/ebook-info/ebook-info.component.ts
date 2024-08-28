@@ -1,11 +1,9 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   OnInit,
   QueryList,
   ViewChildren,
-  ChangeDetectorRef,
   OnDestroy,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -25,6 +23,7 @@ import { CommentState } from '../../../ngrxs/comment/comment.state';
 import * as CommentActions from '../../../ngrxs/comment/comment.actions';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { JWTTokenService } from '../../../services/jwttoken.service';
+import { CommentDetailComponent } from './components/comment-detail/comment-detail.component';
 
 @Component({
   selector: 'app-ebook-info',
@@ -33,10 +32,7 @@ import { JWTTokenService } from '../../../services/jwttoken.service';
   templateUrl: './ebook-info.component.html',
   styleUrls: ['./ebook-info.component.scss'],
 })
-export class EbookInfoComponent implements AfterViewInit, OnInit, OnDestroy {
-  @ViewChildren('commentText') commentTextElements!: QueryList<ElementRef>;
-  isCommentInputVisible: boolean = false;
-
+export class EbookInfoComponent implements OnInit, OnDestroy {
   ebookId = '';
   comments: CommentModel[] = [];
   userComment: CommentModel | null = null;
@@ -62,7 +58,6 @@ export class EbookInfoComponent implements AfterViewInit, OnInit, OnDestroy {
     private _snackBar: MatSnackBar,
     private router: Router,
     private dialog: MatDialog,
-    private cd: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
     private jwtTokenService: JWTTokenService,
     private store: Store<{
@@ -89,7 +84,6 @@ export class EbookInfoComponent implements AfterViewInit, OnInit, OnDestroy {
       this.store.select('comment', 'ebookCommentList').subscribe((comments) => {
         if (comments.length > 0) {
           this.comments = comments;
-          this.checkTextOverflow();
         }
       }),
       this.store
@@ -148,61 +142,37 @@ export class EbookInfoComponent implements AfterViewInit, OnInit, OnDestroy {
     this.store.dispatch(EbookActions.reset());
   }
 
-  ngAfterViewInit(): void {
-    this.checkTextOverflow();
-    this.cd.detectChanges();
-  }
-
-  resetExpandedStatus(): void {
-    // Reset all comments to be collapsed
-    this.comments = this.comments.map((comment) => {
-      return {
-        ...comment,
-        isExpanded: false,
-      };
-    });
-  }
-
-  toggleCommentInput(): void {
-    this.isCommentInputVisible = !this.isCommentInputVisible;
-  }
-
-  checkTextOverflow(): void {
-    this.commentTextElements.forEach((element, index) => {
-      const el = element.nativeElement;
-      this.comments[index].isOverflowing = el.scrollWidth > el.clientWidth;
-      this.comments[index].isExpanded = el.scrollWidth > el.clientWidth;
-    });
-  }
-
-  openCommentDialog(): void {
+  openCommentFormDialog(): void {
     this.jwtTokenService.checkTokenExpired();
     if (this.jwtTokenService.isTokenExpired()) {
       return;
     }
 
-    this.toggleCommentInput();
     const dialogRef = this.dialog.open(AddInputCommentDialogComponent, {
       data: this.userComment,
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.resetExpandedStatus();
-        setTimeout(() => {
-          this.checkTextOverflow();
-          let newComment: CommentModel = {
-            ...result,
-            ebook: this.ebookId,
-          };
-          console.log(newComment);
-          if (this.isAlreadyCommented) {
-            this.store.dispatch(CommentActions.update({ comment: newComment }));
-          } else {
-            this.store.dispatch(CommentActions.create({ comment: newComment }));
-          }
-        }, 100);
+        let newComment: CommentModel = {
+          ...result,
+          ebook: this.ebookId,
+        };
+        console.log(newComment);
+        if (this.isAlreadyCommented) {
+          this.store.dispatch(CommentActions.update({ comment: newComment }));
+        } else {
+          this.store.dispatch(CommentActions.create({ comment: newComment }));
+        }
       }
     });
+  }
+
+  openCommentDetailDialog(comment: CommentModel) {
+    const dialogRef = this.dialog.open(CommentDetailComponent, {
+      data: comment,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   toggleFavorite(): void {
@@ -215,10 +185,6 @@ export class EbookInfoComponent implements AfterViewInit, OnInit, OnDestroy {
 
   onMouseLeave(): void {
     this.isHovering = false;
-  }
-
-  toggleComment(index: number): void {
-    this.comments[index].isExpanded = !this.comments[index].isExpanded;
   }
 
   navigateBack(): void {
