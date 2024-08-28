@@ -98,6 +98,10 @@ export class EbookInfoComponent implements AfterViewInit, OnInit {
   subscriptions: Subscription[] = [];
 
   selectedEbook$ = this.store.select('ebook', 'selectedEbook');
+  isLoadingSelectedEbook$ = this.store.select(
+    'ebook',
+    'isLoadingSelectedEbook',
+  );
 
   constructor(
     private router: Router,

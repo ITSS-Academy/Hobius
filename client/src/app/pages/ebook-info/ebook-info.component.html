@@ -4,16 +4,20 @@
       <button mat-icon-button (click)="navigateBack()">
         <mat-icon>arrow_back</mat-icon>
       </button>
-      <!--      <p id="title">{{  }}</p>-->
+      <p id="title">{{ (selectedEbook$ | async)?.title }}</p>
     </div>
   </div>
   <div id="book-info-card">
     <div id="img-book-info">
-      <img
-        [src]="(selectedEbook$ | async)?.image"
-        [alt]="(selectedEbook$ | async)?.title"
-        id="cover"
-      />
+      @if (isLoadingSelectedEbook$ | async) {
+        <div class="img-book-info-skeleton"></div>
+      } @else {
+        <img
+          [src]="(selectedEbook$ | async)?.image"
+          [alt]="(selectedEbook$ | async)?.title"
+          id="cover"
+        />
+      }
     </div>
     <div id="ebook-info-container">
       <div id="book-info">
