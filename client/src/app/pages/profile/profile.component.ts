@@ -18,6 +18,8 @@ import { NgStyle } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../../ngrxs/user/user.state';
 import { Subscription } from 'rxjs';
+import * as UserActions from '../../../ngrxs/user/user.actions';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-profile',
@@ -201,6 +203,9 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
       console.log(result);
       if (result) {
         console.log(result);
+        this.store.dispatch(UserActions.getById());
+        this.store.dispatch(UserActions.update({ user: result }));
+        this.store.dispatch(UserActions.getById());
       }
     });
   }
@@ -209,5 +214,42 @@ export class ProfileComponent implements AfterViewInit, OnInit, OnDestroy {
     this.subscription.forEach((sub) => sub.unsubscribe());
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subscription.push(
+      this.user$.subscribe((value) => {
+        this.user = value;
+      }),
+      this.store.select('user', 'isCreatingSuccess').subscribe((value) => {
+        if (value) {
+          this._snackBar.open('Tạo hồ sơ thành công', 'Đóng', {
+            duration: 2000,
+          });
+          this.store.dispatch(UserActions.getById());
+        }
+      }),
+      this.store.select('user', 'isCreatingError').subscribe((value) => {
+        if (value) {
+          this._snackBar.open('Tạo hồ sơ thất bại', 'Đóng', {
+            duration: 2000,
+          });
+          this.store.dispatch(UserActions.getById());
+        }
+      }),
+      this.store.select('user', 'isUpdatingSuccess').subscribe((value) => {
+        if (value) {
+          this._snackBar.open('Cập nhật hồ sơ thành công', 'Đóng', {
+            duration: 2000,
+          });
+          this.store.dispatch(UserActions.getById());
+        }
+      }),
+      this.store.select('user', 'isUpdatingError').subscribe((value) => {
+        if (value) {
+          this._snackBar.open('Cập nhật hồ sơ thất bại', 'Đóng', {
+            duration: 2000,
+          });
+        }
+      }),
+    );
+  }
 }
