@@ -34,7 +34,13 @@
     <div id="img">
       <mat-form-field appearance="fill">
         <mat-label>URL Ảnh đại diện</mat-label>
-        <input matInput type="url" formControlName="avatarURL" required />
+        <input
+          matInput
+          type="url"
+          formControlName="avatarURL"
+          required
+          readonly
+        />
         @if (profileFormGroup.get("avatarURL")?.invalid) {
           <mat-error>Chưa tệp nào được chọn</mat-error>
         }
@@ -49,7 +55,13 @@
 
       <mat-form-field appearance="fill">
         <mat-label>URL Ảnh nền</mat-label>
-        <input matInput type="url" formControlName="wallPaperURL" required />
+        <input
+          matInput
+          type="url"
+          formControlName="wallPaperURL"
+          required
+          readonly
+        />
         @if (profileFormGroup.get("wallPaperURL")?.invalid) {
           <mat-error>Chưa tệp nào được chọn</mat-error>
         }
