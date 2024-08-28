@@ -19,6 +19,19 @@
 
     #profile-info {
       width: 98%;
+
+      #wallpaper-img {
+        width: 100%;
+        height: 100%;
+        border-radius: 28px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 28px;
+        }
+      }
     }
 
     #background-img {
@@ -137,6 +150,19 @@
 
     #profile-info {
       width: 98%;
+
+      #wallpaper-img {
+        width: 100%;
+        height: 100%;
+        border-radius: 28px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 28px;
+        }
+      }
     }
 
     #background-img {
@@ -437,7 +463,7 @@
   background-size: cover;
   background-size: 100% 100%;
   background-position: center;
-  -webkit-filter: blur(8px);
+  //-webkit-filter: blur(8px);
 }
 
 #wallpaper-img {
@@ -447,13 +473,13 @@
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 2rem;
-  //width: auto;
-  //height: auto;
+  //width: 100%;
+  //height: 100%;
 
   img {
-    //width: 100%;
-    //height: 100%;
-    //object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
 
