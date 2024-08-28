@@ -25,11 +25,19 @@
   <div id="profile-info">
     <div id="wallpaper"></div>
     <div id="wallpaper-img">
-      <img src="{{ (user$ | async)?.wallPaperURL }}" alt="" />
+      @if ((user$ | async)?.wallPaperURL === "") {
+        <img src="../public/assets/error-samples/wallpaper.png" alt="" />
+      } @else {
+        <img src="{{ (user$ | async)?.wallPaperURL }}" alt="" />
+      }
     </div>
     <div id="background-img">
       <div id="avatar">
-        <img src="{{ (user$ | async)?.avatarURL }}" alt="" />
+        @if ((user$ | async)?.avatarURL === "") {
+          <img src="../public/assets/error-samples/avatar.jpg" alt="" />
+        } @else {
+          <img src="{{ (user$ | async)?.avatarURL }}" alt="" />
+        }
       </div>
       <div id="detail-profile">
         <div id="name">{{ (user$ | async)?.userName }}</div>
