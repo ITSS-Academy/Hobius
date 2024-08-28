@@ -15,7 +15,7 @@
         <div *ngIf="error$ | async as error">Lỗi: {{ error }}</div>
         <div *ngIf="searchResults$ | async as searchResults">
           <div *ngFor="let result of searchResults">
-            <div class="textIn">
+            <div class="textIn" (click)="onResultClick(result)">
               <img
                 matPrefix
                 [src]="getImageUrl(result.image)"
