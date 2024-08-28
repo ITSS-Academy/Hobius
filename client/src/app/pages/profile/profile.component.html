@@ -26,6 +26,7 @@
     #myBackground
     id="background-img"
     style="
+      /*background-image: ;*/
       background-repeat: no-repeat;
       background-size: contain;
       background-size: 1440px 250px;
@@ -38,7 +39,7 @@
     <div id="detail-profile">
       <div id="name">{{ (user$ | async)?.userName }}</div>
       <div id="birth">
-        Ngày tham gia: {{ (user$ | async)?.joinedDate | date }}
+        Ngày tham gia: {{ (user$ | async)?.joinedDate | date: "dd/MM/yyyy" }}
       </div>
       <div id="note">
         <div>
