@@ -90,4 +90,15 @@ export const userReducer = createReducer(
       isUpdatingError: action.error,
     };
   }),
+  on(UserActions.reset, (state, action) => {
+    console.log(action.type);
+    return <UserState>{
+      ...state,
+      isCreatingSuccess: false,
+      isUpdatingSuccess: false,
+      isGettingError: null,
+      isCreatingError: null,
+      isUpdatingError: null,
+    };
+  }),
 );

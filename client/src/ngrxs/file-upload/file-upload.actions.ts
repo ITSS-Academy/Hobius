@@ -34,3 +34,5 @@ export const uploadFileProgress = createAction(
   '[File Upload] Upload File Progress',
   props<{ progress: number }>(),
 );
+
+export const reset = createAction('[File Upload] Reset');
