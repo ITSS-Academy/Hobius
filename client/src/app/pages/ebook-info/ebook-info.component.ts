@@ -24,6 +24,7 @@ import { UserEbookState } from '../../../ngrxs/user-ebook/user-ebook.state';
 import { CommentState } from '../../../ngrxs/comment/comment.state';
 import * as CommentActions from '../../../ngrxs/comment/comment.actions';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { JWTTokenService } from '../../../services/jwttoken.service';
 
 @Component({
   selector: 'app-ebook-info',
@@ -63,6 +64,7 @@ export class EbookInfoComponent implements AfterViewInit, OnInit, OnDestroy {
     private dialog: MatDialog,
     private cd: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
+    private jwtTokenService: JWTTokenService,
     private store: Store<{
       auth: AuthState;
       user: UserState;
@@ -111,6 +113,27 @@ export class EbookInfoComponent implements AfterViewInit, OnInit, OnDestroy {
             });
           }
         }),
+      this.store
+        .select('comment', 'isUpdatingCommentSuccess')
+        .subscribe((val) => {
+          if (val) {
+            this._snackBar.open('Chỉnh sửa đánh giá thành công', 'Đóng', {
+              duration: 2000,
+            });
+            this.store.dispatch(
+              CommentActions.findOne({ ebookId: this.ebookId }),
+            );
+          }
+        }),
+      this.store
+        .select('comment', 'isUpdatingCommentError')
+        .subscribe((val) => {
+          if (val) {
+            this._snackBar.open('Chỉnh sửa đánh giá thất bại', 'Đóng', {
+              duration: 2000,
+            });
+          }
+        }),
       this.store.select('comment', 'selectedComment').subscribe((comment) => {
         if (comment) {
           this.isAlreadyCommented = true;
@@ -148,11 +171,16 @@ export class EbookInfoComponent implements AfterViewInit, OnInit, OnDestroy {
     this.commentTextElements.forEach((element, index) => {
       const el = element.nativeElement;
       this.comments[index].isOverflowing = el.scrollWidth > el.clientWidth;
-      console.log(this.comments[index].isOverflowing);
+      this.comments[index].isExpanded = el.scrollWidth > el.clientWidth;
     });
   }
 
   openCommentDialog(): void {
+    this.jwtTokenService.checkTokenExpired();
+    if (this.jwtTokenService.isTokenExpired()) {
+      return;
+    }
+
     this.toggleCommentInput();
     const dialogRef = this.dialog.open(AddInputCommentDialogComponent, {
       data: this.userComment,

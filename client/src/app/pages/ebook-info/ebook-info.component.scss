@@ -50,8 +50,8 @@
     margin: 0 15px 10px 0;
   }
   .comment-content .avatar-comment {
-    height: 40px;
-    width: 40px;
+    height: 65px;
+    width: 65px;
   }
   .comment-content .comment-name {
     font-size: 14px;
@@ -116,15 +116,15 @@
     width: 100%;
   }
   .comment-content .avatar-comment {
-    height: 50px;
-    width: 50px;
+    height: 65px;
+    width: 65px;
   }
   .comment-content .comment-name {
     font-size: 14px;
   }
   .comment-text {
     font-size: 12px;
-    max-width: calc(100% - 20px);
+    max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -190,8 +190,8 @@
   }
 
   .comment-content .avatar-comment {
-    height: 55px;
-    width: 55px;
+    height: 65px;
+    width: 65px;
   }
 
   .comment-content .comment-name {
@@ -200,7 +200,7 @@
 
   .comment-text {
     font-size: 14px;
-    max-width: calc(100vh - 180px);
+    max-width: calc(100% - 180px);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -258,8 +258,8 @@
     margin: 0 0 10px 0;
   }
   .comment-content .avatar-comment {
-    height: 55px;
-    width: 55px;
+    height: 65px;
+    width: 65px;
   }
   .comment-content .comment-name {
     font-size: 14px;
@@ -324,8 +324,8 @@
     margin: 0 20px 10px 0;
   }
   .comment-content .avatar-comment {
-    height: 55px;
-    width: 55px;
+    height: 65px;
+    width: 65px;
   }
   .comment-content .comment-name {
     font-size: 14px;
@@ -587,12 +587,13 @@
 }
 
 .comment-input {
-  width: calc(100% - 16px - 50px);
+  width: calc(100% - 16px - 70px - 8px);
   height: auto;
+  margin-right: 8px;
 }
 
 .comment-input .comment-name {
-  margin: 10px 0 4px 0;
+  margin: 10px 0 0 0;
 }
 
 .comment-input .comment-text {

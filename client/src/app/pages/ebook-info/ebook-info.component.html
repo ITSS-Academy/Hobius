@@ -97,7 +97,11 @@
           }
           @for (comment of comments; track $index) {
             <div class="comment-content">
-              <img [src]="comment.user.avatarURL" class="avatar-comment" />
+              <img
+                [src]="comment.user.avatarURL"
+                class="avatar-comment"
+                [alt]="comment.user.userName"
+              />
               <div class="comment-input">
                 <p class="comment-name">{{ comment.user.userName }}</p>
                 <p
@@ -119,6 +123,9 @@
                   </button>
                 }
               </div>
+              <button mat-icon-button matTooltip="Chi tiết">
+                <mat-icon>more_vert</mat-icon>
+              </button>
             </div>
           }
         </div>
