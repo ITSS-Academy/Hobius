@@ -35,4 +35,19 @@ export const uploadFileProgress = createAction(
   props<{ progress: number }>(),
 );
 
+export const uploadAvatarFile = createAction(
+  '[File Upload] Upload Avatar File',
+  props<{ file: File; path: string; isPdf: boolean }>(),
+);
+
+export const uploadAvatarFileSuccess = createAction(
+  '[File Upload] Upload Avatar File Success',
+  props<{ downloadURL: string }>(),
+);
+
+export const uploadAvatarFileFailure = createAction(
+  '[File Upload] Upload Avatar File Failure',
+  props<{ error: any }>(),
+);
+
 export const reset = createAction('[File Upload] Reset');
