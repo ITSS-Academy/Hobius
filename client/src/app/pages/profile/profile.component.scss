@@ -15,18 +15,10 @@
     #header-bar {
       width: 98%;
       font-size: 32px;
+    }
 
-      #background-img {
-        width: 100%;
-
-        #name {
-          font-size: 28px;
-        }
-
-        #birth {
-          font-size: 14px;
-        }
-      }
+    #profile-info {
+      width: 98%;
     }
 
     #background-img {
@@ -143,6 +135,10 @@
       font-size: 24px;
     }
 
+    #profile-info {
+      width: 98%;
+    }
+
     #background-img {
       width: 100%;
       color: white;
@@ -246,10 +242,29 @@
       font-size: 14px;
     }
 
+    #profile-info {
+      width: 95%;
+      height: 168px;
+
+      #wallpaper-img {
+        width: 100%;
+        height: 100%;
+        border-radius: 28px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 28px;
+        }
+      }
+    }
+
     #background-img {
       width: 90%;
       align-items: center;
       color: white;
+      padding: 0 0 0 12px;
 
       #avatar {
         width: 100px;
@@ -397,12 +412,57 @@
   color: #808080;
 }
 
-#background-img {
+#profile-info {
+  position: relative;
+  z-index: 1;
   width: 95%;
   height: 224px;
   background-color: #415e91;
   border-radius: 28px;
   margin-bottom: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  //padding: 0 0 12px 12px;
+  //gap: 12px;
+}
+
+#wallpaper {
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  border-radius: 28px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-size: 100% 100%;
+  background-position: center;
+  -webkit-filter: blur(8px);
+}
+
+#wallpaper-img {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 2rem;
+  //width: auto;
+  //height: auto;
+
+  img {
+    //width: 100%;
+    //height: 100%;
+    //object-fit: cover;
+  }
+}
+
+#background-img {
+  width: 100%;
+  height: 100%;
+  //background-color: #415e91;
+  border-radius: 28px;
+  //margin-bottom: 12px;
   display: flex;
   flex-direction: row;
   align-items: end;
