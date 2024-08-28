@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClientAuth } from '../utils/http-client-auth';
 import { updateComment } from '../ngrxs/comment/comment.actions';
+import { CommentModel } from '../models/comment.model';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ import { updateComment } from '../ngrxs/comment/comment.actions';
 export class CommentService {
   constructor(private http: HttpClientAuth) {}
 
-  create(comment: any) {
+  createComment(comment: CommentModel) {
     return this.http.post('ebook-comments', comment);
   }
 
@@ -20,7 +21,7 @@ export class CommentService {
     return this.http.get(`ebook-comments/user/${userId}`);
   }
 
-  findOne(userId: string, ebookId: string) {
+  findOneComment(userId: string, ebookId: string) {
     return this.http.get(`ebook-comments/${userId}/${ebookId}`);
   }
 
