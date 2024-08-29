@@ -60,12 +60,14 @@
         font-size: 28px;
         color: white;
         padding-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
       }
 
       #birth {
         font-size: 14px;
         color: #f0f0f7;
         padding-bottom: 8px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
       }
     }
 
@@ -505,8 +507,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 2rem;
-  //width: 100%;
-  //height: 100%;
+  //max-width: 100%;
+  //height: auto;
 
   img {
     width: 100%;
