@@ -4,7 +4,9 @@
       <h1>Hobius</h1>
     </div>
 
-    <app-search-bar></app-search-bar>
+    <div id="home-header-search">
+      <app-search-bar></app-search-bar>
+    </div>
 
     @if (idToken != "") {
       <div id="home-header-avatar">
@@ -74,15 +76,8 @@
       </div>
     }
   </div>
-  <!--  </cdk-virtual-scroll-viewport>-->
-  <!--  <cdk-virtual-scroll-viewport-->
-  <!--    itemSize="50"-->
-  <!--    id="main-viewport"-->
-  <!--    orientation="horizontal"-->
-  <!--  >-->
-  <div id="home-content">
-    <!--    <cdk-virtual-scroll-viewport itemSize="50" id="main-viewport">-->
 
+  <div id="home-content">
     @if (idToken !== "" && lichSuCards.length > 0) {
       <div class="boxContener">
         <div class="titleName">
@@ -159,5 +154,4 @@
       <div id="free-space"></div>
     </div>
   </div>
-  <!--  </cdk-virtual-scroll-viewport>-->
 </div>

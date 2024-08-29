@@ -29,10 +29,10 @@
       }
     }
 
-    //#home-header-search {
-    //  width: 50%;
-    //  //min-width: 360px;
-    //}
+    #home-header-search {
+      width: 50%;
+      //min-width: 360px;
+    }
 
     #home-header-avatar {
       height: 50px;
@@ -245,12 +245,7 @@
       #home-header-title {
         h1 {
           font-size: 3rem;
-          margin-right: 20px;
         }
-      }
-
-      #home-header-search {
-        width: 100%;
       }
 
       #home-header-avatar {
@@ -299,12 +294,7 @@
       #home-header-title {
         h1 {
           font-size: 2rem;
-          margin-right: 20px;
         }
-      }
-
-      #home-header-search {
-        width: 100%;
       }
 
       #home-header-avatar {

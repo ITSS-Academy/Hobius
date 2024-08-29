@@ -12,18 +12,19 @@ import { MaterialModule } from '../../../shared/modules/material.module';
 import { SharedModule } from '../../../shared/modules/shared.module';
 import { CardComponent } from '../../components/card/card.component';
 import { EbookModel } from '../../../models/ebook.model';
-import { CardService } from '../../../services/card.service';
 import { NgForOf } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { SearchBarComponent } from '../../components/search-bar/search-bar.component';
 import { Store } from '@ngrx/store';
 import { CategoryState } from '../../../ngrxs/category/category.state';
-import { Subscription } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
 import { CategoryModel } from '../../../models/category.model';
 import * as EbookActions from '../../../ngrxs/ebook/ebook.actions';
 import { EbookState } from '../../../ngrxs/ebook/ebook.state';
 import { AuthState } from '../../../ngrxs/auth/auth.state';
-import { UserState } from '../../../ngrxs/user/user.state';
+import { MatChipSelectionChange } from '@angular/material/chips';
+import * as UserEbookActions from '../../../ngrxs/user-ebook/user-ebook.actions';
+import { UserEbookState } from '../../../ngrxs/user-ebook/user-ebook.state';
 
 @Component({
   selector: 'app-categories',
@@ -41,19 +42,39 @@ import { UserState } from '../../../ngrxs/user/user.state';
 export class CategoriesComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChildren('viewport') viewports!: QueryList<ElementRef>;
   @ViewChildren('theLoai') theLoaiElements!: QueryList<ElementRef>;
+
   theLoai: CategoryModel[] = [];
   cardsBar: EbookModel[] = [];
+  filterEbooks: EbookModel[] = [];
+  selectedChip: CategoryModel[] = [];
+
   headerName: string = '';
   subscriptions: Subscription[] = [];
 
+  idToken$ = this.store.select('auth', 'idToken');
+  params$ = this.activatedRoute.paramMap;
+
+  isLoadingTrendingEbooks$ = this.store.select(
+    'ebook',
+    'isLoadingTrendingEbooks',
+  );
+  isLoadingRatingEbooks$ = this.store.select('ebook', 'isLoadingRatingEbooks');
+  isLoadingRecommendEbooks$ = this.store.select(
+    'ebook',
+    'isLoadingRecommendEbooks',
+  );
+  isLoadingReadingHistoryList$ = this.store.select(
+    'user_ebook',
+    'isLoadingReadingHistoryList',
+  );
+
   constructor(
-    private cardService: CardService,
     private activatedRoute: ActivatedRoute,
     private store: Store<{
       category: CategoryState;
       auth: AuthState;
-      user: UserState;
       ebook: EbookState;
+      user_ebook: UserEbookState;
     }>,
     private renderer: Renderer2,
   ) {}
@@ -64,33 +85,38 @@ export class CategoriesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.activatedRoute.paramMap.subscribe((params) => {
-        const type = params.get('type');
-        if (type) {
-          switch (type) {
-            case 'history':
-              this.headerName = 'Lịch sử';
-              this.cardsBar = this.cardService.cards;
-              break;
-            case 'trends':
-              this.headerName = 'Thịnh hành';
-              this.store.dispatch(EbookActions.listByTrend({ limit: 100 }));
-              break;
-            case 'recommend':
-              this.headerName = 'Đề cử';
-              this.store.dispatch(EbookActions.listByRecommend({ limit: 100 }));
-              this.store
-                .select('ebook', 'recommendEbooks')
-                .subscribe((ebooks) => {
-                  this.cardsBar = ebooks;
-                });
-              break;
-            case 'rank':
-              this.headerName = 'Bảng xếp hạng';
-              this.store.dispatch(EbookActions.listByRating({ limit: 100 }));
-              break;
+      combineLatest([this.idToken$, this.params$]).subscribe(
+        ([idToken, params]) => {
+          const type = params.get('type');
+          if (type) {
+            switch (type) {
+              case 'history':
+                this.headerName = 'Lịch sử';
+                if (idToken != '') {
+                  this.store.dispatch(UserEbookActions.findAllByUserId());
+                }
+                break;
+              case 'trends':
+                this.headerName = 'Thịnh hành';
+                this.store.dispatch(EbookActions.listByTrend({ limit: 100 }));
+                break;
+              case 'recommend':
+                this.headerName = 'Đề cử';
+                this.store.dispatch(
+                  EbookActions.listByRecommend({ limit: 100 }),
+                );
+
+                break;
+              case 'rank':
+                this.headerName = 'Bảng xếp hạng';
+                this.store.dispatch(EbookActions.listByRating({ limit: 100 }));
+                break;
+            }
           }
-        }
+        },
+      ),
+      this.store.select('ebook', 'recommendEbooks').subscribe((ebooks) => {
+        this.cardsBar = ebooks;
       }),
       this.store.select('ebook', 'trendingEbooks').subscribe((ebooks) => {
         this.cardsBar = ebooks;
@@ -98,6 +124,15 @@ export class CategoriesComponent implements OnInit, OnDestroy, AfterViewInit {
       this.store.select('ebook', 'ratingEbooks').subscribe((ebooks) => {
         this.cardsBar = ebooks;
       }),
+      this.store
+        .select('user_ebook', 'readingHistoryList')
+        .subscribe((userEbooks) => {
+          if (userEbooks.length > 0) {
+            this.cardsBar = userEbooks.map((userEbook) => {
+              return userEbook.ebook;
+            });
+          }
+        }),
       this.store.select('category', 'categories').subscribe((categories) => {
         if (categories.length > 0) {
           this.theLoai = categories;
@@ -181,5 +216,28 @@ export class CategoriesComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
     });
+  }
+
+  filterList(index: number) {
+    //check if the selectedChip already have the genre
+    const genre = this.theLoai[index];
+    const foundIndex = this.selectedChip.findIndex((chip) => {
+      return chip.id === genre.id;
+    });
+    if (foundIndex !== -1) {
+      this.selectedChip.splice(foundIndex, 1);
+    } else {
+      this.selectedChip.push(genre);
+    }
+
+    //the filterEbooks will add the ebooks that have one of the selected genres
+    this.filterEbooks = this.cardsBar.filter((ebook) => {
+      return ebook.categories.some((category) => {
+        return this.selectedChip.some((selected) => {
+          return category.id === selected.id;
+        });
+      });
+    });
+    // console.log(this.filterEbooks);
   }
 }
