@@ -202,6 +202,7 @@
         max-width: 190px;
         font-size: 12px;
         padding: 4px 8px;
+        gap: 4px;
       }
     }
 
@@ -555,7 +556,7 @@
 
   #note {
     display: flex;
-    gap: 16px;
+    gap: 8px;
   }
 }
 
