@@ -121,7 +121,6 @@
         class="mdc-text-field__input"
         id="cover-file-input"
         required
-        (blur)="updateImageErrorMessage()"
         (change)="onImagePicked($event)"
       />
       <label class="mdc-floating-label" for="cover-file-input">File ảnh</label>
@@ -157,7 +156,6 @@
         class="mdc-text-field__input"
         id="pdf-file-input"
         required
-        (blur)="updatePdfErrorMessage()"
         (change)="onPdfPicked($event)"
       />
       <label class="mdc-floating-label" for="pdf-file-input">File Pdf</label>

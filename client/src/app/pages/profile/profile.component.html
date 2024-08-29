@@ -1,4 +1,9 @@
 <div id="profile-container">
+  @if ((isGetting$ | async) || (isUpdating$ | async)) {
+    <div class="loading-overlay">
+      <mat-spinner></mat-spinner>
+    </div>
+  }
   <div id="header-bar">
     <div id="left">
       <div>
@@ -14,10 +19,11 @@
     </div>
     <div id="right">
       <button
+        (click)="openProfileDialog()"
         mat-icon-button
         aria-label="Example icon button with a vertical three dot icon"
       >
-        <mat-icon (click)="openDialog()">edit</mat-icon>
+        <mat-icon>edit</mat-icon>
       </button>
     </div>
   </div>
@@ -47,11 +53,11 @@
         <div id="note">
           <div>
             <mat-icon class="icon">star</mat-icon>
-            Yêu thích 1000 cuốn sách
+            Yêu thích {{ this.likeQuantity }} cuốn sách
           </div>
           <div>
             <mat-icon class="icon">directions_walk</mat-icon>
-            Đã đọc 1000 cuốn sách
+            Đã đọc {{ this.viewQuantity }} cuốn sách
           </div>
         </div>
       </div>
@@ -73,15 +79,18 @@
             <div class="book-card">
               <div class="left-card">
                 <div class="img">
-                  <img src="{{ item.img }}" alt="" />
+                  <img src="{{ item.ebook.image }}" alt="" />
                 </div>
               </div>
               <div class="middle">
-                <div class="title">{{ item.title }}</div>
+                <div class="title">{{ item.ebook.title }}</div>
                 <div class="info">
-                  <div>{{ item.author }} - {{ item.year }}</div>
+                  <div>
+                    {{ item.ebook.author }} -
+                    {{ item.ebook.publishedDate | date: "dd/MM/yyyy" }}
+                  </div>
                   <div class="sum">
-                    {{ item.summary }}
+                    {{ item.ebook.detail }}
                   </div>
                 </div>
               </div>
@@ -90,6 +99,9 @@
               </div>
             </div>
           }
+          @if (bookCard.length == 0) {
+            <div class="empty">Chưa có sách yêu thích</div>
+          }
         </div>
       </mat-tab>
 
@@ -97,27 +109,38 @@
         <ng-template mat-tab-label>
           <span class="my-custom-class1">Đánh giá</span>
         </ng-template>
-        <div class="content">
-          @for (item of cmtCard; track $index) {
-            <div class="book-card">
-              <div class="left-card">
-                <div class="img">
-                  <img src="{{ item.img }}" alt="" />
+        @if (findAllByUserId$ | async) {
+          <div class="loading-overlay">
+            <mat-progress-spinner></mat-progress-spinner>
+          </div>
+        } @else {
+          <div class="content">
+            @for (item of cmtCard; track $index) {
+              <div class="book-card">
+                <div class="left-card">
+                  <div class="img">
+                    <img src="{{ item.ebook.image }}" alt="" />
+                  </div>
+                </div>
+                <div class="middle">
+                  <div class="title">{{ item.ebook.title }}</div>
+                  <div class="info">
+                    <div>{{ item.commentDate | date: "dd/MM/yyyy" }}</div>
+                    <div class="cmt">{{ item.content }}</div>
+                  </div>
+                </div>
+                <div class="right-card">
+                  <mat-icon [routerLink]="['/ebook-info', item.ebook.id]"
+                    >open_in_new
+                  </mat-icon>
                 </div>
               </div>
-              <div class="middle">
-                <div class="title">{{ item.title }}</div>
-                <div class="info">
-                  <div>{{ item.time }}</div>
-                  <div class="cmt">{{ item.content }}</div>
-                </div>
-              </div>
-              <div class="right-card">
-                <mat-icon [routerLink]="'/ebook-info'">open_in_new</mat-icon>
-              </div>
-            </div>
-          }
-        </div>
+            }
+            @if (cmtCard.length == 0) {
+              <div class="empty">Chưa có đánh giá nào</div>
+            }
+          </div>
+        }
       </mat-tab>
     </mat-tab-group>
   </div>

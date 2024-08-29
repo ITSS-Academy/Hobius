@@ -1,10 +1,6 @@
 import { CommentModel } from '../../models/comment.model';
 
 export interface CommentState {
-  comments: CommentModel[];
-  isLoadingComments: boolean;
-  isLoadingCommentsError: any;
-
   selectedComment: CommentModel | null;
   isLoadingSelectedComment: boolean;
   isLoadingSelectedCommentError: any;
@@ -17,15 +13,11 @@ export interface CommentState {
   isUpdatingCommentSuccess: boolean;
   isUpdatingCommentError: any;
 
-  findingAllEbookId: boolean;
-  findingAllEbookIdSuccess: boolean;
-  findingAllEbookIdError: any;
+  ebookCommentList: CommentModel[];
+  isFindingAllByEbookId: boolean;
+  findingAllByEbookIdError: any;
 
-  findingAllUserId: boolean;
-  findingAllUserIdSuccess: boolean;
-  findingAllUserIdError: any;
-
-  findingOne: boolean;
-  findingOneSuccess: boolean;
-  findingOneError: any;
+  userCommentList: CommentModel[];
+  isFindingAllByUserId: boolean;
+  findingAllByUserIdError: any;
 }

@@ -15,8 +15,8 @@ export class FileUploadEffects {
   uploadEbookCoverFile$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UploadActions.uploadEbookCoverFile),
-      mergeMap(({ file, path }) =>
-        this.cloudStorageService.uploadFile(file, path).pipe(
+      mergeMap(({ file, path, isPdf }) =>
+        this.cloudStorageService.uploadFile(file, path, isPdf).pipe(
           map((result) => {
             if (typeof result === 'number') {
               return UploadActions.uploadFileProgress({ progress: result });
@@ -37,8 +37,8 @@ export class FileUploadEffects {
   uploadEbookPdfFile$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UploadActions.uploadEbookPdfFile),
-      mergeMap(({ file, path }) =>
-        this.cloudStorageService.uploadFile(file, path).pipe(
+      mergeMap(({ file, path, isPdf }) =>
+        this.cloudStorageService.uploadFile(file, path, isPdf).pipe(
           map((result) => {
             if (typeof result === 'number') {
               return UploadActions.uploadFileProgress({ progress: result });
@@ -50,6 +50,50 @@ export class FileUploadEffects {
           }),
           catchError((error) =>
             of(UploadActions.uploadEbookPdfFileFailure({ error })),
+          ),
+        ),
+      ),
+    ),
+  );
+
+  uploadAvatarFile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UploadActions.uploadAvatarFile),
+      mergeMap(({ file, path, isPdf }) =>
+        this.cloudStorageService.uploadFile(file, path, isPdf).pipe(
+          map((result) => {
+            if (typeof result === 'number') {
+              return UploadActions.uploadFileProgress({ progress: result });
+            } else {
+              return UploadActions.uploadAvatarFileSuccess({
+                downloadURL: result,
+              });
+            }
+          }),
+          catchError((error) =>
+            of(UploadActions.uploadAvatarFileFailure({ error })),
+          ),
+        ),
+      ),
+    ),
+  );
+
+  uploadWallpaperFile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UploadActions.uploadWallpaperFile),
+      mergeMap(({ file, path, isPdf }) =>
+        this.cloudStorageService.uploadFile(file, path, isPdf).pipe(
+          map((result) => {
+            if (typeof result === 'number') {
+              return UploadActions.uploadFileProgress({ progress: result });
+            } else {
+              return UploadActions.uploadWallpaperFileSuccess({
+                downloadURL: result,
+              });
+            }
+          }),
+          catchError((error) =>
+            of(UploadActions.uploadWallpaperFileFailure({ error })),
           ),
         ),
       ),

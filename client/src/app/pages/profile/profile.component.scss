@@ -13,7 +13,7 @@
     width: 100%;
 
     #header-bar {
-      width: 98%;
+      width: 96%;
       font-size: 32px;
     }
 
@@ -38,8 +38,11 @@
       width: 95%;
 
       #avatar {
-        width: 120px;
-        height: 120px;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
       }
 
       #detail-profile > div {
@@ -57,12 +60,14 @@
         font-size: 28px;
         color: white;
         padding-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
       }
 
       #birth {
         font-size: 14px;
         color: #f0f0f7;
         padding-bottom: 8px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
       }
     }
 
@@ -79,6 +84,7 @@
 
       .content {
         width: 99%;
+        min-height: 300px;
 
         .book-card {
           width: 98%;
@@ -109,6 +115,11 @@
 
             .title {
               font-size: 18px;
+              max-width: 700px;
+              min-width: 700px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
             }
 
             .info {
@@ -140,7 +151,7 @@
 }
 
 //for tablet
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 600px) and (max-width: 991px) {
   #profile-container {
     width: 100%;
 
@@ -170,16 +181,29 @@
       width: 100%;
       color: white;
 
+      #avatar {
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
       #name {
         font-size: 24px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
       }
 
       #birth {
         font-size: 12px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
       }
 
       #note > div {
-        font-size: 14px;
+        max-width: 190px;
+        font-size: 12px;
+        padding: 4px 8px;
+        gap: 4px;
       }
     }
 
@@ -218,6 +242,11 @@
 
             .title {
               font-size: 18px;
+              max-width: 400px;
+              min-width: 400px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
             }
 
             .info {
@@ -296,6 +325,12 @@
       #avatar {
         width: 100px;
         height: 100px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
       }
 
       #detail-profile > div {
@@ -304,11 +339,13 @@
 
       #name {
         font-size: 14px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
       }
 
       #birth {
         font-size: 10px;
         padding-top: 2px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
       }
 
       #note {
@@ -355,7 +392,11 @@
 
             .title {
               font-size: 14px;
+              max-width: 200px;
+              min-width: 200px;
               white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
             }
 
             .info {
@@ -474,8 +515,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 2rem;
-  //width: 100%;
-  //height: 100%;
+  //max-width: 100%;
+  //height: auto;
 
   img {
     width: 100%;
@@ -487,16 +528,12 @@
 #background-img {
   width: 100%;
   height: 100%;
-  //background-color: #415e91;
   border-radius: 28px;
-  //margin-bottom: 12px;
   display: flex;
   flex-direction: row;
   align-items: end;
   padding: 0 0 12px 12px;
   gap: 12px;
-
-  //background-image: url("https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/03/hinh-nen-desktop.jpg");
 }
 
 #avatar {
@@ -520,7 +557,7 @@
 
   #note {
     display: flex;
-    gap: 16px;
+    gap: 8px;
   }
 }
 
@@ -551,7 +588,7 @@
 
 #profile-content {
   width: 95%;
-  height: calc(100% - 300px);
+  height: 60%;
 }
 
 mat-tab-group {
@@ -604,7 +641,7 @@ mat-tab-group {
 
   .book-card {
     width: 98%;
-    height: 100px;
+    //height: 100px;
     background-color: white;
     border-bottom: 1px solid #c4c6d0;
     display: flex;
@@ -703,4 +740,17 @@ mat-tab-group {
     --mat-mdc-snack-bar-button-color: #fff;
     --mdc-snackbar-supporting-text-color: #fff;
   }
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }

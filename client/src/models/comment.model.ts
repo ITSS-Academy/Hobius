@@ -6,6 +6,4 @@ export interface CommentModel {
   ebook: EbookModel;
   commentDate: string;
   content: string;
-  isExpanded: boolean;
-  isOverflowing: boolean;
 }

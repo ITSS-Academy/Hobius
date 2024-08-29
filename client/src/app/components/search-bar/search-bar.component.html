@@ -5,16 +5,17 @@
       <input
         matInput
         placeholder="Tìm kiếm sách..."
+        [formControl]="searchControl"
         (input)="onInputChange($event)"
       />
     </mat-form-field>
     <!--    <div id="dropdown">-->
-    @if (showDropdown == true) {
+    @if (showDropdown) {
       <div id="dropdownBox">
-        <div *ngIf="loading$ | async"></div>
-        <div *ngIf="error$ | async as error">Lỗi: {{ error }}</div>
-        <div *ngIf="searchResults$ | async as searchResults">
-          <div *ngFor="let result of searchResults">
+        @if ((searchResults$ | async)?.length == 0) {
+          <div class="textIn">Không tìm thấy kết quả</div>
+        } @else {
+          @for (result of searchResults$ | async; track result) {
             <div class="textIn" (click)="onResultClick(result)">
               <img
                 matPrefix
@@ -27,8 +28,8 @@
                 <p class="author">By {{ result.author }}</p>
               </div>
             </div>
-          </div>
-        </div>
+          }
+        }
       </div>
     }
   </div>

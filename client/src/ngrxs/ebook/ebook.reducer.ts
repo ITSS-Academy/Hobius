@@ -303,14 +303,25 @@ export const ebookReducer = createReducer(
       isUpdatingEbookError: null,
 
       isLoadingEbooksError: null,
+      ebooks: [],
 
       isLoadingSelectedEbookError: null,
+      selectedEbook: null,
 
       isLoadingTrendingEbooksError: null,
+      trendingEbooks: [],
 
       isLoadingRecommendEbooksError: null,
+      recommendEbooks: [],
 
       isLoadingRatingEbooksError: null,
+      ratingEbooks: [],
+
+      isUnlikingEbookError: null,
+      isUnlikingEbookSuccess: false,
+
+      isLikingEbookError: null,
+      isLikingEbookSuccess: false,
     };
   }),
 );

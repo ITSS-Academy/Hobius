@@ -12,11 +12,47 @@ export class CommentEffects {
     private commentService: CommentService,
   ) {}
 
+  findAllByEbookId$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CommentActions.findAllByEbookId),
+      exhaustMap((action) => {
+        return this.commentService.findAllByEbookId(action.ebookId).pipe(
+          map((comments) => {
+            return CommentActions.findAllByEbookIdSuccess({
+              comments: comments,
+            });
+          }),
+          catchError((error) => {
+            return of(CommentActions.findAllByEbookIdError({ error: error }));
+          }),
+        );
+      }),
+    ),
+  );
+
+  findAllByUserId$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CommentActions.findAllByUserId),
+      exhaustMap(() => {
+        return this.commentService.findAllByUserId().pipe(
+          map((comments) => {
+            return CommentActions.findAllByUserIdSuccess({
+              comments: comments,
+            });
+          }),
+          catchError((error) => {
+            return of(CommentActions.findAllByUserIdError({ error: error }));
+          }),
+        );
+      }),
+    ),
+  );
+
   create$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CommentActions.create),
       exhaustMap((action) => {
-        return this.commentService.createComment(action.comment).pipe(
+        return this.commentService.create(action.comment).pipe(
           map(() => {
             return CommentActions.createSuccess();
           }),
@@ -27,65 +63,35 @@ export class CommentEffects {
       }),
     ),
   );
-  updateComment$ = createEffect(() =>
+
+  update$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(CommentActions.updateComment),
+      ofType(CommentActions.update),
       exhaustMap((action) => {
-        return this.commentService.updateComment(action.comment).pipe(
+        return this.commentService.update(action.comment).pipe(
           map(() => {
-            return CommentActions.updateCommentSuccess();
+            return CommentActions.updateSuccess();
           }),
           catchError((error) => {
-            return of(CommentActions.updateCommentError({ error: error }));
+            return of(CommentActions.updateError({ error: error }));
           }),
         );
       }),
     ),
   );
-  findAllEbookId$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(CommentActions.findAllEbookId),
-      exhaustMap((action) => {
-        return this.commentService.findAllEbookId(action.ebookId).pipe(
-          map((response) => {
-            return CommentActions.findAllEbookIdSuccess({ comments: response });
-          }),
-          catchError((error) => {
-            return of(CommentActions.findAllEbookIdError({ error: error }));
-          }),
-        );
-      }),
-    ),
-  );
-  findAllUserId$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(CommentActions.findAllUserId),
-      exhaustMap((action) => {
-        return this.commentService.findAllUserId(action.userId).pipe(
-          map((response) => {
-            return CommentActions.findAllUserIdSuccess({ comments: response });
-          }),
-          catchError((error) => {
-            return of(CommentActions.findAllUserIdError({ error: error }));
-          }),
-        );
-      }),
-    ),
-  );
+
   findOne$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CommentActions.findOne),
       exhaustMap((action) => {
-        return this.commentService
-          .findOneComment(action.useId, action.ebookId)
-          .pipe(
-            map((response) => {
-              return CommentActions.findOneSuccess({ comment: response });
-            }),
-            catchError((error) => {
-              return of(CommentActions.findOneError({ error: error }));
-            }),
-          );
+        return this.commentService.findOne(action.ebookId).pipe(
+          map((comment) => {
+            return CommentActions.findOneSuccess({ comment: comment });
+          }),
+          catchError((error) => {
+            return of(CommentActions.findOneError({ error: error }));
+          }),
+        );
       }),
     ),
   );

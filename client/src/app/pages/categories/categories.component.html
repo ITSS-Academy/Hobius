@@ -15,17 +15,56 @@
         <p>{{ headerName }}</p>
       </div>
     </div>
-    <div class="cardBox">
+    <div class="botBox">
       <div id="theLoaiBox" #viewport>
-        <div *ngFor="let loai of theLoai" class="theLoai" #theLoai>
+        <div
+          *ngFor="let loai of theLoai; let i = index"
+          class="theLoai"
+          #theLoai
+          (click)="filterList(i)"
+        >
           {{ loai.name }}
         </div>
       </div>
     </div>
-    <cdk-virtual-scroll-viewport itemSize="50" id="bot-viewport">
-      <div id="cardBox">
-        <app-card *ngFor="let card of cardsBar" [ebook]="card"></app-card>
+    @if (
+      (isLoadingRatingEbooks$ | async) ||
+      (isLoadingTrendingEbooks$ | async) ||
+      (isLoadingRecommendEbooks$ | async) ||
+      (isLoadingReadingHistoryList$ | async)
+    ) {
+      <div class="loading-book">
+        <mat-spinner [mode]="'indeterminate'"></mat-spinner>
       </div>
-    </cdk-virtual-scroll-viewport>
+    } @else {
+      @if (this.selectedChip.length > 0) {
+        @if (filterEbooks.length == 0) {
+          <div>
+            <p class="no-book">Danh sách rỗng</p>
+          </div>
+        } @else {
+          <cdk-virtual-scroll-viewport itemSize="50" class="bot-viewport">
+            <div class="cardBox">
+              <app-card
+                *ngFor="let card of filterEbooks"
+                [ebook]="card"
+              ></app-card>
+            </div>
+          </cdk-virtual-scroll-viewport>
+        }
+      } @else {
+        @if (cardsBar.length == 0) {
+          <div>
+            <p class="no-book">Danh sách rỗng</p>
+          </div>
+        } @else {
+          <cdk-virtual-scroll-viewport itemSize="50" class="bot-viewport">
+            <div class="cardBox">
+              <app-card *ngFor="let card of cardsBar" [ebook]="card"></app-card>
+            </div>
+          </cdk-virtual-scroll-viewport>
+        }
+      }
+    }
   </div>
 </div>

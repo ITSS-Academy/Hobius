@@ -69,6 +69,7 @@
   width: 500px;
   align-items: center;
   font-size: 22px;
+  margin-bottom: 5px;
 }
 
 .bookInfor {
@@ -172,15 +173,15 @@
     cursor: pointer;
   }
   .book-icon {
-    width: 30%; /* Adjust size as needed */
-    height: 90%; /* Adjust size as needed */
+    width: 20%; /* Adjust size as needed */
+    height: auto; /* Adjust size as needed */
   }
 }
 
 /* Small screens (mobile devices) */
 @media (max-width: 600px) {
   #search-container {
-    width: 100px;
+    width: 100%;
 
     #search-header {
       font-size: 1.5rem;
@@ -192,13 +193,14 @@
     }
   }
   #dropdownBox {
-    top: 80px; /* Adjust top position for mobile devices */
+    top: 80px;
     left: 50%;
     transform: translateX(-50%);
-    width: 100%; /* Adjust width for mobile devices */
+    width: calc(100% - 20px);
+    padding: 10px;
   }
   .book-icon {
-    width: 20%; /* Adjust size as needed */
-    height: 90%; /* Adjust size as needed */
+    width: auto;
+    height: 95%;
   }
 }

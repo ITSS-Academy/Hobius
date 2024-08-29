@@ -4,11 +4,10 @@ import {
   Post,
   Body,
   Patch,
-  Param,
   Delete,
   Query,
-  Put,
   Request,
+  HttpException,
 } from '@nestjs/common';
 import { UserEbooksService } from './user_ebooks.service';
 import { CreateUserEbookDto } from './dto/create-user_ebook.dto';
@@ -38,10 +37,15 @@ export class UserEbooksController {
 
   @Get('one')
   async findOne(@Request() req: any, @Query('ebookId') ebookId: string) {
-    return await this.userEbooksService.findOneByEbookIdAndUserId(
+    const result = await this.userEbooksService.findOneByEbookIdAndUserId(
       ebookId,
       req.user.id || req.user.uid,
     );
+    if (result) {
+      return result;
+    } else {
+      throw new HttpException('User ebook not found', 400);
+    }
   }
 
   @Patch('read')

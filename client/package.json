@@ -24,7 +24,7 @@
     "@ngrx/effects": "^18.0.2",
     "@ngrx/store": "^18.0.2",
     "jwt-decode": "^4.0.0",
-    "ngx-extended-pdf-viewer": "^21.1.2",
+    "ngx-extended-pdf-viewer": "^21.3.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"

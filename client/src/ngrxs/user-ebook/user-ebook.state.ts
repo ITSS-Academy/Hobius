@@ -16,4 +16,8 @@ export interface UserEbookState {
   isUpdating: boolean;
   isUpdatingSuccess: boolean;
   errorUpdating: any;
+
+  likeQuantity: number;
+  viewQuantity: number;
+  favoriteEbookList: UserEbookModel[];
 }

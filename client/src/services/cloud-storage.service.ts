@@ -13,10 +13,14 @@ import { Observable } from 'rxjs';
 export class CloudStorageService {
   constructor(private storage: Storage) {}
 
-  uploadFile(file: File, path: string): Observable<number | string> {
+  uploadFile(
+    file: File,
+    path: string,
+    isPdf: boolean,
+  ): Observable<number | string> {
     return new Observable((observer) => {
       const metadata: any = {
-        contentType: 'image/jpeg',
+        contentType: isPdf ? 'application/pdf' : 'image/jpeg',
       };
       const storageRef = ref(this.storage, path);
       const uploadTask = uploadBytesResumable(storageRef, file, metadata);
@@ -27,6 +31,7 @@ export class CloudStorageService {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           observer.next(progress);
+          console.log('Upload is ' + progress + '% done');
         },
         (error) => {
           observer.error(error);

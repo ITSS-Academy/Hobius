@@ -63,7 +63,7 @@
       margin-bottom: 0;
     }
 
-    .cardBox {
+    .botBox {
       height: 130px;
       width: 100%;
       margin: 0;
@@ -130,12 +130,11 @@
       }
     }
 
-    #bot-viewport {
+    .bot-viewport {
       height: calc(100% - 200px);
       width: 100%;
-      margin-left: 10px;
 
-      #cardBox {
+      .cardBox {
         margin-top: 10px;
         width: 100%;
         height: max-content;
@@ -145,6 +144,11 @@
         flex-wrap: wrap;
         align-items: center;
       }
+    }
+
+    .loading-book {
+      display: flex;
+      margin: auto;
     }
   }
 }
@@ -177,5 +181,17 @@
 
   ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
     background: var(--background);
+  }
+}
+
+@media (max-width: 600px) {
+  #categories-container {
+    #categories-content {
+      .bot-viewport {
+        .cardBox {
+          justify-content: center;
+        }
+      }
+    }
   }
 }

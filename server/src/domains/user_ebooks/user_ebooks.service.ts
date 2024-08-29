@@ -50,13 +50,18 @@ export class UserEbooksService {
       return await this.userEbooksRepository
         .createQueryBuilder('userEbook')
         .leftJoinAndSelect('userEbook.ebook', 'ebook')
+        .leftJoinAndSelect('ebook.categories', 'categories')
         .select([
           'userEbook.readingStatus',
           'userEbook.purchaseDate',
+          'userEbook.isLiked',
           'ebook.id',
           'ebook.title',
           'ebook.author',
           'ebook.image',
+          'ebook.publishedDate',
+          'categories.id',
+          'categories.name',
         ])
         .where('userEbook.userId = :userId', { userId })
         .getMany();
