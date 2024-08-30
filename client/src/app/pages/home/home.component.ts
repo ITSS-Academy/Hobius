@@ -201,7 +201,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
         slider.classList.remove('active');
         setTimeout(() => {
           isDragging = false;
-        }, 0);
+        }, 50);
         applyInertia();
       };
 
@@ -214,7 +214,6 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
         const threshold = 5; // Ngưỡng để phát hiện cuộn ngang
         if (deltaX > threshold) {
           isHorizontalSwipe = true;
-          e.preventDefault();
           isDragging = true;
           const walk = (x - startX) * 1.1;
           slider.scrollLeft = scrollLeft - walk;
@@ -234,6 +233,36 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
           checkEndOfScroll();
         }
       };
+
+      // const onTouchMove = (e: TouchEvent) => {
+      //   if (!isDown) return;
+      //
+      //   const x = e.touches[0].pageX - slider.offsetLeft;
+      //   const deltaX = Math.abs(e.touches[0].pageX - startX);
+      //
+      //   const threshold = 5; // Ngưỡng để phát hiện cuộn ngang
+      //   if (deltaX > threshold) {
+      //     isHorizontalSwipe = true;
+      //     e.preventDefault();
+      //     isDragging = true;
+      //     const walk = (x - startX) * 1.1;
+      //     slider.scrollLeft = scrollLeft - walk;
+      //
+      //     const now = Date.now();
+      //     const deltaTime = now - lastMoveTime;
+      //     const moveDeltaX = e.touches[0].pageX - lastMoveX;
+      //
+      //     const minMoveDeltaX = 1; // Ngưỡng cho độ nhạy của việc phát hiện di chuyển
+      //     if (Math.abs(moveDeltaX) > minMoveDeltaX) {
+      //       velocity = moveDeltaX / deltaTime;
+      //     }
+      //
+      //     lastMoveTime = now;
+      //     lastMoveX = e.touches[0].pageX;
+      //
+      //     checkEndOfScroll();
+      //   }
+      // };
 
       const applyInertia = () => {
         const friction = 0.95;
