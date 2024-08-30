@@ -76,7 +76,10 @@
         </ng-template>
         <div class="content">
           @for (item of bookCard; track $index) {
-            <div class="book-card">
+            <div
+              class="book-card"
+              [routerLink]="['/ebook-info', item.ebook.id]"
+            >
               <div class="left-card">
                 <div class="img">
                   <img src="{{ item.ebook.image }}" alt="" />
@@ -121,7 +124,10 @@
         } @else {
           <div class="content">
             @for (item of cmtCard; track $index) {
-              <div class="book-card">
+              <div
+                class="book-card"
+                [routerLink]="['/ebook-info', item.ebook.id]"
+              >
                 <div class="left-card">
                   <div class="img">
                     <img src="{{ item.ebook.image }}" alt="" />
