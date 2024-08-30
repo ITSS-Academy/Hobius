@@ -129,12 +129,15 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
       const slider = viewport.nativeElement as HTMLElement;
       let isDown = false;
       let startX: number;
+      let startY: number;
       let scrollLeft: number;
       let velocity = 0;
       let lastMoveTime: number;
       let lastMoveX: number;
-      const safetyMargin = 100; // Safety margin before bounce-back
-      const minVelocityForBounce = 0.8; // Minimum velocity to trigger bounce-back
+      let isHorizontalSwipe = false;
+
+      const safetyMargin = 100;
+      const minVelocityForBounce = 0.8;
       let debounceTimeout: any;
 
       slider.addEventListener('mousedown', (e) => {
@@ -179,6 +182,69 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
 
         checkEndOfScroll();
       });
+
+      // Thêm sự kiện cho touch
+      slider.addEventListener(
+        'touchstart',
+        (e) => {
+          isDown = true;
+          this.isDragging = false;
+          slider.classList.add('clicking');
+          startX = e.touches[0].pageX - slider.offsetLeft;
+          startY = e.touches[0].pageY;
+          scrollLeft = slider.scrollLeft;
+          lastMoveTime = Date.now();
+          lastMoveX = e.touches[0].pageX;
+          isHorizontalSwipe = false;
+        },
+        { passive: false },
+      );
+
+      slider.addEventListener(
+        'touchend',
+        () => {
+          isDown = false;
+          slider.classList.remove('active');
+          setTimeout(() => {
+            this.isDragging = false;
+          }, 0);
+          applyInertia();
+        },
+        { passive: false },
+      );
+
+      slider.addEventListener(
+        'touchmove',
+        (e) => {
+          if (!isDown) return;
+
+          const x = e.touches[0].pageX - slider.offsetLeft;
+          const y = e.touches[0].pageY;
+          const deltaX = Math.abs(e.touches[0].pageX - startX);
+          const deltaY = Math.abs(y - startY);
+
+          if (deltaX > deltaY) {
+            isHorizontalSwipe = true;
+            e.preventDefault(); // Ngăn chặn hành vi mặc định khi cuộn ngang
+            this.isDragging = true;
+            const walk = (x - startX) * 1.1;
+            slider.scrollLeft = scrollLeft - walk;
+
+            const now = Date.now();
+            const deltaTime = now - lastMoveTime;
+            const moveDeltaX = e.touches[0].pageX - lastMoveX;
+            velocity = moveDeltaX / deltaTime;
+
+            lastMoveTime = now;
+            lastMoveX = e.touches[0].pageX;
+
+            checkEndOfScroll();
+          } else {
+            isDown = false; // Hủy chế độ cuộn ngang nếu phát hiện cuộn dọc
+          }
+        },
+        { passive: false },
+      );
 
       function applyInertia() {
         const friction = 0.95;

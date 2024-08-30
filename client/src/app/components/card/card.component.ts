@@ -38,7 +38,7 @@ export class CardComponent implements OnInit {
     this.moved = false;
     this.holdTimeout = setTimeout(() => {
       this.moved = true;
-    }, 60);
+    }, 200);
   }
 
   @HostListener('mousemove', ['$event'])
