@@ -100,10 +100,10 @@ export class ReadingComponent implements OnInit, OnDestroy {
                   }),
                 );
               } else {
-                this._matSnackbar.open(
-                  'Đã có lỗi xảy ra trong quá trình tải',
-                  'Đóng',
-                );
+                // this._matSnackbar.open(
+                //   'Đã có lỗi xảy ra trong quá trình tải',
+                //   'Đóng',
+                // );
               }
             }
           }
