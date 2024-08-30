@@ -141,6 +141,49 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
       const minVelocityForBounce = 0.8;
       let debounceTimeout: any;
 
+      const onMouseDown = (e: MouseEvent) => {
+        isDown = true;
+        isDragging = false;
+        slider.classList.add('clicking');
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+        lastMoveTime = Date.now();
+        lastMoveX = e.pageX;
+      };
+
+      const onMouseLeave = () => {
+        isDown = false;
+        slider.classList.remove('active');
+      };
+
+      const onMouseUp = () => {
+        isDown = false;
+        slider.classList.remove('active');
+        setTimeout(() => {
+          isDragging = false;
+        }, 0);
+        applyInertia();
+      };
+
+      const onMouseMove = (e: MouseEvent) => {
+        if (!isDown) return;
+        e.preventDefault();
+        isDragging = true;
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 1.1; //scroll-fast
+        slider.scrollLeft = scrollLeft - walk;
+
+        const now = Date.now();
+        const deltaTime = now - lastMoveTime;
+        const deltaX = e.pageX - lastMoveX;
+        velocity = deltaX / deltaTime;
+
+        lastMoveTime = now;
+        lastMoveX = e.pageX;
+
+        checkEndOfScroll();
+      };
+
       const onTouchStart = (e: TouchEvent) => {
         isDown = true;
         isDragging = false;
@@ -236,6 +279,11 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
           }
         }
       };
+
+      slider.addEventListener('mousedown', onMouseDown);
+      slider.addEventListener('mouseleave', onMouseLeave);
+      slider.addEventListener('mouseup', onMouseUp);
+      slider.addEventListener('mousemove', onMouseMove);
 
       slider.addEventListener('touchstart', onTouchStart, { passive: false });
       slider.addEventListener('touchend', onTouchEnd, { passive: false });
