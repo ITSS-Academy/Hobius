@@ -275,6 +275,7 @@
   }
 }
 
+//For mobile
 @media (max-width: 600px) {
   #home-container {
     justify-content: start;
@@ -282,6 +283,10 @@
     #home-header {
       justify-content: space-between;
       gap: 0;
+
+      #home-header-search {
+        width: 45%;
+      }
 
       .app-search-bar {
         width: 50%;

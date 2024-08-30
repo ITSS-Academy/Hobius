@@ -28,6 +28,14 @@
       display: flex;
       justify-content: center;
       align-items: center;
+
+      mat-icon {
+        width: 10%;
+      }
+
+      input {
+        width: 20%;
+      }
     }
 
     #search-header-search > mdc-text-field {
