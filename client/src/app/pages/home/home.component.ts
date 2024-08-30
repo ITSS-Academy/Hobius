@@ -129,66 +129,24 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
       const slider = viewport.nativeElement as HTMLElement;
       let isDown = false;
       let startX: number;
-      let startY: number; // Define startY
+      let startY: number;
       let scrollLeft: number;
       let velocity = 0;
       let lastMoveTime: number;
       let lastMoveX: number;
       let isHorizontalSwipe = false;
+      let isDragging = false;
 
       const safetyMargin = 100;
       const minVelocityForBounce = 0.8;
       let debounceTimeout: any;
 
-      const onMouseDown = (e: MouseEvent) => {
-        isDown = true;
-        this.isDragging = false;
-        slider.classList.add('clicking');
-        startX = e.pageX - slider.offsetLeft;
-        scrollLeft = slider.scrollLeft;
-        lastMoveTime = Date.now();
-        lastMoveX = e.pageX;
-      };
-
-      const onMouseLeave = () => {
-        isDown = false;
-        slider.classList.remove('active');
-      };
-
-      const onMouseUp = () => {
-        isDown = false;
-        slider.classList.remove('active');
-        setTimeout(() => {
-          this.isDragging = false;
-        }, 0);
-        applyInertia();
-      };
-
-      const onMouseMove = (e: MouseEvent) => {
-        if (!isDown) return;
-        e.preventDefault();
-        this.isDragging = true;
-        const x = e.pageX - slider.offsetLeft;
-        const walk = (x - startX) * 1.1; //scroll-fast
-        slider.scrollLeft = scrollLeft - walk;
-
-        const now = Date.now();
-        const deltaTime = now - lastMoveTime;
-        const deltaX = e.pageX - lastMoveX;
-        velocity = deltaX / deltaTime;
-
-        lastMoveTime = now;
-        lastMoveX = e.pageX;
-
-        checkEndOfScroll();
-      };
-
       const onTouchStart = (e: TouchEvent) => {
         isDown = true;
-        this.isDragging = false;
+        isDragging = false;
         slider.classList.add('clicking');
         startX = e.touches[0].pageX - slider.offsetLeft;
-        startY = e.touches[0].pageY; // Initialize startY
+        startY = e.touches[0].pageY;
         scrollLeft = slider.scrollLeft;
         lastMoveTime = Date.now();
         lastMoveX = e.touches[0].pageX;
@@ -199,7 +157,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
         isDown = false;
         slider.classList.remove('active');
         setTimeout(() => {
-          this.isDragging = false;
+          isDragging = false;
         }, 0);
         applyInertia();
       };
@@ -209,12 +167,12 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
 
         const x = e.touches[0].pageX - slider.offsetLeft;
         const deltaX = Math.abs(e.touches[0].pageX - startX);
-        const deltaY = Math.abs(e.touches[0].pageY - startY); // Use startY
+        const deltaY = Math.abs(e.touches[0].pageY - startY);
 
         if (deltaX > deltaY) {
           isHorizontalSwipe = true;
           e.preventDefault(); // Ngăn chặn hành vi mặc định khi cuộn ngang
-          this.isDragging = true;
+          isDragging = true;
           const walk = (x - startX) * 1.1;
           slider.scrollLeft = scrollLeft - walk;
 
@@ -279,14 +237,25 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
         }
       };
 
-      slider.addEventListener('mousedown', onMouseDown);
-      slider.addEventListener('mouseleave', onMouseLeave);
-      slider.addEventListener('mouseup', onMouseUp);
-      slider.addEventListener('mousemove', onMouseMove);
-
       slider.addEventListener('touchstart', onTouchStart, { passive: false });
       slider.addEventListener('touchend', onTouchEnd, { passive: false });
       slider.addEventListener('touchmove', onTouchMove, { passive: false });
+
+      // Prevent card click or touch event if dragging
+      const cards = slider.querySelectorAll('app-card');
+      cards.forEach((card) => {
+        card.addEventListener('click', (e) => {
+          if (isDragging) {
+            e.stopImmediatePropagation();
+          }
+        });
+
+        card.addEventListener('touchend', (e) => {
+          if (isDragging) {
+            e.stopImmediatePropagation();
+          }
+        });
+      });
     });
   }
 
