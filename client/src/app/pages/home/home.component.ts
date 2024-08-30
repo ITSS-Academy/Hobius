@@ -170,7 +170,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
         e.preventDefault();
         isDragging = true;
         const x = e.pageX - slider.offsetLeft;
-        const walk = (x - startX) * 1.1; //scroll-fast
+        const walk = (x - startX) * 1.1; // scroll-fast
         slider.scrollLeft = scrollLeft - walk;
 
         const now = Date.now();
@@ -210,11 +210,11 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
 
         const x = e.touches[0].pageX - slider.offsetLeft;
         const deltaX = Math.abs(e.touches[0].pageX - startX);
-        const deltaY = Math.abs(e.touches[0].pageY - startY);
 
-        if (deltaX > deltaY) {
+        const threshold = 5; // Ngưỡng để phát hiện cuộn ngang
+        if (deltaX > threshold) {
           isHorizontalSwipe = true;
-          e.preventDefault(); // Ngăn chặn hành vi mặc định khi cuộn ngang
+          e.preventDefault();
           isDragging = true;
           const walk = (x - startX) * 1.1;
           slider.scrollLeft = scrollLeft - walk;
@@ -222,14 +222,16 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
           const now = Date.now();
           const deltaTime = now - lastMoveTime;
           const moveDeltaX = e.touches[0].pageX - lastMoveX;
-          velocity = moveDeltaX / deltaTime;
+
+          const minMoveDeltaX = 1; // Ngưỡng cho độ nhạy của việc phát hiện di chuyển
+          if (Math.abs(moveDeltaX) > minMoveDeltaX) {
+            velocity = moveDeltaX / deltaTime;
+          }
 
           lastMoveTime = now;
           lastMoveX = e.touches[0].pageX;
 
           checkEndOfScroll();
-        } else {
-          isDown = false; // Hủy chế độ cuộn ngang nếu phát hiện cuộn dọc
         }
       };
 
@@ -289,7 +291,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
       slider.addEventListener('touchend', onTouchEnd, { passive: false });
       slider.addEventListener('touchmove', onTouchMove, { passive: false });
 
-      // Prevent card click or touch event if dragging
+      // Ngăn chặn sự kiện click hoặc chạm vào card nếu đang kéo
       const cards = slider.querySelectorAll('app-card');
       cards.forEach((card) => {
         card.addEventListener('click', (e) => {
