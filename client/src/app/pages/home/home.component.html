@@ -78,23 +78,30 @@
   </div>
 
   <div id="home-content">
-    @if (idToken !== "" && lichSuCards.length > 0) {
-      <div class="boxContener">
+    <div class="boxContener">
+      @if (idToken != "") {
         <div class="titleName">
           <p>LỊCH SỬ</p>
           <button mat-icon-button [routerLink]="['/categories/history']">
             <mat-icon>arrow_forward</mat-icon>
           </button>
         </div>
-        <div class="cardBox" #viewport>
-          @for (card of lichSuCards; track $index) {
-            @if ($index < 10) {
+      }
+      <div class="cardBox" #viewport>
+        @if (idToken != "") {
+          @if (isLoadingReadingHistoryList$ | async) {
+            <div class="loading">
+              <mat-spinner diameter="50"></mat-spinner>
+            </div>
+          }
+          @for (card of lichSuCards; track card; let i = $index) {
+            @if (i < 10) {
               <app-card [ebook]="card"></app-card>
             }
           }
-        </div>
+        }
       </div>
-    }
+    </div>
 
     <div class="boxContener">
       <div class="titleName">

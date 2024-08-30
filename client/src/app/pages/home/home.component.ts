@@ -125,6 +125,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+    console.log(this.viewport);
     this.viewports.forEach((viewport) => {
       const slider = viewport.nativeElement as HTMLElement;
       let isDown = false;
