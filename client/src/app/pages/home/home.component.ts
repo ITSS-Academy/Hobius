@@ -125,12 +125,11 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    console.log(this.viewport);
     this.viewports.forEach((viewport) => {
       const slider = viewport.nativeElement as HTMLElement;
       let isDown = false;
       let startX: number;
-      let startY: number;
+      let startY: number; // Define startY
       let scrollLeft: number;
       let velocity = 0;
       let lastMoveTime: number;
@@ -141,7 +140,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
       const minVelocityForBounce = 0.8;
       let debounceTimeout: any;
 
-      slider.addEventListener('mousedown', (e) => {
+      const onMouseDown = (e: MouseEvent) => {
         isDown = true;
         this.isDragging = false;
         slider.classList.add('clicking');
@@ -149,23 +148,23 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
         scrollLeft = slider.scrollLeft;
         lastMoveTime = Date.now();
         lastMoveX = e.pageX;
-      });
+      };
 
-      slider.addEventListener('mouseleave', () => {
+      const onMouseLeave = () => {
         isDown = false;
         slider.classList.remove('active');
-      });
+      };
 
-      slider.addEventListener('mouseup', () => {
+      const onMouseUp = () => {
         isDown = false;
         slider.classList.remove('active');
         setTimeout(() => {
           this.isDragging = false;
         }, 0);
         applyInertia();
-      });
+      };
 
-      slider.addEventListener('mousemove', (e) => {
+      const onMouseMove = (e: MouseEvent) => {
         if (!isDown) return;
         e.preventDefault();
         this.isDragging = true;
@@ -182,72 +181,58 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
         lastMoveX = e.pageX;
 
         checkEndOfScroll();
-      });
+      };
 
-      // Thêm sự kiện cho touch
-      slider.addEventListener(
-        'touchstart',
-        (e) => {
-          isDown = true;
+      const onTouchStart = (e: TouchEvent) => {
+        isDown = true;
+        this.isDragging = false;
+        slider.classList.add('clicking');
+        startX = e.touches[0].pageX - slider.offsetLeft;
+        startY = e.touches[0].pageY; // Initialize startY
+        scrollLeft = slider.scrollLeft;
+        lastMoveTime = Date.now();
+        lastMoveX = e.touches[0].pageX;
+        isHorizontalSwipe = false;
+      };
+
+      const onTouchEnd = () => {
+        isDown = false;
+        slider.classList.remove('active');
+        setTimeout(() => {
           this.isDragging = false;
-          slider.classList.add('clicking');
-          startX = e.touches[0].pageX - slider.offsetLeft;
-          startY = e.touches[0].pageY;
-          scrollLeft = slider.scrollLeft;
-          lastMoveTime = Date.now();
+        }, 0);
+        applyInertia();
+      };
+
+      const onTouchMove = (e: TouchEvent) => {
+        if (!isDown) return;
+
+        const x = e.touches[0].pageX - slider.offsetLeft;
+        const deltaX = Math.abs(e.touches[0].pageX - startX);
+        const deltaY = Math.abs(e.touches[0].pageY - startY); // Use startY
+
+        if (deltaX > deltaY) {
+          isHorizontalSwipe = true;
+          e.preventDefault(); // Ngăn chặn hành vi mặc định khi cuộn ngang
+          this.isDragging = true;
+          const walk = (x - startX) * 1.1;
+          slider.scrollLeft = scrollLeft - walk;
+
+          const now = Date.now();
+          const deltaTime = now - lastMoveTime;
+          const moveDeltaX = e.touches[0].pageX - lastMoveX;
+          velocity = moveDeltaX / deltaTime;
+
+          lastMoveTime = now;
           lastMoveX = e.touches[0].pageX;
-          isHorizontalSwipe = false;
-        },
-        { passive: false },
-      );
 
-      slider.addEventListener(
-        'touchend',
-        () => {
-          isDown = false;
-          slider.classList.remove('active');
-          setTimeout(() => {
-            this.isDragging = false;
-          }, 0);
-          applyInertia();
-        },
-        { passive: false },
-      );
+          checkEndOfScroll();
+        } else {
+          isDown = false; // Hủy chế độ cuộn ngang nếu phát hiện cuộn dọc
+        }
+      };
 
-      slider.addEventListener(
-        'touchmove',
-        (e) => {
-          if (!isDown) return;
-
-          const x = e.touches[0].pageX - slider.offsetLeft;
-          const y = e.touches[0].pageY;
-          const deltaX = Math.abs(e.touches[0].pageX - startX);
-          const deltaY = Math.abs(y - startY);
-
-          if (deltaX > deltaY) {
-            isHorizontalSwipe = true;
-            e.preventDefault(); // Ngăn chặn hành vi mặc định khi cuộn ngang
-            this.isDragging = true;
-            const walk = (x - startX) * 1.1;
-            slider.scrollLeft = scrollLeft - walk;
-
-            const now = Date.now();
-            const deltaTime = now - lastMoveTime;
-            const moveDeltaX = e.touches[0].pageX - lastMoveX;
-            velocity = moveDeltaX / deltaTime;
-
-            lastMoveTime = now;
-            lastMoveX = e.touches[0].pageX;
-
-            checkEndOfScroll();
-          } else {
-            isDown = false; // Hủy chế độ cuộn ngang nếu phát hiện cuộn dọc
-          }
-        },
-        { passive: false },
-      );
-
-      function applyInertia() {
+      const applyInertia = () => {
         const friction = 0.95;
         const step = () => {
           if (Math.abs(velocity) < 0.1) return;
@@ -257,7 +242,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
           checkEndOfScroll();
         };
         requestAnimationFrame(step);
-      }
+      };
 
       let isBouncingBack = false;
 
@@ -293,6 +278,15 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
           }
         }
       };
+
+      slider.addEventListener('mousedown', onMouseDown);
+      slider.addEventListener('mouseleave', onMouseLeave);
+      slider.addEventListener('mouseup', onMouseUp);
+      slider.addEventListener('mousemove', onMouseMove);
+
+      slider.addEventListener('touchstart', onTouchStart, { passive: false });
+      slider.addEventListener('touchend', onTouchEnd, { passive: false });
+      slider.addEventListener('touchmove', onTouchMove, { passive: false });
     });
   }
 

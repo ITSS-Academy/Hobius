@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   HostListener,
   Input,
@@ -28,7 +29,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   standalone: true,
   imports: [NgForOf, NgIf, NgOptimizedImage, MaterialModule, SharedModule],
 })
-export class SearchBarComponent implements OnInit, OnDestroy {
+export class SearchBarComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() ebook!: EbookModel;
   showDropdown = false;
 
@@ -60,13 +61,9 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     const input = event.target as HTMLInputElement;
     const query = input.value.trim();
     this.showDropdown = query.length > 0;
-    // if (query.length > 0) {
-    //   this.store.dispatch(SearchActions.search({ q: query }));
-    // }
   }
 
   getImageUrl(imageUrl: string): string {
-    // console.log('Image URL:', imageUrl);
     return imageUrl;
   }
 
@@ -79,8 +76,22 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscription.push();
-    this.updateDropdownWidth();
+    this.updateDropdownWidth(); // Ensure it runs when the component initializes
+
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+      searchInput.addEventListener('click', () => {
+        this.updateDropdownWidth();
+      });
+    }
+
+    this.searchControl.valueChanges.subscribe(() => {
+      this.updateDropdownWidth();
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.updateDropdownWidth(); // Ensure it runs once after the view has been initialized
   }
 
   @HostListener('window:resize', ['$event'])
@@ -90,9 +101,9 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   updateDropdownWidth() {
     const searchHeader = document.getElementById('search-header');
-    const dropdownBox = document.getElementById('dropdownBox');
-    if (searchHeader && dropdownBox) {
-      dropdownBox.style.width = `${searchHeader.offsetWidth}px`;
+    if (searchHeader) {
+      const width = `${searchHeader.offsetWidth}px`;
+      document.documentElement.style.setProperty('--dropdown-width', width);
     }
   }
 }
