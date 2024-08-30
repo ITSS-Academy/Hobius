@@ -8,11 +8,9 @@ import { combineLatest, Subscription } from 'rxjs';
 import { UserEbookState } from '../../../ngrxs/user-ebook/user-ebook.state';
 import * as UserEbookActions from '../../../ngrxs/user-ebook/user-ebook.actions';
 import * as EbookActions from '../../../ngrxs/ebook/ebook.actions';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { AuthState } from '../../../ngrxs/auth/auth.state';
 import { EbookModel } from '../../../models/ebook.model';
-import { UserModel } from '../../../models/user.model';
 
 @Component({
   selector: 'app-reading',
@@ -23,7 +21,6 @@ import { UserModel } from '../../../models/user.model';
 })
 export class ReadingComponent implements OnInit, OnDestroy {
   page = 1;
-  pdfUrl: string = '';
   subscriptions: Subscription[] = [];
   isLogin = false;
   selectedEbook: EbookModel | null = null;
@@ -45,7 +42,6 @@ export class ReadingComponent implements OnInit, OnDestroy {
       user_ebook: UserEbookState;
       auth: AuthState;
     }>,
-    private _matSnackbar: MatSnackBar,
   ) {}
 
   ngOnDestroy(): void {
@@ -57,11 +53,6 @@ export class ReadingComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       combineLatest([this.selectedEbook$, this.idToken$]).subscribe(
         ([ebook, idToken]) => {
-          if (ebook) {
-            this.pdfUrl =
-              'https://pdf-extracter.ext.akademy.dev/proxy?fileUrl=' +
-              encodeURIComponent(ebook.pdf);
-          }
           if (ebook && idToken != '') {
             this.isLogin = true;
             this.selectedEbook = ebook;
@@ -112,14 +103,15 @@ export class ReadingComponent implements OnInit, OnDestroy {
   }
 
   updateCurrentReadingPage(page: number) {
-    console.log(page);
-    this.store.dispatch(
-      UserEbookActions.read({
-        ebookId: this.selectedEbook!.id,
-        userEbook: {
-          currentPage: page,
-        },
-      }),
-    );
+    if (this.isLogin) {
+      this.store.dispatch(
+        UserEbookActions.read({
+          ebookId: this.selectedEbook!.id,
+          userEbook: {
+            currentPage: page,
+          },
+        }),
+      );
+    }
   }
 }
