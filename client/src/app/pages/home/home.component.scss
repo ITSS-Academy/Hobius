@@ -158,6 +158,7 @@
       overflow: hidden;
       white-space: nowrap;
       cursor: grab;
+      touch-action: pan-y; /* Chỉ cho phép cuộn dọc */
     }
 
     .cardBox.active {
@@ -361,4 +362,8 @@
   100% {
     opacity: 1;
   }
+}
+
+#viewport {
+  touch-action: pan-y; /* Chỉ cho phép cuộn dọc */
 }

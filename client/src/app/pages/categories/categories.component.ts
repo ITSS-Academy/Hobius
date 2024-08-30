@@ -156,6 +156,7 @@ export class CategoriesComponent implements OnInit, OnDestroy, AfterViewInit {
       let lastMoveTime: number;
       let lastMoveX: number;
 
+      // Mouse Events
       slider.addEventListener('mousedown', (e) => {
         isDown = true;
         slider.classList.add('active');
@@ -190,6 +191,38 @@ export class CategoriesComponent implements OnInit, OnDestroy, AfterViewInit {
 
         lastMoveTime = now;
         lastMoveX = e.pageX;
+      });
+
+      // Touch Events
+      slider.addEventListener('touchstart', (e) => {
+        isDown = true;
+        slider.classList.add('active');
+        startX = e.touches[0].pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+        lastMoveTime = Date.now();
+        lastMoveX = e.touches[0].pageX;
+      });
+
+      slider.addEventListener('touchend', () => {
+        isDown = false;
+        slider.classList.remove('active');
+        applyInertia();
+      });
+
+      slider.addEventListener('touchmove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.touches[0].pageX - slider.offsetLeft;
+        const walk = (x - startX) * 1.1; //scroll-fast
+        slider.scrollLeft = scrollLeft - walk;
+
+        const now = Date.now();
+        const deltaTime = now - lastMoveTime;
+        const deltaX = e.touches[0].pageX - lastMoveX;
+        velocity = deltaX / deltaTime;
+
+        lastMoveTime = now;
+        lastMoveX = e.touches[0].pageX;
       });
 
       function applyInertia() {
