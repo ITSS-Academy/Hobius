@@ -3,6 +3,9 @@
   width: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
+  display: flex;
+  flex-direction: column; /* Ensure vertical stacking */
+  align-items: center; /* Center align elements */
 
   #search-header {
     display: flex;
@@ -13,7 +16,8 @@
     border-top-left-radius: var(--container-border-radius);
     border-top-right-radius: var(--container-border-radius);
     height: 100px;
-    width: 100%;
+    width: 100%; /* Full width */
+    max-width: 500px; /* Optional: Set a max width */
     color: var(--primary);
     z-index: 1;
 
@@ -46,21 +50,18 @@
 }
 
 #dropdownBox {
-  display: flex;
-  margin: 0;
-  top: 100px; /* height of #search-header */
+  width: 100%; /* Match width with #search-header */
+  max-width: 500px; /* Same max width as #search-header */
+  top: 100px; /* Position below #search-header */
   position: absolute;
-  width: 500px;
-  height: calc(400px + 10px);
   background-color: var(--surfaceContainerLow);
-  z-index: 1; /* ensure it is not overlapped by other elements */
-  //border-bottom-left-radius: 12px;
-  //border-bottom-right-radius: 12px;
+  z-index: 1;
   border-radius: 12px;
+  display: flex;
   align-items: center;
   flex-direction: column;
   text-overflow: ellipsis;
-  overflow: visible; /* Ensure overflow is visible */
+  overflow: hidden;
 }
 
 .textIn {
@@ -109,36 +110,36 @@
 
 /* Medium screens (tablets) */
 @media (max-width: 1000px) {
-  #search-container {
-    #search-header {
-      font-size: 1.5rem;
-      height: 80px;
-      width: 100%;
-
-      #search-header-search {
-        height: max-content;
-        min-width: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    }
-  }
-  #dropdownBox {
-    display: flex;
-    margin: 0;
-    top: 100px; /* height of #search-header */
-    position: absolute;
-    width: 250px;
-    height: calc(400px + 10px);
-    background-color: var(--surfaceContainerLow);
-    z-index: 1; /* ensure it is not overlapped by other elements */
-    border-radius: 12px;
-    align-items: center;
-    flex-direction: column;
-    text-overflow: ellipsis;
-    overflow: hidden; /* Ensure overflow is hidden */
-  }
+  //  #search-container {
+  //    #search-header {
+  //      font-size: 1.5rem;
+  //      height: 80px;
+  //      width: 100%; /* Đảm bảo chiều rộng là 100% */
+  //
+  //      #search-header-search {
+  //        height: max-content;
+  //        min-width: 10px;
+  //        display: flex;
+  //        justify-content: center;
+  //        align-items: center;
+  //      }
+  //    }
+  //  }
+  //  #dropdownBox {
+  //    display: flex;
+  //    margin: 0;
+  //    top: 100px; /* height of #search-header */
+  //    position: absolute;
+  //    width: 50%; /* Đảm bảo chiều rộng là 100% */
+  //    max-width: 350px; /* Đặt chiều rộng tối đa */
+  //    background-color: var(--surfaceContainerLow);
+  //    z-index: 1; /* ensure it is not overlapped by other elements */
+  //    border-radius: 12px;
+  //    align-items: center;
+  //    flex-direction: column;
+  //    text-overflow: ellipsis;
+  //    overflow: hidden; /* Ensure overflow is hidden */
+  //  }
 
   .textIn {
     display: flex;
@@ -180,25 +181,25 @@
 
 /* Small screens (mobile devices) */
 @media (max-width: 600px) {
-  #search-container {
-    width: 100%;
-
-    #search-header {
-      font-size: 1.5rem;
-      height: 60px;
-      width: 100%;
-
-      #search-header-search {
-      }
-    }
-  }
-  #dropdownBox {
-    top: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 20px);
-    padding: 10px;
-  }
+  //#search-container {
+  //  width: 100%;
+  //
+  //  #search-header {
+  //    font-size: 1.5rem;
+  //    height: 60px;
+  //    width: 100%;
+  //
+  //    #search-header-search {
+  //    }
+  //  }
+  //}
+  //#dropdownBox {
+  //  top: 80px;
+  //  left: 50%;
+  //  transform: translateX(-50%);
+  //  width: calc(100% - 20px);
+  //  padding: 10px;
+  //}
   .book-icon {
     width: auto;
     height: 95%;

@@ -1,4 +1,10 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -74,5 +80,19 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription.push();
+    this.updateDropdownWidth();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.updateDropdownWidth();
+  }
+
+  updateDropdownWidth() {
+    const searchHeader = document.getElementById('search-header');
+    const dropdownBox = document.getElementById('dropdownBox');
+    if (searchHeader && dropdownBox) {
+      dropdownBox.style.width = `${searchHeader.offsetWidth}px`;
+    }
   }
 }
