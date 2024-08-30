@@ -4,12 +4,12 @@
       <mat-icon matPrefix>search</mat-icon>
       <input
         matInput
-        placeholder="Tìm kiếm sách..."
+        placeholder="Tìm kiếm "
         [formControl]="searchControl"
         (input)="onInputChange($event)"
       />
     </mat-form-field>
-    <!--    <div id="dropdown">-->
+    <!--    <div id="dropdown fffff">-->
     @if (showDropdown) {
       <div id="dropdownBox">
         @if ((searchResults$ | async)?.length == 0) {
