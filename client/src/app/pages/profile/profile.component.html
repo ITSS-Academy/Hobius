@@ -83,7 +83,12 @@
                 </div>
               </div>
               <div class="middle">
-                <div class="title">{{ item.ebook.title }}</div>
+                <div
+                  class="title"
+                  [routerLink]="['/ebook-info', item.ebook.id]"
+                >
+                  {{ item.ebook.title }}
+                </div>
                 <div class="info">
                   <div>
                     {{ item.ebook.author }} -
@@ -123,7 +128,9 @@
                   </div>
                 </div>
                 <div class="middle">
-                  <div class="title">{{ item.ebook.title }}</div>
+                  <div class="title">
+                    {{ item.ebook.title }}
+                  </div>
                   <div class="info">
                     <div>{{ item.commentDate | date: "dd/MM/yyyy" }}</div>
                     <div class="cmt">{{ item.content }}</div>
