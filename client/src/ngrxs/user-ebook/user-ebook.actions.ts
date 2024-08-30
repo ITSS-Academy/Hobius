@@ -49,7 +49,7 @@ export const read = createAction(
   '[User Ebook] Read',
   props<{
     ebookId: string;
-    userEbook: UserEbookModel;
+    userEbook: any;
   }>(),
 );
 export const readSuccess = createAction('[User Ebook] Read Success');

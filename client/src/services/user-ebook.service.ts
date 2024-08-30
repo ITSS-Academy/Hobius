@@ -21,11 +21,11 @@ export class UserEbookService {
   }
 
   read(ebookId: string, userEbook: UserEbookModel) {
-    return this.http.put(`user-ebooks/read?ebookId=${ebookId}`, userEbook);
+    return this.http.patch(`user-ebooks/read?ebookId=${ebookId}`, userEbook);
   }
 
   finishReading(ebookId: string, userEbook: UserEbookModel) {
-    return this.http.put(
+    return this.http.patch(
       `user-ebooks/finish-reading?ebookId=${ebookId}`,
       userEbook,
     );

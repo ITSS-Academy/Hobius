@@ -1,8 +1,14 @@
 <div id="reading-container">
+  @if ((isCreating$ | async) || (isLoadingCurrentReading$ | async)) {
+    <div class="progress-bar-overlay">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+  }
   @if (pdfUrl != "") {
     <app-example-pdf-viewer
       [page]="page"
       [pdfSrc]="this.pdfUrl"
+      (pageChange)="updateCurrentReadingPage($event)"
     ></app-example-pdf-viewer>
   }
 </div>

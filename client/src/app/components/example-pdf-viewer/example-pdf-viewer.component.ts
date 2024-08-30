@@ -3,6 +3,9 @@ import {
   ChangeDetectionStrategy,
   Input,
   OnInit,
+  Output,
+  EventEmitter,
+  OnDestroy,
 } from '@angular/core';
 import {
   AnnotationLayerRenderedEvent,
@@ -12,6 +15,7 @@ import {
   pdfDefaultOptions,
   PdfDocumentInfo,
 } from 'ngx-extended-pdf-viewer';
+import { debounceTime, Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-example-pdf-viewer',
@@ -22,11 +26,14 @@ import {
   providers: [NgxExtendedPdfViewerService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExamplePdfViewerComponent implements OnInit {
+export class ExamplePdfViewerComponent implements OnInit, OnDestroy {
   @Input('pdfSrc') pdfSrc = '';
   @Input('page') page = 1;
   @Input('pageLabel') pageLabel = '1';
-  fileInfo!: PdfDocumentInfo;
+  @Output() pageChange = new EventEmitter<number>();
+
+  private pageChangeSubject = new Subject<number>();
+  subscriptions: Subscription[] = [];
 
   public spreadMode: 'off' | 'even' | 'odd' = 'off';
 
@@ -51,9 +58,24 @@ export class ExamplePdfViewerComponent implements OnInit {
     pdfDefaultOptions.doubleTapResetsZoomOnSecondDoubleTap = true;
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
   ngOnInit(): void {
     console.log('ExamplePdfViewerComponent initialized');
     console.log(this.pdfSrc);
+
+    this.subscriptions.push(
+      this.pageChangeSubject
+        .pipe(
+          debounceTime(1000), // Adjust the debounce time as needed
+        )
+        .subscribe((page) => {
+          this.pageChange.emit(page);
+          console.log(`Debounced page change: ${page}`);
+        }),
+    );
   }
 
   public onAnnotationLayerRendered(event: AnnotationLayerRenderedEvent): void {
@@ -83,6 +105,7 @@ export class ExamplePdfViewerComponent implements OnInit {
       this.page + pagesAfter,
       this.pdfService.numberOfPages(),
     );
+    console.log(endPage);
 
     const renderedPages = this.pdfService.currentlyRenderedPages();
 
@@ -96,7 +119,6 @@ export class ExamplePdfViewerComponent implements OnInit {
   }
 
   public onPageChanges(page: number): void {
-    const now = new Date().toLocaleTimeString();
-    console.log(`${now} Loaded a document with ${page} pages`);
+    this.pageChangeSubject.next(page);
   }
 }

@@ -47,8 +47,10 @@
     [showPropertiesButton]="false"
     [textLayer]="true"
     (annotationLayerRendered)="onAnnotationLayerRendered($event)"
+    (pageRendered)="onPageRendered()"
     [(page)]="page"
     [(pageLabel)]="pageLabel"
+    [mobileFriendlyZoom]="'150%'"
   >
   </ngx-extended-pdf-viewer>
 </div>

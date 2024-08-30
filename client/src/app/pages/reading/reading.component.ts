@@ -82,6 +82,7 @@ export class ReadingComponent implements OnInit, OnDestroy {
         .subscribe((userEbook) => {
           if (userEbook) {
             console.log(userEbook);
+            this.page = userEbook.currentPage == 0 ? 1 : userEbook.currentPage;
           }
         }),
       this.store
@@ -107,6 +108,18 @@ export class ReadingComponent implements OnInit, OnDestroy {
             }
           }
         }),
+    );
+  }
+
+  updateCurrentReadingPage(page: number) {
+    console.log(page);
+    this.store.dispatch(
+      UserEbookActions.read({
+        ebookId: this.selectedEbook!.id,
+        userEbook: {
+          currentPage: page,
+        },
+      }),
     );
   }
 }

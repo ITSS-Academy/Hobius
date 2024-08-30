@@ -37,6 +37,7 @@ export class AppComponent implements OnInit {
       if (user) {
         const token = await user.getIdTokenResult();
         this.store.dispatch(AuthActions.storeIdToken({ idToken: token.token }));
+        this.jwtTokenService.setToken(token.token);
       }
     });
     // console.log(this.get('idToken'));

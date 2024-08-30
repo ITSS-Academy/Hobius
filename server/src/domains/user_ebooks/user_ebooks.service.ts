@@ -143,7 +143,6 @@ export class UserEbooksService {
 
       // Step 2: Update the UserEbook
       userEbook.currentPage = updateUserEbookDto.currentPage;
-      userEbook.lastPageRead = updateUserEbookDto.lastPageRead;
       userEbook.lastReadDate = new Date().toISOString();
       userEbook.readingStatus = ReadingStatus.READING;
 
