@@ -219,6 +219,10 @@ export class EbookInfoComponent implements OnInit, OnDestroy {
   }
 
   openCommentDetailDialog(comment: CommentModel) {
+    this.jwtTokenService.checkTokenExpired();
+    if (this.jwtTokenService.isTokenExpired()) {
+      return;
+    }
     const dialogRef = this.dialog.open(CommentDetailComponent, {
       data: comment,
     });
@@ -226,6 +230,10 @@ export class EbookInfoComponent implements OnInit, OnDestroy {
   }
 
   toggleFavorite(): void {
+    this.jwtTokenService.checkTokenExpired();
+    if (this.jwtTokenService.isTokenExpired()) {
+      return;
+    }
     if (this.isFavorite) {
       this.store.dispatch(EbookActions.unlike({ id: this.ebookId }));
     } else {
