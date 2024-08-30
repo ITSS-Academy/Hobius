@@ -186,6 +186,10 @@
 
 @media (max-width: 600px) {
   #categories-container {
+    app-search-bar {
+      width: 250px;
+    }
+
     #categories-content {
       .bot-viewport {
         .cardBox {

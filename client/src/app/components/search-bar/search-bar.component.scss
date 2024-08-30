@@ -50,7 +50,7 @@
 }
 
 #dropdownBox {
-  width: 50%; /* Match width with #search-header */
+  width: var(--dropdown-width, 0); /* Use CSS variable with a fallback */
   max-width: 500px; /* Same max width as #search-header */
   top: 100px; /* Position below #search-header */
   position: absolute;
@@ -67,7 +67,7 @@
 .textIn {
   display: flex;
   height: 100px;
-  width: 500px;
+  width: 100%;
   align-items: center;
   font-size: 22px;
   margin-bottom: 5px;
@@ -84,7 +84,7 @@
   padding: 0;
   display: block; /* Ensure width is respected */
   color: var(--primary);
-  width: 50%; /* Ensure it takes the full width of the parent */
+  width: 80%; /* Ensure it takes the full width of the parent */
   white-space: nowrap; /* Prevent text wrapping */
   overflow: hidden; /* Hide overflow text */
   text-overflow: ellipsis; /* Apply ellipsis to overflow text */
