@@ -26,21 +26,21 @@
     </mat-form-field>
 
     <!--   author form control   -->
-    <mat-form-field appearance="fill">
-      <mat-label>Email</mat-label>
-      <input matInput placeholder="Email..." formControlName="email" required />
-      @if (profileFormGroup.get("email")?.valid) {
-        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-      } @else {
-        <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>
-      }
-      @if (profileFormGroup.get("email")?.hasError("required")) {
-        <mat-error> Email không được để trống!</mat-error>
-      }
-      @if (profileFormGroup.get("email")?.hasError("email")) {
-        <mat-error> Email không hợp lệ</mat-error>
-      }
-    </mat-form-field>
+    <!--    <mat-form-field appearance="fill">-->
+    <!--      <mat-label>Email</mat-label>-->
+    <!--      <input matInput placeholder="Email..." formControlName="email" required />-->
+    <!--      @if (profileFormGroup.get("email")?.valid) {-->
+    <!--        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>-->
+    <!--      } @else {-->
+    <!--        <mat-icon matSuffix>sentiment_very_dissatisfied</mat-icon>-->
+    <!--      }-->
+    <!--      @if (profileFormGroup.get("email")?.hasError("required")) {-->
+    <!--        <mat-error> Email không được để trống!</mat-error>-->
+    <!--      }-->
+    <!--      @if (profileFormGroup.get("email")?.hasError("email")) {-->
+    <!--        <mat-error> Email không hợp lệ</mat-error>-->
+    <!--      }-->
+    <!--    </mat-form-field>-->
 
     <!--   image file form control   -->
     <mat-form-field appearance="fill">

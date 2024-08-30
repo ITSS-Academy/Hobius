@@ -57,3 +57,5 @@ export const findOneError = createAction(
   '[Comment] Find One Error',
   props<{ error: any }>(),
 );
+
+export const reset = createAction('[Comment] Reset');

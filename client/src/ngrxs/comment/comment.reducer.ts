@@ -151,4 +151,25 @@ export const commentReducer = createReducer(
       isLoadingSelectedCommentError: action.error,
     };
   }),
+  on(CommentActions.reset, (state) => {
+    console.log(CommentActions.reset.type);
+    return <CommentState>{
+      ...state,
+      selectedComment: null,
+      isLoadingSelectedComment: false,
+      isLoadingSelectedCommentError: undefined,
+      isCreatingComment: false,
+      isCreatingCommentSuccess: false,
+      isCreatingCommentError: undefined,
+      isUpdatingComment: false,
+      isUpdatingCommentSuccess: false,
+      isUpdatingCommentError: undefined,
+      ebookCommentList: [],
+      isFindingAllByEbookId: false,
+      findingAllByEbookIdError: undefined,
+      userCommentList: [],
+      isFindingAllByUserId: false,
+      findingAllByUserIdError: undefined,
+    };
+  }),
 );

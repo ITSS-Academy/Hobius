@@ -94,6 +94,7 @@ export class EbookInfoComponent implements OnInit, OnDestroy {
             this._snackBar.open('Đánh giá thành công', 'Đóng', {
               duration: 2000,
             });
+            this.isAlreadyCommented = true;
             this.store.dispatch(
               CommentActions.findAllByEbookId({ ebookId: this.ebookId }),
             );
@@ -184,6 +185,7 @@ export class EbookInfoComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
     this.store.dispatch(EbookActions.reset());
+    this.store.dispatch(CommentActions.reset());
   }
 
   openCommentFormDialog(): void {
