@@ -24,6 +24,7 @@ export class ReadingComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   isLogin = false;
   selectedEbook: EbookModel | null = null;
+  pdfUrl: string = '';
 
   isLoadingCurrentReading$ = this.store.select(
     'user_ebook',
@@ -53,6 +54,11 @@ export class ReadingComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       combineLatest([this.selectedEbook$, this.idToken$]).subscribe(
         ([ebook, idToken]) => {
+          if (ebook) {
+            this.pdfUrl =
+              'https://pdf-extracter.ext.akademy.dev/proxy?fileUrl=' +
+              encodeURIComponent(ebook.pdf);
+          }
           if (ebook && idToken != '') {
             this.isLogin = true;
             this.selectedEbook = ebook;
